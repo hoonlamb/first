@@ -174,8 +174,8 @@ assets['kv-1920x1080'] = [1920, 1080, shell(1920, 1080, C.ink,
 // Key visual 1080×1350 (portrait, feed)
 assets['kv-1080x1350'] = [1080, 1350, shell(1080, 1350, C.ink,
   stage(1080, 1350, stepped({
-    x0: 72, late: 64, yTop: 600, gap: (d) => 104 + 21 * d, T: 40, dogX: 850, s: 1.35, xEnd: 1008, sw: 7, numPlace: 'below', inset: 16,
-    steps: [{ d: 15, L: 210, size: 150 }, { d: 8, L: 150, size: 108 }, { d: 4, L: 104, size: 76 }, { d: 2, size: 64 }],
+    x0: 72, late: 64, yTop: 600, gap: (d) => 104 + 21 * d, T: 40, dogX: 770, s: 1.35, xEnd: 1008, sw: 7, numPlace: 'below', inset: 16,
+    steps: [{ d: 15, L: 190, size: 150 }, { d: 8, L: 130, size: 108 }, { d: 4, L: 92, size: 76 }, { d: 2, size: 64 }],
   }) + logo({ x: 72, y: 1236, size: 36, tone: 'paper' })) +
   `<p class="a eb" style="left:72px;top:80px;font-size:24px;color:${C.moss}">동네 산책을 위한 거리 약속</p>
    <h1 class="a hd" style="left:68px;top:124px;font-size:112px">가까워지는 데는<br>순서가 있어요.</h1>
@@ -192,34 +192,34 @@ assets['og-1200x630'] = [1200, 630, shell(1200, 630, C.ink,
    <p class="a" style="right:64px;top:58px;font-size:20px;font-weight:700;color:${C['muted-on-ink']}">우리 개의 편한 거리를 먼저 알려요</p>`)]
 
 // App icon 1024
-assets['app-icon-1024'] = [1024, 1024, shell(1024, 1024, C.ink, stage(1024, 1024, mark({ x: 192, y: 272, w: 640, tone: 'paper' })))]
+assets['app-icon-1024'] = [1024, 1024, shell(1024, 1024, C.ink, stage(1024, 1024, mark({ x: 198, y: 274, w: 640, tone: 'paper' })))]
 
 // Poster — A-ratio (A4 @150dpi), for apartment boards / park notice boards. Paper, prints well in 2 colors + black.
 {
   const W = 1240, H = 1754, m = 96
-  const yLane = 1040, yThem = 1210
+  const yLane = 820, yThem = 960
   const g = `
-    <line x1="${m}" y1="${yLane}" x2="780" y2="${yLane}" stroke="${C.ink}" stroke-width="10" stroke-linecap="round"/>
-    <line x1="1000" y1="${yLane}" x2="${W - m}" y2="${yLane}" stroke="${C.ink}" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 34" opacity=".5"/>
-    ${dog({ x: 890, y: yLane, s: 2.3, state: 'calm', color: C.ink, detail: C.paper })}
-    <path d="M${m + 40} ${H - 470} C 300 ${yThem + 60}, 330 ${yThem}, 430 ${yThem} L 700 ${yThem}" fill="none" stroke="${C.signal}" stroke-width="10" stroke-linecap="round"/>
+    <line x1="${m}" y1="${yLane}" x2="800" y2="${yLane}" stroke="${C.ink}" stroke-width="10" stroke-linecap="round"/>
+    <line x1="1010" y1="${yLane}" x2="${W - m}" y2="${yLane}" stroke="${C.ink}" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 34" opacity=".5"/>
+    ${dog({ x: 905, y: yLane, s: 2.1, state: 'calm', color: C.ink, detail: C.paper })}
+    <path d="M${m + 20} 1016 C 250 980, 320 ${yThem}, 430 ${yThem} L 700 ${yThem}" fill="none" stroke="${C.signal}" stroke-width="10" stroke-linecap="round"/>
     <circle cx="740" cy="${yThem}" r="15" fill="${C.signal}"/>
-    <g stroke="${C['moss-ink']}" stroke-width="3" stroke-linecap="round"><line x1="620" x2="620" y1="${yLane + 20}" y2="${yThem - 20}"/><line x1="608" x2="632" y1="${yLane + 20}" y2="${yLane + 20}"/><line x1="608" x2="632" y1="${yThem - 20}" y2="${yThem - 20}"/></g>
-    <text x="440" y="${(yLane + yThem) / 2 + 12}" fill="${C['moss-ink']}" style="font:800 30px/1 P;letter-spacing:-0.02em">여기서 한 번,</text>
-    <text x="440" y="${(yLane + yThem) / 2 + 50}" fill="${C['moss-ink']}" style="font:800 30px/1 P;letter-spacing:-0.02em">물어보는 거리</text>
+    <g stroke="${C['moss-ink']}" stroke-width="3" stroke-linecap="round"><line x1="640" x2="640" y1="${yLane + 20}" y2="${yThem - 20}"/><line x1="628" x2="652" y1="${yLane + 20}" y2="${yLane + 20}"/><line x1="628" x2="652" y1="${yThem - 20}" y2="${yThem - 20}"/></g>
+    <text x="620" y="${(yLane + yThem) / 2 - 4}" text-anchor="end" fill="${C['moss-ink']}" style="font:800 30px/1 P;letter-spacing:-0.02em">여기서 한 번,</text>
+    <text x="620" y="${(yLane + yThem) / 2 + 34}" text-anchor="end" fill="${C['moss-ink']}" style="font:800 30px/1 P;letter-spacing:-0.02em">물어보는 거리</text>
     <rect x="0" y="${H - 212}" width="${W}" height="212" fill="${C.signal}"/>
     ${mark({ x: W - m - 120, y: H - 150, w: 120, tone: 'mono-ink' })}`
   const rule = (n, t) => `<li style="display:grid;grid-template-columns:84px 1fr;align-items:baseline;border-top:3px solid ${C.ink};padding:22px 0 0"><span class="num" style="font-size:44px;font-weight:880;color:${C['signal-ink']}">${n}</span><span style="font-size:36px;font-weight:700;letter-spacing:-0.03em;line-height:1.35">${t}</span></li>`
   assets['poster-a-ratio'] = [W, H, shell(W, H, C.paper, stage(W, H, g) + `
     <p class="a eb" style="left:${m}px;top:88px;font-size:28px;color:${C['signal-ink']}">우리 동네 산책 부탁</p>
-    <div class="a" style="right:${m}px;top:84px">${`<svg width="84" height="63" viewBox="0 0 48 36">${mark({ tone: 'ink' })}</svg>`}</div>
     <h1 class="a hd" style="left:${m - 6}px;top:150px;font-size:168px;line-height:1.02">만지기 전에<br>물어봐 주세요.</h1>
-    <p class="a" style="left:${m}px;top:540px;width:${W - m * 2}px;font-size:32px;font-weight:600;line-height:1.5;color:${C.ink}">산책하는 개마다 편한 거리가 달라요. <b style="font-weight:800">“귀엽다”며 다가오는 손</b>이 어떤 개에게는 가장 무서운 순간이에요.</p>
-    <ol class="a" style="list-style:none;left:${m}px;top:680px;width:${W - m * 2}px;display:grid;gap:22px">
+    <p class="a" style="left:${m}px;top:520px;width:${W - m * 2}px;font-size:32px;font-weight:600;line-height:1.5;color:${C.ink}">산책하는 개마다 편한 거리가 달라요. <b style="font-weight:800">“귀엽다”며 다가오는 손</b>이 어떤 개에게는 가장 무서운 순간이에요.</p>
+    <ol class="a" style="list-style:none;left:${m}px;top:1070px;width:${W - m * 2}px;display:grid;gap:22px">
       ${rule('01', '다가오기 전에 보호자에게 먼저 물어봐 주세요.')}
       ${rule('02', '괜찮다고 하면, 개가 먼저 다가올 때까지 기다려 주세요.')}
       ${rule('03', '인사 없이 지나가는 것도 좋은 인사예요.')}
     </ol>
+    <p class="a" style="left:${m}px;top:1400px;width:${W - m * 2}px;font-size:24px;font-weight:700;line-height:1.5">반려견 가구의 <span class="num" style="color:${C['signal-ink']};font-weight:880">89.4%</span>가 산책하다 낯선 사람의 행동 때문에 불편을 겪었어요.<br><span style="font-size:17px;font-weight:600;color:${C.muted}">출처: KB금융지주 경영연구소 「2025 한국 반려동물 보고서」 보도 인용(데일리벳, 2025)</span></p>
     <p class="a hd" style="left:${m}px;top:${H - 176}px;font-size:76px;color:${C.ink}">거리를 지켜 줘서, 댕큐.</p>
     <p class="a" style="left:${m}px;top:${H - 70}px;font-size:19px;font-weight:600;color:${C.ink}">댕큐 리프로젝트 컨셉 포스터예요. 실제 캠페인·기관과 관계없어요.</p>`)]
 }
@@ -229,25 +229,26 @@ assets['app-icon-1024'] = [1024, 1024, shell(1024, 1024, C.ink, stage(1024, 1024
   const W = 1600, H = 1200
   const tags = [
     { bg: C.moss, t: ['먼저', '물어봐', '주세요'], key: '인사 좋아해요' },
-    { bg: C.paper, t: ['냄새 먼저,', '손은', '나중에'], key: '천천히 인사해요' },
-    { bg: C.signal, t: ['인사 없이', '지나가', '주세요'], key: '인사 없이 지나가요' },
+    { bg: C.paper, t: ['냄새', '먼저,', '손은', '나중에'], key: '천천히 인사해요' },
+    { bg: C.signal, t: ['인사', '없이', '지나가', '주세요'], key: '인사 없이 지나가요' },
   ]
-  const tx0 = 900, tw = 190, th = 470, ty = 300
-  let tagSvg = `<path d="M 860 250 C 1000 262, 1300 262, 1540 244" fill="none" stroke="${C.ink}" stroke-width="16" stroke-linecap="round"/>`
+  const tx0 = 880, tw = 210, th = 480, ty = 300
+  let tagSvg = `<path d="M 850 250 C 1000 262, 1300 262, 1560 244" fill="none" stroke="${C.ink}" stroke-width="16" stroke-linecap="round"/>`
   tags.forEach((tg, i) => {
-    const x = tx0 + i * 220
+    const x = tx0 + i * 232
     tagSvg += `<line x1="${x + tw / 2}" y1="254" x2="${x + tw / 2}" y2="${ty + 22}" stroke="${C.ink}" stroke-width="4"/>
       <circle cx="${x + tw / 2}" cy="${ty + 30}" r="11" fill="${C['paper-2']}" stroke="${C.ink}" stroke-width="4"/>
       <rect x="${x}" y="${ty}" width="${tw}" height="${th}" rx="30" fill="${tg.bg}" stroke="${C.ink}" stroke-width="${tg.bg === C.paper ? 3 : 0}"/>
       <circle cx="${x + tw / 2}" cy="${ty + 30}" r="11" fill="${C['paper-2']}" stroke="${C.ink}" stroke-width="3"/>
       ${mark({ x: x + 28, y: ty + 70, w: 54, tone: tg.bg === C.paper ? 'ink' : 'mono-ink' })}
+      ${tg.t.map((ln, k) => `<text x="${x + 28}" y="${ty + 190 + k * 50}" fill="${C.ink}" style="font:880 42px/1 P;letter-spacing:-0.05em">${ln}</text>`).join('')}
       <line x1="${x + 28}" y1="${ty + th - 60}" x2="${x + tw - 28}" y2="${ty + th - 60}" stroke="${C.ink}" stroke-width="2.5"/>
       <text x="${x + tw - 28}" y="${ty + th - 70}" text-anchor="end" fill="${C.ink}" style="font:880 30px/1 P">m</text>
       <text x="${x + 28}" y="${ty + th - 30}" fill="${C.ink}" style="font:700 17px/1 P">편한 거리 적는 칸</text>`
   })
   const bandana = `
     <path d="M 110 330 L 790 330 L 450 860 Z" fill="${C.signal}" stroke-linejoin="round"/>
-    <path d="M 110 330 C 70 330, 40 310, 20 280 M 790 330 C 830 330, 860 310, 880 280" stroke="${C.signal}" stroke-width="30" stroke-linecap="round" fill="none"/>
+    <path d="M 124 332 L 34 314 M 776 332 L 836 314" stroke="${C.signal}" stroke-width="26" stroke-linecap="round" fill="none"/>
     <line x1="170" y1="366" x2="720" y2="366" stroke="${C.ink}" stroke-width="8" stroke-linecap="round"/>
     <line x1="230" y1="396" x2="720" y2="396" stroke="${C.ink}" stroke-width="8" stroke-linecap="round"/>
     <circle cx="746" cy="366" r="7" fill="${C.ink}"/><circle cx="746" cy="396" r="7" fill="${C.ink}"/>
@@ -258,8 +259,8 @@ assets['app-icon-1024'] = [1024, 1024, shell(1024, 1024, C.ink, stage(1024, 1024
     <p class="a eb" style="left:80px;top:72px;font-size:22px;color:${C['signal-ink']}">컨셉 목업 · 실제 제품이 아니에요</p>
     <h1 class="a" style="left:80px;top:108px;font-size:48px;font-weight:850;letter-spacing:-0.04em">반다나와 리드줄 태그</h1>
     <p class="a" style="left:80px;top:930px;width:700px;font-size:22px;font-weight:600;line-height:1.55;color:${C.muted}">멀리서도 읽히는 한 문장. 시그널 바탕 위에서는 마크를 잉크 한 색으로 써요. 두 선의 상단 띠가 반다나를 두를 때 목선을 따라 나란히 놓여요.</p>
-    <div class="a" style="left:900px;top:820px;width:630px;display:grid;gap:12px;font-size:21px;font-weight:600;color:${C.ink}">
-      ${tags.map((tg) => `<p style="display:flex;gap:14px;align-items:center"><span style="width:26px;height:26px;border-radius:8px;background:${tg.bg};border:2px solid ${C.ink}"></span>${tg.t.join(' ')} <span style="color:${C.muted}">— 산책 카드 ‘${tg.key}’</span></p>`).join('')}
+    <div class="a" style="left:880px;top:830px;width:660px;display:grid;gap:12px;font-size:21px;font-weight:600;color:${C.ink}">
+      ${tags.map((tg) => `<p style="display:flex;gap:14px;align-items:center"><span style="width:26px;height:26px;border-radius:8px;background:${tg.bg};border:2px solid ${C.ink}"></span>${tg.t.join(' ').replace(', ', ',&nbsp;')} <span style="color:${C.muted}">— 산책 카드 ‘${tg.key}’</span></p>`).join('')}
       <p style="font-size:18px;color:${C.muted};margin-top:8px">태그 문장은 산책 카드의 인사 설정과 같아요. 색만으로 뜻을 전하지 않고 늘 글자와 함께 써요.</p>
     </div>
     <p class="a" style="right:80px;top:1130px;font-size:17px;font-weight:600;color:${C.muted}">코드로 그린 평면 시안 · 댕큐 리프로젝트</p>`)]
@@ -268,13 +269,14 @@ assets['app-icon-1024'] = [1024, 1024, shell(1024, 1024, C.ink, stage(1024, 1024
 // Instagram 1/3 — problem
 {
   const W = 1080, H = 1350
-  const y = 800
+  const y = 790
   const g = `${pager(0, 'paper')}
-    <line x1="80" y1="${y}" x2="420" y2="${y}" stroke="${C.ink}" stroke-width="9" stroke-linecap="round"/>
-    ${dog({ x: 520, y, s: 2.0, state: 'react', color: C.ink, detail: C.paper, stride: 0 })}
-    <path d="M 1000 1010 L 706 ${y - 68}" stroke="${C.signal}" stroke-width="9" stroke-linecap="round"/>
-    <circle cx="690" cy="${y - 74}" r="13" fill="${C.signal}"/>
-    <text x="760" y="1000" fill="${C.muted}" style="font:700 24px/1 P">마주 보고, 곧장</text>`
+    <line x1="80" y1="${y}" x2="400" y2="${y}" stroke="${C.ink}" stroke-width="9" stroke-linecap="round"/>
+    <line x1="660" y1="${y}" x2="1000" y2="${y}" stroke="${C.ink}" stroke-width="9" stroke-linecap="round" stroke-dasharray="2 30" opacity=".45"/>
+    ${dog({ x: 510, y, s: 2.2, state: 'react', color: C.ink, detail: C.paper, stride: 0 })}
+    <path d="M 1000 1000 L 742 ${y - 84}" stroke="${C.signal}" stroke-width="9" stroke-linecap="round"/>
+    <circle cx="728" cy="${y - 98}" r="14" fill="${C.signal}"/>
+    <text x="800" y="1000" text-anchor="end" fill="${C.muted}" style="font:700 24px/1 P">마주 보고, 곧장 다가올 때</text>`
   assets['insta-1-problem'] = [W, H, shell(W, H, C.paper, stage(W, H, g) + `
     <p class="a eb" style="right:80px;top:70px;font-size:20px;color:${C.muted}">댕큐 · 산책길의 3초</p>
     <p class="a num" style="left:70px;top:132px;font-size:250px;font-weight:880;line-height:1;color:${C['signal-ink']};letter-spacing:-0.06em">89.4%</p>
@@ -307,7 +309,7 @@ assets['app-icon-1024'] = [1024, 1024, shell(1024, 1024, C.ink, stage(1024, 1024
 {
   const W = 1080, H = 1350
   const cardCss = `
-  .card{position:absolute;left:300px;top:400px;width:620px;background:${C.ink};color:${C.paper};border-radius:44px;padding:44px;display:grid;gap:22px;box-shadow:0 40px 70px -40px rgba(21,32,26,.7)}
+  .card{position:absolute;left:380px;top:410px;width:620px;background:${C.ink};color:${C.paper};border-radius:44px;padding:44px;display:grid;gap:22px;box-shadow:0 40px 70px -40px rgba(21,32,26,.7)}
   .card .top{display:flex;justify-content:space-between;align-items:center}
   .card .k{font-size:22px;font-weight:800;letter-spacing:.06em;color:${C['muted-on-ink']}}
   .card .n{font-size:64px;font-weight:850;letter-spacing:-0.04em;line-height:1}
@@ -329,7 +331,7 @@ assets['app-icon-1024'] = [1024, 1024, shell(1024, 1024, C.ink, stage(1024, 1024
       <p class="ask">냄새 먼저, 손은 나중에</p>
       <dl><div><dt>인사</dt><dd>천천히 인사해요</dd></div><div><dt>걸음</dt><dd>느긋하게 · 중형</dd></div><div><dt>조심해 주세요</dt><dd>자전거·킥보드, 뛰어오는 아이</dd></div></dl>
     </div>
-    <p class="a" style="left:80px;top:420px;width:190px;font-size:26px;font-weight:700;line-height:1.45">누가 다가오면, 설명 대신 이 화면을 보여 주세요.</p>
+    <p class="a" style="left:80px;top:1060px;width:920px;font-size:38px;font-weight:800;letter-spacing:-0.035em;line-height:1.35">누가 다가오면, 설명하는 대신<br>이 화면을 보여 주세요.</p>
     <p class="a" style="right:80px;top:1240px;font-size:26px;font-weight:800;letter-spacing:-0.02em">우리 개의 거리부터 알려 주세요 →</p>`, cardCss)]
 }
 
@@ -347,7 +349,7 @@ const vectors = {}
   const w = logoWidth(size) + pw * 2, h = size * 0.9 + pw * 2
   vectors['logo-horizontal-paper.svg'] = svgFile(w, h, logo({ x: pw, y: pw, size, tone: 'paper' }), '댕큐 로고 (어두운 바탕용)')
   vectors['logo-horizontal-ink.svg'] = svgFile(w, h, logo({ x: pw, y: pw, size, tone: 'ink' }), '댕큐 로고 (밝은 바탕용)')
-  vectors['app-icon.svg'] = svgFile(1024, 1024, `<rect width="1024" height="1024" fill="${C.ink}"/>` + mark({ x: 192, y: 272, w: 640, tone: 'paper' }), '댕큐 앱 아이콘')
+  vectors['app-icon.svg'] = svgFile(1024, 1024, `<rect width="1024" height="1024" fill="${C.ink}"/>` + mark({ x: 198, y: 274, w: 640, tone: 'paper' }), '댕큐 앱 아이콘')
 }
 
 /* ---------------------------------------------------------------- render */
