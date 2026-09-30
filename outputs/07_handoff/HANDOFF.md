@@ -67,6 +67,11 @@ npx playwright test    # E2E (desktop + mobile). Chromium 경로: /opt/pw-browse
 4. 실서비스 설계: 카드 공유 링크(QR), 신고·차단, 서버 저장.
 
 ## 7. 배포
+- 비공개 미리보기(소유자만 열람): https://claude.ai/artifact/ULrWBYxwqW2tMJm7rQt5Mw
+  - `app/dist`를 그대로 올린 것이다.
+  - 미리보기 창의 보안 제약 때문에 두 기능이 동작하지 않는다.
+    - 위치 권한: 자동으로 거부되며, 거부 흐름으로 처리된다.
+    - 태그의 '인쇄하기': 아무 일도 일어나지 않는다. 로컬이나 실제 배포에서는 정상 동작한다.
 - 현재 **공개 배포하지 않았다**(승인 필요).
 - `app/dist`는 정적 파일이라 Netlify, Vercel, GitHub Pages, Cloudflare Pages 어디든 올릴 수 있다.
 - 기존 djdb.kr 운영 사이트는 교체하지 않는다.
