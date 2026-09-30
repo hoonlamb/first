@@ -149,11 +149,13 @@ function pager(i, tone) {
 }
 
 /* ---------------------------------------------------------------- assets */
+// Matches the product rule (app/src/lib/demo.ts planFor) for 뽀리 8m + 두부 6m across walks:
+// 1st walk 10 → 8 → 6 (floor 6m, no greeting) · 2nd walk 8 → 6 → 4 → 3 (greeting only if both want)
 const LADDER = [
-  { d: 15, label: '멀리서, 같은 방향으로' },
-  { d: 8, label: '둘 다 편하면 조금 더' },
-  { d: 4, label: '나란히, 한 블록 더' },
-  { d: 2, label: '인사는 선택' },
+  { d: 10, label: '첫날, 멀리서 같은 방향으로' },
+  { d: 6, label: '첫날은 여기까지' },
+  { d: 4, label: '다음 산책, 이어서 조금 더' },
+  { d: 3, label: '인사는 둘 다 원할 때만' },
 ]
 
 const assets = {}
@@ -288,7 +290,7 @@ assets['app-icon-1024'] = [1024, 1024, shell(1024, 1024, C.ink, stage(1024, 1024
 // Instagram 2/3 — idea: the mark IS the sequence
 {
   const W = 1080, H = 1350
-  const rows = [{ d: 15, gap: 118, t: '멀리서, 같은 방향으로' }, { d: 8, gap: 74, t: '둘 다 편하면 조금 더' }, { d: 4, gap: 44, t: '나란히, 한 블록 더' }, { d: 2, gap: 24, t: '인사는 선택' }]
+  const rows = [{ d: 10, gap: 118, t: '첫날, 멀리서 같은 방향으로' }, { d: 6, gap: 74, t: '첫날은 여기까지' }, { d: 4, gap: 44, t: '다음 산책, 이어서' }, { d: 3, gap: 28, t: '인사는 둘 다 원할 때만' }]
   let g = pager(1, 'ink'), y = 470
   rows.forEach((r, i) => {
     const y2 = y + r.gap

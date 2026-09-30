@@ -104,7 +104,7 @@ export default function CaseStudy() {
               <p className="case__src">참고: Sniffspot·Journey Dog Training·MLAR의 병행 산책 안내(S79–S81), AKC CGC 테스트 항목(S74). 수치 기준은 이 자료를 참고한 설계 가정이에요. 행동 전문가 검토 전이에요.</p>
             </div>
             <div className="case__lanes" aria-hidden="true">
-              {[15, 8, 4].map((d) => <Lanes key={d} distance={d} me={{ name: 'A', state: 'calm' }} them={{ name: 'B', state: 'calm' }} theme="paper" height={200} />)}
+              {[10, 8, 6].map((d) => <Lanes key={d} distance={d} me={{ name: 'A', state: 'calm' }} them={{ name: 'B', state: 'calm' }} theme="paper" height={200} />)}
             </div>
           </div>
         </section>

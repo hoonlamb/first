@@ -561,7 +561,7 @@ function IllustSection() {
 }
 
 /* ------------------------------------------------------------------ 10 */
-const STEPS = [15, 8, 4, 2]
+const STEPS = [10, 8, 6] // same as the product rule for 뽀리 8m + 두부 6m, first walk (lib/demo planFor)
 
 function Curve({ c, label }: { c: [number, number, number, number]; label: string }) {
   const [x1, y1, x2, y2] = c

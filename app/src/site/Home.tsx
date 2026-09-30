@@ -113,8 +113,8 @@ export function Home() {
                 <Link to="/app" className="btn btn-ink">체험 모드로 써 보기</Link>
               </div>
               <div className="how__visual how__visual--bond" aria-hidden="true">
-                {[15, 8, 4].map((d, i) => (
-                  <div key={d} className="bondbar"><span className="bondbar__date">{['5월 3일', '5월 10일', '5월 17일'][i]}</span><span className="bondbar__line" style={{ width: `${(d / 20) * 100}%` }} /><span className="num">{d}m</span></div>
+                {[6, 4, 3].map((d, i) => (
+                  <div key={d} className="bondbar"><span className="bondbar__date">{['1회 · 첫날', '2회', '3회'][i]}</span><span className="bondbar__line" style={{ width: `${(d / 20) * 100}%` }} /><span className="num">{d}m</span></div>
                 ))}
               </div>
             </article>
