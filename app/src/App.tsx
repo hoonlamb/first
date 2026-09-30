@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useRef } from 'react'
 import { focusMainHeading, titleFor } from './lib/a11y'
 import { HashRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { Home } from './site/Home'
-import { ProductApp } from './product/ProductApp'
+import { HfApp } from './hifi/HfApp'
 
 const Brand = lazy(() => import('./site/Brand'))
 const CaseStudy = lazy(() => import('./site/CaseStudy'))
@@ -32,7 +32,7 @@ export function App() {
           <Route path="/" element={<Home />} />
           <Route path="/brand" element={<Brand />} />
           <Route path="/case" element={<CaseStudy />} />
-          <Route path="/app/*" element={<ProductApp />} />
+          <Route path="/app/*" element={<HfApp />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </Suspense>

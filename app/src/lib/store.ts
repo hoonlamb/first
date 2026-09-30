@@ -16,8 +16,16 @@ export interface DogCard {
   triggers: Trigger[]
   slots: Slot[]
   note: string
+  photo?: string // sample photo path or a data URL the user picked
+  breed?: string
+  age?: number
+  sex?: 'm' | 'f'
   updatedAt: number
 }
+
+export interface Message { id: string; from: 'me' | 'them' | 'system'; at: number; text?: string; meet?: Meet }
+export interface Meet { date: string; time: string; placeId: string | null; confirmed: boolean }
+export interface Review { neighborId: string; at: number; tags: string[]; note: string }
 
 export interface Encounter { at: number; distance: number | null; reaction: Reaction }
 export interface Walk { id: string; startedAt: number; endedAt: number; encounters: Encounter[]; applied?: number }
@@ -49,10 +57,16 @@ export interface State {
   neighborhood: string | null
   activeTogether: ActiveTogether | null
   hidden: string[] // neighbours the user chose not to see (local block)
+  threads: Record<string, Message[]> // chat per neighbour (demo replies)
+  meets: Record<string, Meet> // latest agreed meet per neighbour
+  reviews: Review[]
+  badges: string[] // earned badge ids
+  saved: string[] // saved place ids
+  answers: Record<string, string> // daily question answers
 }
 
 const KEY = 'dangq.demo.v1'
-const empty: State = { card: null, walks: [], activeWalk: null, requests: {}, bonds: {}, location: 'unknown', neighborhood: null, activeTogether: null, hidden: [] }
+const empty: State = { card: null, walks: [], activeWalk: null, requests: {}, bonds: {}, location: 'unknown', neighborhood: null, activeTogether: null, hidden: [], threads: {}, meets: {}, reviews: [], badges: [], saved: [], answers: {} }
 
 function load(): State {
   try {
