@@ -1,0 +1,22 @@
+{
+ "R06_tocHref": [
+  "#positioning",
+  "#message",
+  "#voice"
+ ],
+ "R06_deepLink": {
+  "url": "http://127.0.0.1:4181/#positioning",
+  "h1": "가까워지는 데는\n순서가 있어요."
+ },
+ "R02": {
+  "sources": 1,
+  "canPlay": "",
+  "fallbackLink": false
+ },
+ "X06_togetherBg": [
+  "rgb(244, 241, 234)",
+  "rgb(232, 227, 215)"
+ ],
+ "dial_kong_3m": "3m\n콩이는 편안해요. 이 거리라면 지나가도, 나란히 걸어도 괜찮아요.",
+ "errors": []
+}

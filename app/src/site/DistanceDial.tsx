@@ -27,7 +27,7 @@ export function DistanceDial() {
 
   const message =
     state === 'calm'
-      ? `${josa(dog.name, '은/는')} 편안해요. 이 거리라면 지나가도, 나란히 걸어도 괜찮아요.`
+      ? `${josa(dog.name, '은/는')} 편안해요. 이 거리라면 편하게 지나갈 수 있어요.`
       : state === 'alert'
         ? `${dog.name}의 귀가 섰어요. 여기서 더 다가오지 말아 주세요.`
         : `너무 가까워요. ${josa(dog.name, '은/는')} 지금 자리를 피하고 싶어요.`

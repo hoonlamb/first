@@ -21,6 +21,7 @@ export function Together() {
   const bond = useStore((s) => (id ? s.bonds[id] : undefined))
   const req = useStore((s) => (id ? s.requests[id] : undefined))
   const active = useStore((s) => (s.activeTogether && s.activeTogether.neighborId === id ? s.activeTogether : null))
+  const otherActive = useStore((s) => (s.activeTogether && s.activeTogether.neighborId !== id ? s.activeTogether.neighborId : null))
   const nav = useNavigate()
   const [left, setLeft] = useState(DEMO_STEP_SEC)
   const [paused, setPaused] = useState(false)
@@ -44,13 +45,15 @@ export function Together() {
   if (!done && !active && req?.status !== 'accepted') return <Navigate to={`/app/together/${n.id}`} replace />
 
   const plan = planFor(card, n, bond?.sessions)
+  // Guards: trainer-only pairs and a second walk while another is in progress can't start from a direct URL.
+  if (!done && !active && (plan.needsPro || otherActive)) return <Navigate to={`/app/together/${n.id}`} replace />
   const steps = active?.steps ?? plan.steps
   const d = steps[i]
   const update = (patch: Partial<ActiveTogether>) =>
     setState((s) => (s.activeTogether ? { ...s, activeTogether: { ...s.activeTogether, ...patch } } : s))
 
   const begin = () => {
-    if (getState().activeTogether?.neighborId === n.id) return
+    if (getState().activeTogether) return // never overwrite a walk in progress
     setState((s) => ({ ...s, activeTogether: { neighborId: n.id, steps: plan.steps, i: 0, phase: 'walking', log: [], canGreet: plan.canGreet, startedAt: Date.now() } }))
     setLeft(DEMO_STEP_SEC); setPaused(false)
   }
@@ -80,7 +83,8 @@ export function Together() {
   const tenseHere = () => update({ log: [...(active?.log ?? []), { distance: d, result: 'tense' }], phase: 'tense' })
   const stepBack = () => {
     if (i > 0) walkAt(i - 1)
-    else walkAt(0, [stepAbove(d), ...steps]) // already at the start: add a farther step in front
+    else if (stepAbove(d) > d) walkAt(0, [stepAbove(d), ...steps]) // already at the start: add a farther step in front
+    else walkAt(0) // already at the farthest step
   }
 
   const lanesDistance = phase === 'done' ? (done?.closest ?? done?.start ?? steps[0]) : phase === 'intro' ? plan.start : d

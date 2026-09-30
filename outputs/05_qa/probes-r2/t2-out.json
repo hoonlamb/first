@@ -1,0 +1,77 @@
+{
+ "slow": {
+  "tags": [
+   {
+    "w": 80,
+    "h": 50,
+    "x": 0,
+    "y": 0,
+    "overflow": false
+   },
+   {
+    "w": 80,
+    "h": 50,
+    "x": 86,
+    "y": 0,
+    "overflow": false
+   }
+  ],
+  "visibleOther": [],
+  "docHeightMm": 223.3,
+  "askFont": "17.16px",
+  "distFont": "11px",
+  "bg": "rgb(255, 106, 43)",
+  "printAdjust": "exact",
+  "pdfPages": 1
+ },
+ "pass-longname": {
+  "tags": [
+   {
+    "w": 80,
+    "h": 50,
+    "x": 0,
+    "y": 0,
+    "overflow": false
+   },
+   {
+    "w": 80,
+    "h": 50,
+    "x": 86,
+    "y": 0,
+    "overflow": false
+   }
+  ],
+  "visibleOther": [],
+  "docHeightMm": 223.3,
+  "askFont": "17.16px",
+  "distFont": "11px",
+  "bg": "rgb(255, 106, 43)",
+  "printAdjust": "exact",
+  "pdfPages": 1
+ },
+ "hello-bldg": {
+  "tags": [
+   {
+    "w": 80,
+    "h": 50,
+    "x": 0,
+    "y": 0,
+    "overflow": false
+   },
+   {
+    "w": 80,
+    "h": 50,
+    "x": 86,
+    "y": 0,
+    "overflow": false
+   }
+  ],
+  "visibleOther": [],
+  "docHeightMm": 223.3,
+  "askFont": "17.16px",
+  "distFont": "11px",
+  "bg": "rgb(255, 106, 43)",
+  "printAdjust": "exact",
+  "pdfPages": 1
+ }
+}

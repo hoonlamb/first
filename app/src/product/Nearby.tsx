@@ -107,9 +107,19 @@ export function Nearby() {
       <p className="sr-only" role="status">{results.length}마리의 이웃이 있어요.</p>
       {inHood.length === 0 ? (
         <div className="emptybox">
-          <p><b>{hood}에는 아직 산책 카드가 없어요.</b></p>
-          <p>동네에 카드가 모이면 여기에 보여 드려요. 가까운 망원동부터 볼까요?</p>
-          <button className="btn btn-ghost" onClick={() => pickHood('망원동')}>망원동 보기</button>
+          {hidden.length > 0 && NEIGHBORS.some((n) => hidden.includes(n.id) && (n.hood === hood || (hood === '망원동' && n.hood === '합정동'))) ? (
+            <>
+              <p><b>이 동네 이웃을 모두 숨겼어요.</b></p>
+              <p>숨긴 이웃은 설정에서 다시 볼 수 있어요.</p>
+              <Link className="btn btn-ghost" to="/app/settings">숨긴 이웃 관리</Link>
+            </>
+          ) : (
+            <>
+              <p><b>{hood}에는 아직 산책 카드가 없어요.</b></p>
+              <p>동네에 카드가 모이면 여기에 보여 드려요.{hood !== '망원동' ? ' 가까운 망원동부터 볼까요?' : ''}</p>
+              {hood !== '망원동' && <button className="btn btn-ghost" onClick={() => pickHood('망원동')}>망원동 보기</button>}
+            </>
+          )}
         </div>
       ) : results.length === 0 ? (
         <div className="emptybox">

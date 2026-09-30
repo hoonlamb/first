@@ -2,6 +2,7 @@ import { Dog } from './Dog'
 import type { Reaction } from '../lib/store'
 import { useEffect, useState } from 'react'
 import { useTween } from '../lib/motion'
+import { josa } from '../lib/korean'
 
 interface DogSpec { name: string; state: Reaction }
 
@@ -46,7 +47,7 @@ export function Lanes({ distance, max = 20, me, them, walking = false, theme = '
 
   return (
     <svg className={`lanes lanes--${theme} ${moving ? 'is-walking' : ''}`} viewBox={`0 0 ${W} ${H}`} role="img"
-      aria-label={`${me.name}${them ? `와 ${them.name}` : ''} 사이의 거리 ${distance}미터`}>
+      aria-label={`${them ? `${josa(me.name, '과/와')} ${them.name}` : me.name} 사이의 거리 ${distance}미터`}>
       {/* lanes: walked part solid, ahead dashed */}
       <g className="lane" transform={`translate(0,${yMe})`}>
         <line x1="40" y1="0" x2={dogX - 70} y2="0" stroke={meColor} strokeWidth="6" strokeLinecap="round" />

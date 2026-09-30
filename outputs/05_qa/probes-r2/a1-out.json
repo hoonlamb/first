@@ -1,0 +1,300 @@
+{
+ "390 #/": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:가까워지는 데는 순서가 있어요.",
+   "H2:“귀엽다”며 다가오는 손이 어떤 개에게는 가",
+   "H2:거리를 말하고, 지키고, 기억해요.",
+   "H3:산책 카드",
+   "H3:뽀리",
+   "H3:나란히 첫 산책",
+   "H3:사이 기록",
+   "H2:말 대신 화면 한 장."
+  ]
+ },
+ "390 #/brand": {
+  "violations": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 4,
+    "sample": [
+     "tr:nth-child(13) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 4.49 (foreground color: #b83a0a, background color: #e8e3d7, font size: 13.5pt (18px), font weight",
+     "tr:nth-child(14) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 2.85 (foreground color: #ffffff, background color: #ff6a2b, font size: 13.5pt (18px), font weight",
+     "tr:nth-child(15) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 2.53 (foreground color: #ff6a2b, background color: #f4f1ea, font size: 13.5pt (18px), font weight",
+     "tr:nth-child(16) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 1.49 (foreground color: #9fd3b2, background color: #f4f1ea, font size: 13.5pt (18px), font weight"
+    ]
+   }
+  ],
+  "h1count": 1,
+  "headings": [
+   "H1:두 선이 나란히 걷는 브랜드.",
+   "H2:포지셔닝",
+   "H3:포지셔닝 문장",
+   "H3:이름의 뜻",
+   "H3:우리는 / 우리가 아닌 것",
+   "H2:메시지 구조",
+   "H3:산책 카드",
+   "H3:나란히 첫 산책"
+  ]
+ },
+ "390 #/case": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:만남을 약속하던 앱을, 거리를 약속하는 서비",
+   "H2:기존 댕큐에서 시작했어요",
+   "H2:처음 가설을 스스로 반박했어요",
+   "H2:다섯 방향을 비교해 둘을 골랐어요",
+   "H2:핵심 아이디어: 병행 산책",
+   "H2:브랜드: 세 방향 중 ‘나란히 두 선’",
+   "H2:기억에 남기려고 만든 다섯 장면",
+   "H2:만든 것과 아직 아닌 것"
+  ]
+ },
+ "390 #/app": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:뽀리의 산책 카드",
+   "H2:뽀리",
+   "H2:오늘의 산책",
+   "H2:나란히"
+  ]
+ },
+ "390 #/app/walk": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:0:13"
+  ]
+ },
+ "390 #/app/together": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:뽀리와 나란히 걸을 이웃"
+  ]
+ },
+ "390 #/app/together/dubu": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:뽀리와 두부의 나란히 계획",
+   "H2:뽀리",
+   "H2:두부",
+   "H2:첫 나란히 산책 계획"
+  ]
+ },
+ "390 #/app/together/mango": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:뽀리와 망고의 나란히 계획",
+   "H2:뽀리",
+   "H2:망고",
+   "H2:첫 나란히 산책 계획"
+  ]
+ },
+ "390 #/app/together/dubu/walk": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:뽀리와 두부, 나란히 걸어요."
+  ]
+ },
+ "390 #/app/bond": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:뽀리의 사이",
+   "H2:보리"
+  ]
+ },
+ "390 #/app/show": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:냄새 먼저, 손은 나중에"
+  ]
+ },
+ "390 #/app/tag": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:휴대폰 없이도 보이게."
+  ]
+ },
+ "390 #/app/card/edit": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:어떤 친구의 카드인가요?"
+  ]
+ },
+ "390 #/app/settings": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:체험 모드 안내",
+   "H2:숨긴 이웃"
+  ]
+ },
+ "390 EMPTY": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:우리 개의 거리부터 알려 주세요."
+  ]
+ },
+ "1440 #/": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:가까워지는 데는 순서가 있어요.",
+   "H2:“귀엽다”며 다가오는 손이 어떤 개에게는 가",
+   "H2:거리를 말하고, 지키고, 기억해요.",
+   "H3:산책 카드",
+   "H3:뽀리",
+   "H3:나란히 첫 산책",
+   "H3:사이 기록",
+   "H2:말 대신 화면 한 장."
+  ]
+ },
+ "1440 #/brand": {
+  "violations": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 4,
+    "sample": [
+     "tr:nth-child(13) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 4.49 (foreground color: #b83a0a, background color: #e8e3d7, font size: 13.5pt (18px), font weight",
+     "tr:nth-child(14) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 2.85 (foreground color: #ffffff, background color: #ff6a2b, font size: 13.5pt (18px), font weight",
+     "tr:nth-child(15) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 2.53 (foreground color: #ff6a2b, background color: #f4f1ea, font size: 13.5pt (18px), font weight",
+     "tr:nth-child(16) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 1.49 (foreground color: #9fd3b2, background color: #f4f1ea, font size: 13.5pt (18px), font weight"
+    ]
+   }
+  ],
+  "h1count": 1,
+  "headings": [
+   "H1:두 선이 나란히 걷는 브랜드.",
+   "H2:포지셔닝",
+   "H3:포지셔닝 문장",
+   "H3:이름의 뜻",
+   "H3:우리는 / 우리가 아닌 것",
+   "H2:메시지 구조",
+   "H3:산책 카드",
+   "H3:나란히 첫 산책"
+  ]
+ },
+ "1440 #/case": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:만남을 약속하던 앱을, 거리를 약속하는 서비",
+   "H2:기존 댕큐에서 시작했어요",
+   "H2:처음 가설을 스스로 반박했어요",
+   "H2:다섯 방향을 비교해 둘을 골랐어요",
+   "H2:핵심 아이디어: 병행 산책",
+   "H2:브랜드: 세 방향 중 ‘나란히 두 선’",
+   "H2:기억에 남기려고 만든 다섯 장면",
+   "H2:만든 것과 아직 아닌 것"
+  ]
+ },
+ "1440 #/app": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:뽀리의 산책 카드",
+   "H2:뽀리",
+   "H2:오늘의 산책",
+   "H2:나란히"
+  ]
+ },
+ "1440 #/app/walk": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:0:51"
+  ]
+ },
+ "1440 #/app/together": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:뽀리와 나란히 걸을 이웃"
+  ]
+ },
+ "1440 #/app/together/dubu": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:뽀리와 두부의 나란히 계획",
+   "H2:뽀리",
+   "H2:두부",
+   "H2:첫 나란히 산책 계획"
+  ]
+ },
+ "1440 #/app/together/mango": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:뽀리와 망고의 나란히 계획",
+   "H2:뽀리",
+   "H2:망고",
+   "H2:첫 나란히 산책 계획"
+  ]
+ },
+ "1440 #/app/together/dubu/walk": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:뽀리와 두부, 나란히 걸어요."
+  ]
+ },
+ "1440 #/app/bond": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:뽀리의 사이",
+   "H2:보리"
+  ]
+ },
+ "1440 #/app/show": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:냄새 먼저, 손은 나중에"
+  ]
+ },
+ "1440 #/app/tag": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:휴대폰 없이도 보이게."
+  ]
+ },
+ "1440 #/app/card/edit": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:어떤 친구의 카드인가요?"
+  ]
+ },
+ "1440 #/app/settings": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:체험 모드 안내",
+   "H2:숨긴 이웃"
+  ]
+ },
+ "1440 EMPTY": {
+  "violations": [],
+  "h1count": 1,
+  "headings": [
+   "H1:우리 개의 거리부터 알려 주세요."
+  ]
+ }
+}

@@ -177,7 +177,7 @@ assets['kv-1920x1080'] = [1920, 1080, shell(1920, 1080, C.ink,
 assets['kv-1080x1350'] = [1080, 1350, shell(1080, 1350, C.ink,
   stage(1080, 1350, stepped({
     x0: 72, late: 64, yTop: 600, gap: (d) => 104 + 21 * d, T: 40, dogX: 770, s: 1.35, xEnd: 1008, sw: 7, numPlace: 'below', inset: 16,
-    steps: [{ d: 15, L: 190, size: 150 }, { d: 8, L: 130, size: 108 }, { d: 4, L: 92, size: 76 }, { d: 2, size: 64 }],
+    steps: [{ d: 10, L: 190, size: 150 }, { d: 6, L: 130, size: 108 }, { d: 4, L: 92, size: 76 }, { d: 3, size: 64 }],
   }) + logo({ x: 72, y: 1236, size: 36, tone: 'paper' })) +
   `<p class="a eb" style="left:72px;top:80px;font-size:24px;color:${C.moss}">동네 산책을 위한 거리 약속</p>
    <h1 class="a hd" style="left:68px;top:124px;font-size:112px">가까워지는 데는<br>순서가 있어요.</h1>
@@ -188,7 +188,7 @@ assets['kv-1080x1350'] = [1080, 1350, shell(1080, 1350, C.ink,
 assets['og-1200x630'] = [1200, 630, shell(1200, 630, C.ink,
   stage(1200, 630, stepped({
     x0: 64, late: 50, yTop: 372, gap: (d) => 84 + 9.5 * d, T: 36, dogX: 930, s: 1.0, xEnd: 1136, sw: 6,
-    steps: [{ d: 15, L: 300, size: 92 }, { d: 8, L: 200, size: 66 }, { d: 4, L: 150, size: 48 }, { d: 2, size: 44 }],
+    steps: [{ d: 10, L: 300, size: 92 }, { d: 6, L: 200, size: 66 }, { d: 4, L: 150, size: 48 }, { d: 3, size: 44 }],
   }) + logo({ x: 64, y: 52, size: 32, tone: 'paper' })) +
   `<h1 class="a hd" style="left:60px;top:118px;font-size:78px">가까워지는 데는<br>순서가 있어요.</h1>
    <p class="a" style="right:64px;top:58px;font-size:20px;font-weight:700;color:${C['muted-on-ink']}">우리 개의 편한 거리를 먼저 알려요</p>`)]

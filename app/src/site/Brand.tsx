@@ -116,7 +116,7 @@ const PILLARS = [
     ],
   },
   {
-    n: '02', name: '나란히 첫 산책', verb: '거리를 지켜요', line: '첫 만남은 마주 보는 인사가 아니라 멀리서 같은 방향으로 걷기부터. 15m에서 시작해 한 단계씩.',
+    n: '02', name: '나란히 첫 산책', verb: '거리를 지켜요', line: '첫 만남은 마주 보는 인사가 아니라 멀리서 같은 방향으로 걷기부터. 첫날은 6m보다 가까이 가지 않고, 인사도 하지 않아요.',
     proofs: [
       { k: 'fact' as const, src: 'S25', t: '훈련사 칼럼: 개끼리 인사가 당연하다는 건 오해이고, 인사하지 않고 지나가기도 예절이에요.' },
       { k: 'press' as const, src: 'S20', t: '반려견 유치원 이용 이유의 71.0%가 사회화, 월평균 25만4,800원. 보호자는 이미 사회화에 돈을 써요.' },
@@ -170,7 +170,7 @@ const VOICE = [
   { t: '숫자는 정확하게, 말은 짧게', b: '거리는 m 단위로, 한 문장에 한 가지만. 사실과 가설을 섞지 않아요.', ex: '지난번엔 4m에서 편안했어요.' },
 ]
 const DODONT = [
-  { s: '이웃 제안', no: '우리 친구 할래? 지금 바로 만나 보세요!', yes: '두부와 15m에서 나란히 걸어 볼까요?' },
+  { s: '이웃 제안', no: '우리 친구 할래? 지금 바로 만나 보세요!', yes: '두부와 10m 떨어져, 같은 방향으로 걸어 볼까요?' },
   { s: '근처 알림', no: '근처에 산책 친구 3명! 놓치지 마세요', yes: '같은 시간에 걷는 이웃이 있어요. 준비되면 요청해 주세요.' },
   { s: '중간에 멈췄을 때', no: '산책을 완료하지 못했어요.', yes: '여기서 멈춘 것도 성공이에요. 다음엔 8m부터 시작해요.' },
   { s: '예민한 개 설명', no: '공격성이 있는 개예요. 주의!', yes: '자전거를 만나면 긴장해요. 조금 떨어져 지나가 주세요.' },
@@ -634,12 +634,12 @@ function MotionSection() {
 /* ------------------------------------------------------------------ 11 */
 type Shot = { f: string; w: number; h: number; t: string; how: 'code' | 'mock'; alt: string; wide?: boolean }
 const SHOTS: Shot[] = [
-  { f: 'kv-1920x1080.png', w: 1920, h: 1080, wide: true, how: 'code', t: '키 비주얼 · 1920×1080', alt: '잉크 바탕에 “가까워지는 데는 순서가 있어요.” 제목. 시그널 선이 15m, 8m, 4m, 2m 네 계단으로 페이퍼 선에 가까워지고, 끝에서 두 마리 개가 나란히 걸어요.' },
-  { f: 'kv-1080x1350.png', w: 1080, h: 1350, how: 'code', t: '키 비주얼 · 1080×1350', alt: '세로형 키 비주얼. 계단처럼 좁혀지는 두 선 아래에 15m, 8m, 4m 숫자가 크게 놓이고 끝에 2m에서 나란히 걷는 두 개.' },
+  { f: 'kv-1920x1080.png', w: 1920, h: 1080, wide: true, how: 'code', t: '키 비주얼 · 1920×1080', alt: '잉크 바탕에 “가까워지는 데는 순서가 있어요.” 제목. 시그널 선이 10m, 6m(첫날), 4m, 3m(다음 산책) 네 계단으로 페이퍼 선에 가까워지고, 끝에서 두 마리 개가 나란히 걸어요.' },
+  { f: 'kv-1080x1350.png', w: 1080, h: 1350, how: 'code', t: '키 비주얼 · 1080×1350', alt: '세로형 키 비주얼. 계단처럼 좁혀지는 두 선 아래에 10m, 6m, 4m 숫자가 크게 놓이고 끝에 3m에서 나란히 걷는 두 개.' },
   { f: 'poster-a-ratio.png', w: 1240, h: 1754, how: 'code', t: '동네 게시판 포스터 · A 비율', alt: '페이퍼 바탕 포스터. “만지기 전에 물어봐 주세요.” 제목, 잉크 개와 멀리서 다가와 나란히 멈추는 시그널 선, 세 가지 부탁, 하단 시그널 띠에 “거리를 지켜 줘서, 댕큐.”' },
   { f: 'tag-bandana-mockup.png', w: 1600, h: 1200, how: 'mock', t: '반다나 · 리드줄 태그', alt: '시그널 반다나에 “인사 없이 지나가 주세요”, 모스·페이퍼·시그널 세 가지 리드줄 태그에 인사 방식 문장과 편한 거리 적는 칸.' },
   { f: 'insta-1-problem.png', w: 1080, h: 1350, how: 'code', t: '인스타그램 1/3 · 문제', alt: '89.4% 큰 숫자와 설명, 겁먹은 자세의 개를 향해 대각선으로 곧장 다가오는 시그널 선. “문제는 친구가 없어서가 아니라, 서로의 거리를 몰라서 생겨요.”' },
-  { f: 'insta-2-idea.png', w: 1080, h: 1350, how: 'code', t: '인스타그램 2/3 · 아이디어', alt: '“마주 보지 말고, 나란히 걸어요.” 제목 아래 마크 모양의 두 선이 15m, 8m, 4m, 2m 순서로 점점 가까워지는 네 줄.' },
+  { f: 'insta-2-idea.png', w: 1080, h: 1350, how: 'code', t: '인스타그램 2/3 · 아이디어', alt: '“마주 보지 말고, 나란히 걸어요.” 제목 아래 마크 모양의 두 선이 10m, 6m, 4m, 3m 순서로 점점 가까워지는 네 줄(첫날 6m까지, 다음 산책에 이어서).' },
   { f: 'insta-3-product.png', w: 1080, h: 1350, how: 'code', t: '인스타그램 3/3 · 제품', alt: '시그널 바탕에 “말 대신 화면 한 장.” 제목과 뽀리의 산책 카드: 편한 거리 8m, 냄새 먼저 손은 나중에.' },
   { f: 'og-1200x630.png', w: 1200, h: 630, how: 'code', t: '공유 이미지(OG) · 1200×630', alt: '잉크 바탕에 로고, “가까워지는 데는 순서가 있어요.” 제목, 계단형 두 선과 나란히 걷는 두 개.' },
   { f: 'app-icon-1024.png', w: 1024, h: 1024, how: 'code', t: '앱 아이콘 · 1024', alt: '잉크 바탕 가운데에 페이퍼 선과 시그널 선, 두 점으로 된 나란히 마크.' },
@@ -734,7 +734,7 @@ export default function Brand() {
           <nav className="wrap bd-toc" aria-label="브랜드 가이드 목차">
             <ol>
               {TOC.map(([id, t], k) => (
-                <li key={id}><a href={`#${id}`} onClick={(e) => { e.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' }); document.getElementById(`${id}-t`)?.focus({ preventScroll: true }) }}><span className="num">{String(k + 1).padStart(2, '0')}</span>{t}</a></li>
+                <li key={id}><a href="#/brand" onClick={(e) => { e.preventDefault(); document.getElementById(id)?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' }); document.getElementById(`${id}-t`)?.focus({ preventScroll: true }) }}><span className="num">{String(k + 1).padStart(2, '0')}</span>{t}</a></li>
               ))}
             </ol>
           </nav>

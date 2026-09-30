@@ -243,6 +243,7 @@ fieldset.field legend { padding: 0; margin-bottom: var(--s2); }
   @page { margin: 12mm; }
   body * { visibility: hidden; }
   .tags, .tags * { visibility: visible; }
-  .tags { position: absolute; left: 0; top: 0; grid-template-columns: 80mm 80mm; gap: 6mm; }
+  .tags { position: fixed; left: 0; top: 0; width: auto; grid-template-columns: 80mm 80mm; gap: 6mm; }
+  .product, .product__frame { background: #fff; }
   .tag-print { width: 80mm; height: 50mm; aspect-ratio: auto; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }

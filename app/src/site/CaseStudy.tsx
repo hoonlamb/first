@@ -30,7 +30,7 @@ export default function CaseStudy() {
               <video controls playsInline preload="none" poster="./media/poster.jpg" width="1920" height="1080">
                 <source src="./media/dangq-launch-1080p.mp4" type="video/mp4" />
               </video>
-              <figcaption>출시 영상 28초. 체험 모드 화면을 실제로 조작하며 녹화했어요. 소리는 없어요.</figcaption>
+              <figcaption>출시 영상 30초. 체험 모드 화면을 실제로 조작하며 녹화했어요. 소리는 없어요.</figcaption>
             </figure>
           </div>
         </header>
@@ -96,7 +96,7 @@ export default function CaseStudy() {
               <p>여러 반려견 훈련 자료가 개를 처음 소개할 때 권하는 방법이 있어요. 두 개를 멀리 떨어뜨려 같은 방향으로 걷게 하고, 둘 다 편할 때만 거리를 좁히는 ‘병행 산책(parallel walk)’이에요. 댕큐는 이 방법을 따라 하기 쉬운 단계로 나누고, 안전 규칙을 코드로 고정했어요.</p>
               <ul className="case__list">
                 <li>시작은 둘 중 더 먼 쪽의 편한 거리보다 2m 이상 멀리서.</li>
-                <li>첫 만남은 6m 또는 편한 거리의 60%보다 가까이 가지 않고, 인사하지 않아요. 6m는 AKC 시민견 테스트에서 다른 개와 마주치는 항목의 거리(약 20ft)를 참고했어요.</li>
+                <li>첫 만남은 6m와 ‘먼 쪽 편한 거리의 60%’ 중 더 먼 거리보다 가까이 가지 않고, 인사하지 않아요. 6m는 AKC 시민견 테스트에서 다른 개와 마주치는 항목의 거리(약 20ft)를 참고했어요.</li>
                 <li>한 단계에 35%보다 많이 좁히지 않아요. 긴장하면 물러나기가 기본 선택지예요.</li>
                 <li>다음 산책은 지난번 편안했던 거리보다 한 단계 멀리서 몸을 풀고 시작해요.</li>
                 <li>둘 중 한 친구라도 12m 이상 필요하면 보호자끼리가 아니라 훈련사 동행으로만 열어요(준비 중).</li>

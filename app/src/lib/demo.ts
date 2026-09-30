@@ -68,7 +68,7 @@ export function ladder(start: number, floor: number) {
 }
 
 export function stepAbove(d: number) {
-  return ASC.find((x) => x > d) ?? 30
+  return ASC.find((x) => x > d) ?? ASC[ASC.length - 1]
 }
 
 export interface Plan {
@@ -84,7 +84,9 @@ export interface Plan {
 type Comfy = Pick<DogCard, 'comfort' | 'greeting'>
 /** The one function every screen uses for "where do we start and how far do we go". */
 export function planFor(me: Comfy, n: Comfy, sessions: { closest: number | null }[] = []): Plan {
-  const sessionIndex = sessions.length
+  // Only sessions where both dogs were calm at some step count as a meeting; a walk stopped before that
+  // (or a stopped-at-start one) keeps the first-meeting rules (no greeting, 6m floor).
+  const sessionIndex = sessions.filter((x) => x.closest !== null).length
   const lastCalm = [...sessions].reverse().find((s) => s.closest !== null)?.closest ?? null
   const floor = floorDistance(me.comfort, n.comfort, sessionIndex)
   const fresh = startDistance(me.comfort, n.comfort)

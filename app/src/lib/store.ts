@@ -123,7 +123,7 @@ export function reactionAt(distance: number, comfort: number): Reaction {
 /**
  * Card-distance suggestion after a walk. Widening (safer) always wins over narrowing.
  * - widen: any tense/react encounter at or beyond the card distance → farthest such distance + 2m.
- * - narrow: only with ≥3 calm encounters across ≥2 walks, all closer than the card, and no tense/react
+ * - narrow: never if any tense/react was logged without a distance; otherwise only with ≥3 calm encounters across ≥2 walks, all closer than the card, and no tense/react
  *   within 2m of them in any walk → the closest distance that is still ≥ (farthest tense/react + 2m).
  */
 export function suggestComfort(card: DogCard, walks: Walk[]): { to: number; kind: 'widen' | 'narrow' } | null {
@@ -131,6 +131,8 @@ export function suggestComfort(card: DogCard, walks: Walk[]): { to: number; kind
   const bad = all.filter((e) => e.reaction !== 'calm').map((e) => e.distance)
   const worst = bad.length ? Math.max(...bad) : 0
   if (worst >= card.comfort) return { to: Math.min(20, worst + 2), kind: 'widen' }
+  const badNoDistance = walks.some((w) => w.encounters.some((e) => e.reaction !== 'calm' && e.distance === null))
+  if (badNoDistance) return null // a reaction without distance: we can't prove a smaller distance is safe
   const calmClose = all.filter((e) => e.reaction === 'calm' && e.distance < card.comfort && e.distance >= worst + 2)
   const walksWithCalm = new Set(calmClose.map((e) => e.walk)).size
   if (calmClose.length >= 3 && walksWithCalm >= 2) {

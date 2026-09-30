@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { Link, NavLink, Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { setState, useStore } from '../lib/store'
 import { NEIGHBORS } from '../lib/demo'
 import { josa } from '../lib/korean'
@@ -22,6 +22,11 @@ function RequireCard({ children }: { children: React.ReactNode }) {
   const card = useStore((s) => s.card)
   if (!card) return <Navigate to="/app" replace state={{ needCard: true }} />
   return <>{children}</>
+}
+
+function KeyedDetail() {
+  const { id } = useParams()
+  return <NeighborDetail key={id} />
 }
 
 const TABS = [
@@ -79,7 +84,7 @@ export function ProductApp() {
             <Route path="card/edit" element={<RequireCard><CardBuilder mode="edit" /></RequireCard>} />
             <Route path="walk" element={<RequireCard><WalkScreen /></RequireCard>} />
             <Route path="together" element={<RequireCard><Nearby /></RequireCard>} />
-            <Route path="together/:id" element={<RequireCard><NeighborDetail /></RequireCard>} />
+            <Route path="together/:id" element={<RequireCard><KeyedDetail /></RequireCard>} />
             <Route path="together/:id/walk" element={<RequireCard><Together /></RequireCard>} />
             <Route path="bond" element={<RequireCard><BondScreen /></RequireCard>} />
             <Route path="tag" element={<RequireCard><TagPrint /></RequireCard>} />

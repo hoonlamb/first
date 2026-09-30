@@ -39,3 +39,13 @@ test('korean particles', () => {
   expect(josa('Max', '은/는')).toBe('Max(은)는')
   expect(strides(8)).toBe(10)
 })
+
+// QA R2-01: a session that never reached a calm step is not a meeting.
+test('stopped-before-calm sessions keep first-meeting rules', () => {
+  const me = { comfort: 8, greeting: 'slow' as const }
+  const n = { comfort: 6, greeting: 'slow' as const }
+  const p = planFor(me, n, [{ closest: null }, { closest: null }])
+  expect(p.sessionIndex).toBe(0)
+  expect(p.canGreet).toBe(false)
+  expect(Math.min(...p.steps)).toBeGreaterThanOrEqual(6)
+})

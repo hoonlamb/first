@@ -1,0 +1,53 @@
+{
+ "load #/": [
+  "dangq-sans-BdDXIvGm.woff2:142K"
+ ],
+ "load #/app": [
+  "dangq-sans-BdDXIvGm.woff2:142K"
+ ],
+ "load #/brand": [
+  "dangq-sans-BdDXIvGm.woff2:142K",
+  "PretendardVariable.subset.78-DhqRb:26K"
+ ],
+ "load #/case": [
+  "dangq-sans-BdDXIvGm.woff2:142K"
+ ],
+ "builderH1": "뚫훑은 다른 개가\n얼마나 떨어져야 편한가요?",
+ "builderH1Fonts": [
+  {
+   "familyName": "Pretendard Variable",
+   "postScriptName": "PretendardVariable-Regular",
+   "isCustomFont": true,
+   "glyphCount": 23
+  }
+ ],
+ "fontsFetchedAfterTyping": [
+  "PretendardVariable.subset.80-DsV9Q",
+  "PretendardVariable.subset.2-dCZkyK",
+  "dangq-sans-BdDXIvGm.woff2",
+  "PretendardVariable.subset.80-DsV9Q",
+  "PretendardVariable.subset.2-dCZkyK"
+ ],
+ "cardNameFonts": [
+  {
+   "familyName": "Pretendard Variable",
+   "postScriptName": "PretendardVariable-Regular",
+   "isCustomFont": true,
+   "glyphCount": 2
+  }
+ ],
+ "h1FontsWhenSubsetBlocked": [
+  {
+   "familyName": "Pretendard Variable",
+   "postScriptName": "PretendardVariable-Regular",
+   "isCustomFont": true,
+   "glyphCount": 21
+  },
+  {
+   "familyName": "WenQuanYi Zen Hei",
+   "postScriptName": "WenQuanYiZenHei",
+   "isCustomFont": false,
+   "glyphCount": 2
+  }
+ ]
+}

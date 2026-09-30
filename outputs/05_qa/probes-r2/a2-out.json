@@ -1,0 +1,126 @@
+{
+ "titles": {
+  "#/": "댕큐 DANGQ — 가까워지는 데는 순서가 있어요",
+  "#/brand": "브랜드 가이드 · 댕큐",
+  "#/case": "케이스 스터디 · 댕큐",
+  "#/app": "산책 카드 · 댕큐 체험",
+  "#/app/card/new": "카드 만들기 · 댕큐 체험",
+  "#/app/card/edit": "카드 고치기 · 댕큐 체험",
+  "#/app/walk": "산책 · 댕큐 체험",
+  "#/app/together": "나란히 이웃 · 댕큐 체험",
+  "#/app/together/dubu": "나란히 계획 · 댕큐 체험",
+  "#/app/together/dubu/walk": "나란히 산책 중 · 댕큐 체험",
+  "#/app/bond": "사이 기록 · 댕큐 체험",
+  "#/app/show": "보여주기 · 댕큐 체험",
+  "#/app/tag": "리드줄 태그 · 댕큐 체험",
+  "#/app/settings": "설정 · 댕큐 체험",
+  "#/zzz": "댕큐 DANGQ — 가까워지는 데는 순서가 있어요"
+ },
+ "titlesUnique": 14,
+ "historyAfterShowClose": 22,
+ "dial": {
+  "initialValue": "20",
+  "label": "슬라이더를 왼쪽으로 옮겨 다가가 보세요",
+  "ends": "가까이 1m\n멀리 20m",
+  "afterLeft12": {
+   "value": "8",
+   "status": "8m\n뽀리는 편안해요. 이 거리라면 지나가도, 나란히 걸어도 괜찮아요."
+  },
+  "clickLeftEnd": "1",
+  "clickRightEnd": "20"
+ },
+ "seq": [
+  [
+   "create",
+   "h1:어떤 친구의 카드인가요?"
+  ],
+  [
+   "step1",
+   "h1:뽀리는 다른 개가 얼마나 떨어져야 편한가요?"
+  ],
+  [
+   "preview",
+   "h1:뽀리의 산책 카드예요."
+  ],
+  [
+   "saved",
+   "h1:뽀리의 산책 카드"
+  ],
+  [
+   "showOpen",
+   "button:닫기"
+  ],
+  [
+   "showTab",
+   "button:닫기"
+  ],
+  [
+   "showShiftTab",
+   "button:닫기"
+  ],
+  [
+   "showEsc",
+   "a:보여주기 누가 다가올 때 @/app"
+  ],
+  [
+   "showBrowserBack",
+   "a:보여주기 누가 다가올 때 @/app"
+  ],
+  [
+   "showCloseBtn",
+   "/app"
+  ],
+  [
+   "showDirectEsc",
+   "/app"
+  ],
+  [
+   "tabToWalk",
+   "h1:오늘도 우리 속도로."
+  ],
+  [
+   "walkStart",
+   "button:편안했어요"
+  ],
+  [
+   "logged",
+   "button:편안했어요"
+  ],
+  [
+   "walkEnd",
+   "h1:0:01 동안 걸었어요"
+  ],
+  [
+   "summaryBack",
+   "h1:오늘도 우리 속도로."
+  ],
+  [
+   "discardDialog",
+   "button:취소"
+  ],
+  [
+   "discarded",
+   "button:기록 안 하고 끝내기"
+  ],
+  [
+   "togetherWalk",
+   "h1:10m"
+  ],
+  [
+   "togetherAfterTimer",
+   "button:잠깐 멈춤",
+   "시간이 됐어요. 둘 다 어땠는지 알려 주세요."
+  ],
+  [
+   "menuOpen",
+   "a:서비스",
+   "true"
+  ],
+  [
+   "menuEsc",
+   "button:메뉴",
+   "false"
+  ]
+ ],
+ "errors": []
+}

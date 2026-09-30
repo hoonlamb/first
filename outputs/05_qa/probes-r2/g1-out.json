@@ -1,0 +1,102 @@
+{
+ "gap80": {
+  "pt": {
+   "x": 274,
+   "y": 784
+  },
+  "request": {
+   "url": "/app/together/dubu",
+   "req": true
+  },
+  "discardPt": {
+   "x": 274,
+   "y": 784
+  },
+  "discard": {
+   "url": "/app/walk",
+   "active": null
+  },
+  "stopPt": {
+   "x": 274,
+   "y": 784
+  },
+  "stop": {
+   "url": "/app/together/dubu/walk",
+   "sessions": 1
+  },
+  "hidePt": {
+   "x": 274,
+   "y": 784
+  },
+  "hide": {
+   "url": "/app/together"
+  }
+ },
+ "gap150": {
+  "pt": {
+   "x": 274,
+   "y": 784
+  },
+  "request": {
+   "url": "/app/together/dubu",
+   "req": true
+  },
+  "discardPt": {
+   "x": 274,
+   "y": 784
+  },
+  "discard": {
+   "url": "/app/walk",
+   "active": null
+  },
+  "stopPt": {
+   "x": 274,
+   "y": 784
+  },
+  "stop": {
+   "url": "/app/together/dubu/walk",
+   "sessions": 1
+  },
+  "hidePt": {
+   "x": 274,
+   "y": 784
+  },
+  "hide": {
+   "url": "/app/together"
+  }
+ },
+ "gap250": {
+  "pt": {
+   "x": 274,
+   "y": 784
+  },
+  "request": {
+   "url": "/app/together/dubu",
+   "req": true
+  },
+  "discardPt": {
+   "x": 274,
+   "y": 784
+  },
+  "discard": {
+   "url": "/app/walk",
+   "active": null
+  },
+  "stopPt": {
+   "x": 274,
+   "y": 784
+  },
+  "stop": {
+   "url": "/app/together/dubu/walk",
+   "sessions": 1
+  },
+  "hidePt": {
+   "x": 274,
+   "y": 784
+  },
+  "hide": {
+   "url": "/app/together"
+  }
+ },
+ "errors": []
+}

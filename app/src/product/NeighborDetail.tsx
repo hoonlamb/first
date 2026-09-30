@@ -73,6 +73,7 @@ export function NeighborDetail() {
         <p className="fineprint">오늘은 <span className="num">{plan.floor}m</span>보다 가까이 가지 않아요.{plan.sessionIndex === 0 ? ' 첫 만남에는 인사하지 않아요.' : ''}</p>
         {f.reasons.length > 0 && <ul className="why">{f.reasons.map((r) => <li key={r}>{r}</li>)}</ul>}
         {f.cautions.length > 0 && <ul className="why why--caution">{f.cautions.map((r) => <li key={r}>{r}</li>)}</ul>}
+        {slotOptions.length === 0 && !plan.needsPro && <p className="error">겹치는 낮 시간대가 없어서 첫 만남을 잡을 수 없어요. 카드의 산책 시간을 확인해 주세요.</p>}
       </section>
 
       {plan.needsPro ? (
@@ -85,10 +86,10 @@ export function NeighborDetail() {
           <p><b>진행 중인 나란히가 있어요.</b> {active!.i + 1}단계(<span className="num">{active!.steps[active!.i]}m</span>)에서 멈췄어요.</p>
           <button className="btn btn-signal btn-block" onClick={() => nav(`/app/together/${n.id}/walk`)}>이어서 걷기</button>
         </div>
+      ) : busyElsewhere && req?.status === 'accepted' ? (
+        <p className="notice" role="status">{josa(busyElsewhere.name, '과/와')}의 나란히가 진행 중이에요. 그 산책을 먼저 마쳐 주세요. <Link to={`/app/together/${busyElsewhere.id}/walk`}>이어서 걷기</Link></p>
       ) : !req ? (
-        busyElsewhere
-          ? <p className="notice" role="status">{josa(busyElsewhere.name, '과/와')}의 나란히가 진행 중이에요. 그 산책을 먼저 마쳐 주세요.</p>
-          : <button className="btn btn-ink btn-block" onClick={() => setAsking(true)}>나란히 산책 요청하기</button>
+        <button className="btn btn-ink btn-block" onClick={() => setAsking(true)} disabled={slotOptions.length === 0}>나란히 산책 요청하기</button>
       ) : req.status === 'pending' ? (
         <div className="status-box" role="status">
           <p><b>요청을 보냈어요.</b> {n.name} 보호자의 응답을 기다리는 중이에요.</p>
@@ -113,6 +114,7 @@ export function NeighborDetail() {
             {slotOptions.map((s) => <label key={s} className="choice"><input type="radio" name="req-slot" checked={chosen === s} onChange={() => setSlot(s)} /><span>{SLOT_LABEL[s]}</span></label>)}
           </div>
           {plan.sessionIndex === 0 && <p className="hint">첫 만남은 밝을 때, 탁 트인 곳에서 해요.</p>}
+          {slotOptions.length === 0 && <p className="error">겹치는 낮 시간대가 없어요. 첫 만남은 밤에 잡을 수 없어요.</p>}
         </fieldset>
         <p className="fineprint">상대에게는 동네와 시간대만 보여요. 정확한 위치와 연락처는 공유하지 않아요.</p>
         <div className="sheet__actions">

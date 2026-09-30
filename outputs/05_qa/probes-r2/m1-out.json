@@ -1,0 +1,138 @@
+{
+ "F07_code1": {
+  "title": "위치 없이도 찾을 수 있어요.",
+  "retry": 1,
+  "stored": "denied"
+ },
+ "F07_afterReloadDenied": {
+  "title": "위치 없이도 찾을 수 있어요.",
+  "retry": 1
+ },
+ "F07_code2": {
+  "title": "위치를 찾지 못했어요.",
+  "retry": 1,
+  "stored": "unknown"
+ },
+ "F07_code3": {
+  "title": "위치를 찾지 못했어요.",
+  "retry": 1,
+  "stored": "unknown"
+ },
+ "F07_pending4_6s": [
+  "위치 확인이 늦어지고 있어요. 동네를 직접 골라도 돼요."
+ ],
+ "F08": {
+  "box": "연남동에는 아직 산책 카드가 없어요. 동네에 카드가 모이면 여기에 보여 드려요. 가까운 망원동부터 볼까요? 망원동 보기",
+  "buttons": [
+   "망원동 보기"
+  ]
+ },
+ "F08_after": [
+  "두부",
+  "보리",
+  "콩이",
+  "망고",
+  "솔"
+ ],
+ "hideAll": {
+  "box": "망원동에는 아직 산책 카드가 없어요. 동네에 카드가 모이면 여기에 보여 드려요. 가까운 망원동부터 볼까요? 망원동 보기",
+  "buttons": [
+   "망원동 보기"
+  ]
+ },
+ "hide_list": [
+  "보리",
+  "콩이",
+  "망고",
+  "솔"
+ ],
+ "hide_settings": "숨긴 이웃 두부 다시 보기",
+ "unhide_list": [
+  "두부",
+  "보리",
+  "콩이",
+  "망고",
+  "솔"
+ ],
+ "hiddenOnHome": "나란히 보리와 다음 산책 10m에서 시작해요 →",
+ "hiddenOnBond": [
+  "보리"
+ ],
+ "F12_notice": "이미 뽀리의 카드가 있어요. 새로 만들면 지금 카드를 바꾸게 돼요. 지금 카드 고치기",
+ "F12_confirm": "뽀리 카드를 새 카드로 바꿀까요? 지금 카드는 사라지고 새 카드가 저장돼요. 산책·사이 기록은 그대로 남아요. 취소 새 카드로 바꾸기",
+ "F12_afterCancel": "뽀리",
+ "F12_newDogPlan": {
+  "title": "2번째 나란히",
+  "steps": "8m 6m 4m 3m 인사(둘 다 원할 때)",
+  "fine": "오늘은 3m보다 가까이 가지 않아요."
+ },
+ "F13_appbar": {
+  "settingsLink": 0,
+  "logoLink": 0
+ },
+ "F13_back": {
+  "url": "/app/settings",
+  "dialog": 0
+ },
+ "F13_forwardName": "뽀리",
+ "F14_emoji6": {
+  "err": [],
+  "h1": "🐶🐶🐶🐶🐶🐶(은)는 다른 개가 얼마나 떨어져야 편한가요?"
+ },
+ "F14_11": {
+  "err": [
+   "이름은 10글자까지 쓸 수 있어요."
+  ],
+  "maxLength": "40"
+ },
+ "F14_zwjValue": 25,
+ "V01 처음엔옆보다 #/app": {
+  "sw": 360,
+  "card": 344
+ },
+ "V01 처음엔옆보다 #/app/together/dubu": {
+  "sw": 360,
+  "card": 344
+ },
+ "V01 처음엔옆보다 #/app/tag": {
+  "sw": 360,
+  "card": 344
+ },
+ "V01 처음엔옆보다 #/app/show": {
+  "sw": 360,
+  "card": 360
+ },
+ "V01 https: #/app": {
+  "sw": 360,
+  "card": 344
+ },
+ "V01 https: #/app/together/dubu": {
+  "sw": 360,
+  "card": 344
+ },
+ "V01 https: #/app/tag": {
+  "sw": 360,
+  "card": 344
+ },
+ "V01 https: #/app/show": {
+  "sw": 360,
+  "card": 360
+ },
+ "V01 WWWWWW #/app": {
+  "sw": 360,
+  "card": 344
+ },
+ "V01 WWWWWW #/app/together/dubu": {
+  "sw": 360,
+  "card": 344
+ },
+ "V01 WWWWWW #/app/tag": {
+  "sw": 360,
+  "card": 344
+ },
+ "V01 WWWWWW #/app/show": {
+  "sw": 360,
+  "card": 360
+ },
+ "errors": []
+}

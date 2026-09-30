@@ -1,0 +1,58 @@
+{
+ "no-preference": {
+  "home_1s": 20,
+  "idle_2to7s": {
+   "TaskMs": 776,
+   "Layouts": 182,
+   "StyleRecalcs": 182
+  },
+  "home_7s": 0,
+  "idle_7to12s": {
+   "TaskMs": 2,
+   "Layouts": 0,
+   "StyleRecalcs": 0
+  },
+  "dial_after_change_0_5s": 11,
+  "dial_after_change_5_7s": 0,
+  "together_0_8s": 10,
+  "together_5_8s": 1,
+  "together_idle_after_rest": {
+   "TaskMs": 91,
+   "Layouts": 1,
+   "StyleRecalcs": 37
+  },
+  "builder_6s": 0,
+  "brand_6_5s": 0,
+  "show": 1,
+  "tween40ms": "translate(0,347.081789152186)",
+  "tween740ms": "translate(0,292.3)"
+ },
+ "reduce": {
+  "home_1s": 0,
+  "idle_2to7s": {
+   "TaskMs": 12,
+   "Layouts": 1,
+   "StyleRecalcs": 1
+  },
+  "home_7s": 0,
+  "idle_7to12s": {
+   "TaskMs": 1,
+   "Layouts": 0,
+   "StyleRecalcs": 0
+  },
+  "dial_after_change_0_5s": 0,
+  "dial_after_change_5_7s": 0,
+  "together_0_8s": 0,
+  "together_5_8s": 0,
+  "together_idle_after_rest": {
+   "TaskMs": 42,
+   "Layouts": 1,
+   "StyleRecalcs": 5
+  },
+  "builder_6s": 0,
+  "brand_6_5s": 0,
+  "show": 0,
+  "tween40ms": "translate(0,292.3)",
+  "tween740ms": "translate(0,292.3)"
+ }
+}

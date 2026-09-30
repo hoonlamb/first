@@ -11,6 +11,7 @@ export function AppHome() {
   const activeWalk = useStore((s) => s.activeWalk)
   const bonds = useStore((s) => s.bonds)
   const requests = useStore((s) => s.requests)
+  const activeT = useStore((s) => s.activeTogether)
   const location = useLocation()
   const needCard = (location.state as { needCard?: boolean } | null)?.needCard
 
@@ -63,7 +64,9 @@ export function AppHome() {
 
       <section className="panel" aria-labelledby="next-title">
         <h2 id="next-title" className="panel__title">나란히</h2>
-        {lastBond && lastNeighbor ? (
+        {activeT ? (
+          <Link to={`/app/together/${activeT.neighborId}/walk`} className="rowlink"><span><b>{josa(NEIGHBORS.find((x) => x.id === activeT.neighborId)?.name ?? '이웃', '과/와')} 걷는 중</b><small><span className="num">{activeT.steps[activeT.i]}m</span> 단계에서 이어서 걸어요</small></span><span aria-hidden="true">→</span></Link>
+        ) : lastBond && lastNeighbor ? (
           <Link to={`/app/together/${lastNeighbor.id}`} className="rowlink"><span><b>{josa(lastNeighbor.name, '과/와')} 다음 산책</b><small><span className="num">{nextStart}m</span>에서 시작해요</small></span><span aria-hidden="true">→</span></Link>
         ) : (
           <Link to="/app/together" className="rowlink"><span><b>동네 이웃 개 찾기</b><small>{pending ? '수락된 요청이 있어요' : '걷는 속도와 거리가 맞는 이웃'}</small></span><span aria-hidden="true">→</span></Link>
