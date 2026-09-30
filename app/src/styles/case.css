@@ -48,3 +48,6 @@
 @media (max-width: 860px) {
   .case__meta, .case__two, .case__evidence, .case__grid3 { grid-template-columns: 1fr; }
 }
+.case__film { margin: var(--s8) 0 0; }
+.case__film video { width: 100%; height: auto; border-radius: var(--r-l); background: #000; display: block; }
+.case__film figcaption { margin-top: var(--s3); font-size: 14px; color: var(--muted-on-ink); }

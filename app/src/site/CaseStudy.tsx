@@ -26,6 +26,12 @@ export default function CaseStudy() {
               <div><dt>결과물</dt><dd>브랜드 사이트, 작동하는 체험 모드 제품, 브랜드 가이드, 키비주얼, 출시 영상</dd></div>
               <div><dt>검증 수준</dt><dd>자동화 테스트와 접근성 점검까지. <b>실제 사용자 인터뷰는 아직 하지 않았어요.</b></dd></div>
             </dl>
+            <figure className="case__film">
+              <video controls playsInline preload="none" poster="./media/poster.jpg" width="1920" height="1080">
+                <source src="./media/dangq-launch-1080p.mp4" type="video/mp4" />
+              </video>
+              <figcaption>출시 영상 28초. 체험 모드 화면을 실제로 조작하며 녹화했어요. 소리는 없어요.</figcaption>
+            </figure>
           </div>
         </header>
 
