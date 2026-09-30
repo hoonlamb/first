@@ -1,0 +1,20 @@
+.logo { display: inline-flex; align-items: center; gap: .35em; font-weight: 850; letter-spacing: -0.05em; line-height: 1; text-decoration: none; }
+.logo--paper { color: var(--paper); }
+.logo--ink { color: var(--ink); }
+
+/* Lanes + Dog */
+.lanes { width: 100%; height: auto; overflow: visible; }
+.bracket__text { font: 800 44px/1 var(--font); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.dog__ear, .dog__tail { transition: d var(--t-base) var(--ease); }
+.dog__head, .dog__whole { transition: transform var(--t-base) var(--ease); }
+.dog--alert .dog__head { transform: translateY(-4px); }
+.dog--react .dog__head { transform: translateY(5px); }
+.dog--react .dog__whole { transform: translate(-5px, 3px); }
+.is-walking .leg { transform-box: fill-box; transform-origin: 50% 0; animation: step .6s var(--ease-step) infinite alternate; }
+.is-walking .leg-b { animation-delay: -.3s; }
+.is-walking .lane__ahead { animation: ground 1.2s linear infinite; }
+@keyframes step { from { transform: rotate(14deg); } to { transform: rotate(-14deg); } }
+@keyframes ground { to { stroke-dashoffset: 48; } }
+@media (prefers-reduced-motion: reduce) {
+  .is-walking .leg, .is-walking .lane__ahead { animation: none; }
+}

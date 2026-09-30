@@ -1,0 +1,48 @@
+/* 댕큐 DANGQ design tokens — source of truth: outputs/04_brand/tokens.json */
+:root {
+  /* color — roles, not decoration */
+  --ink: #15201A;          /* 길(asphalt). primary surface for brand moments, text on paper */
+  --ink-2: #24302A;        /* raised ink surface */
+  --ink-3: #3A4740;        /* ink hairline / disabled on ink */
+  --paper: #F4F1EA;        /* 낮(daylight). product surface */
+  --paper-2: #E8E3D7;      /* sunken paper / cards on paper */
+  --paper-3: #D6CFBF;      /* hairline on paper */
+  --signal: #FF6A2B;       /* 상대·주의. fill / text on ink only. never white text on it (5.9:1 vs ink) */
+  --signal-ink: #B83A0A;   /* signal as text on paper (5.1:1) */
+  --moss: #9FD3B2;         /* 편안·가까워짐. on ink */
+  --moss-ink: #1F6B45;     /* moss as text on paper (5.7:1) */
+  --muted: #58625C;        /* secondary text on paper (5.6:1) */
+  --muted-on-ink: #A9B3AD; /* secondary text on ink (7.8:1) */
+  --state-calm: #1F6B45;
+  --state-alert: #8A5A00;
+  --state-react: #B3261E;
+
+  /* type */
+  --font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --fs-display: clamp(56px, 11vw, 168px);
+  --fs-h1: clamp(34px, 5.2vw, 64px);
+  --fs-h2: clamp(26px, 3.4vw, 40px);
+  --fs-h3: 21px;
+  --fs-body: 17px;
+  --fs-small: 14px;
+  --track-tight: -0.045em;
+  --track-head: -0.03em;
+
+  /* space (4pt) */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px; --s10: 144px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --max: 1200px;
+
+  /* shape */
+  --r-s: 8px; --r-m: 14px; --r-l: 24px; --r-pill: 999px;
+  --lane-stroke: 6px;
+
+  /* motion — '나란히': things move together, in steps */
+  --ease: cubic-bezier(.2,.7,.2,1);
+  --ease-step: cubic-bezier(.65,0,.35,1);
+  --t-fast: 160ms; --t-base: 260ms; --t-slow: 520ms;
+  --tap: 48px;             /* min touch target */
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --t-fast: 0ms; --t-base: 0ms; --t-slow: 0ms; }
+}
