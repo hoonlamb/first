@@ -32,7 +32,7 @@ export function ShowMode() {
         <button ref={closeRef} className="btn btn-ink showmode__close" onClick={() => nav('/app')}>닫기</button>
       </div>
       <div className="showmode__body">
-        <p id="show-ask" className="showmode__ask">{ask.title}</p>
+        <p id="show-ask" className="showmode__ask">{ask.title.split(', ').map((line, k, all) => <span key={line}>{line}{k < all.length - 1 ? ',' : ''}{k < all.length - 1 && <br />}</span>)}</p>
         <p className="showmode__line">{ask.body}</p>
         <p className="showmode__dist"><b className="num">{card.comfort}m</b> {card.name}는 이 정도 떨어져 있을 때 편안해요.</p>
         {card.triggers.length > 0 && (

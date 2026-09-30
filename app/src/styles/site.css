@@ -64,6 +64,7 @@
 @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
 
 /* problem */
+.problem__title { font-size: clamp(30px, 3.6vw, 50px); }
 .problem__grid { display: grid; grid-template-columns: 7fr 5fr; gap: var(--s7); align-items: end; }
 .stat__num { font-size: clamp(80px, 12vw, 160px); font-weight: 880; line-height: .9; color: var(--signal-ink); letter-spacing: -0.06em; }
 .stat__text { margin-top: var(--s4); }

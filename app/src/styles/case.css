@@ -1,0 +1,50 @@
+.case__hero { background: var(--ink); color: var(--paper); padding: var(--s9) 0 var(--s8); }
+.case__title { font-size: clamp(38px, 6vw, 84px); font-weight: 880; letter-spacing: -0.05em; line-height: 1.05; margin-bottom: var(--s7); }
+.case__meta { margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s5) var(--s7); }
+.case__meta div { border-top: 1px solid var(--ink-3); padding-top: var(--s3); }
+.case__meta dt { font-size: 13px; font-weight: 800; color: var(--moss); margin-bottom: 4px; }
+.case__meta dd { margin: 0; color: var(--muted-on-ink); }
+.case__meta dd b { color: var(--paper); }
+.case__sec { padding: var(--s9) 0; }
+.case__sec--ink { background: var(--ink); color: var(--paper); }
+.case__sec--soft { background: var(--paper-2); }
+.case__sec--ink .case__lead, .case__sec--ink .case__grid3 li { color: var(--muted-on-ink); }
+.case__sec--ink b { color: var(--paper); }
+.case__no { font-weight: 880; color: var(--signal-ink); margin-bottom: var(--s3); }
+.case__sec--ink .case__no { color: var(--signal); }
+.case__two { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s8); align-items: start; }
+.case__two > div { display: grid; gap: var(--s4); }
+.case__lead { margin-top: var(--s5); font-size: 18px; max-width: 44em; }
+.case__list { margin: 0; padding-left: 1.1em; display: grid; gap: var(--s3); }
+.case__h3 { font-size: 20px; }
+.case__src { display: block; margin-top: var(--s2); font-size: 13px; color: var(--muted); }
+.case__sec--ink .case__src { color: var(--muted-on-ink); }
+.case__note { font-size: 14px; color: var(--muted); }
+.case__sec--ink .case__note { color: var(--muted-on-ink); }
+.case__before { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
+.case__before img { width: 100%; height: auto; border-radius: var(--r-m); border: 1px solid var(--paper-3); }
+.case__before figcaption { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+.case__evidence { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s5); margin-top: var(--s7); }
+.case__evidence article { border-top: 3px solid var(--signal); padding-top: var(--s4); color: var(--muted-on-ink); }
+.case__big { font-size: clamp(44px, 5vw, 72px); font-weight: 880; letter-spacing: -0.05em; color: var(--signal); line-height: 1; margin-bottom: var(--s3); }
+.case__turn { margin-top: var(--s8); font-size: var(--fs-h2); font-weight: 700; letter-spacing: var(--track-head); line-height: 1.3; }
+.case__tablewrap { margin-top: var(--s6); overflow-x: auto; border-radius: var(--r-m); border: 1px solid var(--paper-3); background: #fff; }
+.case__table { width: 100%; border-collapse: collapse; min-width: 760px; font-size: 15px; }
+.case__table th, .case__table td { text-align: left; padding: var(--s3) var(--s4); border-bottom: 1px solid var(--paper-3); vertical-align: top; }
+.case__table thead th { font-size: 13px; color: var(--muted); font-weight: 800; background: var(--paper); }
+.case__table tr.is-picked { background: #FFF4EC; }
+.case__table tr.is-picked th { box-shadow: inset 4px 0 0 var(--signal-ink); }
+.case__lanes { display: grid; gap: var(--s2); background: var(--paper-2); border-radius: var(--r-l); padding: var(--s4); }
+.case__fig { margin: var(--s6) 0 0; }
+.case__fig img { width: 100%; height: auto; border-radius: var(--r-m); }
+.case__fig figcaption { margin-top: var(--s3); font-size: 14px; color: var(--muted-on-ink); }
+.case__grid3 { list-style: none; padding: 0; margin: var(--s7) 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s6); }
+.case__grid3 li { border-top: 1px solid var(--ink-3); padding-top: var(--s3); }
+.case__grid3 b { display: block; font-size: 20px; margin-bottom: var(--s2); }
+.case__sec--ink .btn { margin-top: var(--s6); }
+.case__scenes { margin: var(--s6) 0 var(--s6); padding-left: 1.3em; display: grid; gap: var(--s4); max-width: 52em; }
+.case__scenes b { font-size: 19px; }
+.case__scenes span { color: var(--muted); font-size: 14px; font-weight: 600; }
+@media (max-width: 860px) {
+  .case__meta, .case__two, .case__evidence, .case__grid3 { grid-template-columns: 1fr; }
+}

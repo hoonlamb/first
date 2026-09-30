@@ -44,7 +44,7 @@ a { color: inherit; }
 .btn-ink { background: var(--ink); color: var(--paper); }
 .btn-ink:hover { background: var(--ink-2); }
 .btn-ghost { background: transparent; border-color: currentColor; }
-.btn-quiet { background: transparent; min-height: 44px; padding: 0 var(--s3); text-decoration: underline; text-underline-offset: 4px; font-weight: 600; }
+.btn-quiet { background: transparent; border: 0; color: inherit; cursor: pointer; display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--s3); text-decoration: underline; text-underline-offset: 4px; font-weight: 600; }
 .btn-block { width: 100%; }
 
 /* chips / segmented choices (radio-backed) */

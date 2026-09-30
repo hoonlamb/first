@@ -62,7 +62,7 @@ export function Home() {
           <div className="wrap problem__grid">
             <div>
               <p className="eyebrow">산책길의 3초</p>
-              <h2 id="problem-title" className="h-xl">“귀엽다”며 다가오는 손이<br />어떤 개에게는 가장 무서운 순간이에요.</h2>
+              <h2 id="problem-title" className="h-xl problem__title">“귀엽다”며 다가오는 손이<br />어떤 개에게는 가장 무서운 순간이에요.</h2>
             </div>
             <div className="stat">
               <p className="stat__num num">89.4%</p>

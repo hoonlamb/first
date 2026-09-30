@@ -104,7 +104,7 @@ export function Together() {
             <li><b>둘 다 편할 때만 가까이.</b> 한쪽이라도 긴장하면 멈추거나 물러나요.</li>
           </ul>
           <p className="fineprint">체험 모드: 단계마다 {DEMO_STEP_SEC}초로 줄였어요. 실제로는 2~3분씩 걸어요.</p>
-          <button className="btn btn-signal btn-block" onClick={() => walkStep(0)}><span className="num">{steps[0]}m</span>에서 걷기 시작</button>
+          <button className="btn btn-signal btn-block" onClick={() => walkStep(0)}><span><span className="num">{steps[0]}m</span>에서 걷기 시작</span></button>
         </section>
       )}
 
@@ -141,8 +141,8 @@ export function Together() {
           <h1 ref={headRef} tabIndex={-1} className="together__title">괜찮아요. 물러나는 것도 순서예요.</h1>
           <p className="together__line">귀가 서거나 걸음이 멈추면 거리를 벌려 주세요.</p>
           <div className="stack-s">
-            {i > 0 && <button className="btn btn-ink btn-block" onClick={() => walkStep(i - 1)}><span className="num">{steps[i - 1]}m</span>로 물러나 다시 걷기</button>}
-            <button className="btn btn-ghost btn-block" onClick={() => walkStep(i)}><span className="num">{d}m</span>에서 한 번 더</button>
+            {i > 0 && <button className="btn btn-ink btn-block" onClick={() => walkStep(i - 1)}><span><span className="num">{steps[i - 1]}m</span>로 물러나 다시 걷기</span></button>}
+            <button className="btn btn-ghost btn-block" onClick={() => walkStep(i)}><span><span className="num">{d}m</span>에서 한 번 더</span></button>
             <button className="btn-quiet" onClick={() => finish(true)}>오늘은 여기까지</button>
           </div>
         </section>
