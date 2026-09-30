@@ -221,9 +221,9 @@
 .bd-nums .bd-fig { background: var(--paper); border-radius: var(--r-l); padding: var(--s6); }
 .bd-numcols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5); }
 .bd-numcols__h { font-size: 12px; font-weight: 800; color: var(--muted); margin-bottom: var(--s2); }
-.bd-numcol { font-size: 48px; font-weight: 880; line-height: 1.05; text-align: right; letter-spacing: -0.045em; padding-right: var(--s3); border-right: 3px solid var(--signal-ink); }
+.bd-numcol { font-size: 48px; font-weight: 880; line-height: 1.05; text-align: left; letter-spacing: -0.045em; padding-left: var(--s3); border-left: 3px solid var(--signal-ink); }
 .bd-numcol--tab { font-variant-numeric: tabular-nums; }
-.bd-numcol--prop { font-variant-numeric: proportional-nums; color: var(--muted); border-right-color: var(--paper-3); }
+.bd-numcol--prop { font-variant-numeric: proportional-nums; color: var(--muted); border-left-color: var(--paper-3); }
 @media (max-width: 420px) { .bd-numcol { font-size: 36px; } }
 
 /* 07 grid */

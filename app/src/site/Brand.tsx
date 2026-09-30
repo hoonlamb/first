@@ -430,8 +430,8 @@ function TypeSection() {
       <div className="bd-cols2 bd-nums">
         <figure className="bd-fig bd-fig--paper">
           <div className="bd-numcols">
-            <div><p className="bd-numcols__h">tabular-nums · 써요</p><p className="bd-numcol bd-numcol--tab">15m<br />8m<br />11m<br />4m</p></div>
-            <div><p className="bd-numcols__h">기본 숫자 · 거리엔 안 써요</p><p className="bd-numcol bd-numcol--prop">15m<br />8m<br />11m<br />4m</p></div>
+            <div><p className="bd-numcols__h">tabular-nums · 써요</p><p className="bd-numcol bd-numcol--tab">11m<br />18m<br />14m<br />10m</p></div>
+            <div><p className="bd-numcols__h">기본 숫자 · 거리엔 안 써요</p><p className="bd-numcol bd-numcol--prop">11m<br />18m<br />14m<br />10m</p></div>
           </div>
           <figcaption>거리·날짜·퍼센트는 <code>font-variant-numeric: tabular-nums</code>. 숫자가 바뀌어도 자리가 흔들리지 않아요.</figcaption>
         </figure>
