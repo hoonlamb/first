@@ -168,7 +168,7 @@ fieldset.field legend { padding: 0; margin-bottom: var(--s2); }
 .together .progress li { background: var(--ink-3); }
 .together .progress li.is-on { background: var(--moss); }
 .together__stage { border-radius: var(--r-l); background: var(--ink-2); padding: var(--s3) var(--s2); transition: box-shadow var(--t-base); }
-.together__stage.is-tense { box-shadow: inset 0 0 0 2px #E0A84A; }
+.together__stage.is-tense { box-shadow: inset 0 0 0 2px var(--alert-ring); }
 .together__panel { display: grid; gap: var(--s4); animation: stepin var(--t-slow) var(--ease) both; }
 .together__kicker { font-size: 14px; font-weight: 800; color: var(--moss); }
 .together__title { font-size: 28px; font-weight: 850; letter-spacing: var(--track-tight); line-height: 1.2; outline: none; }

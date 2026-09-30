@@ -44,7 +44,7 @@
 .dial__tab input:checked + span small { color: var(--muted); }
 .dial__tab input:focus-visible + span { outline: 3px solid var(--signal); outline-offset: 2px; }
 .dial__stage { position: relative; border-radius: var(--r-l); background: var(--ink-2); padding: var(--s4) var(--s2) var(--s2); transition: box-shadow var(--t-base) var(--ease); }
-.dial__stage--alert { box-shadow: inset 0 0 0 2px #E0A84A; }
+.dial__stage--alert { box-shadow: inset 0 0 0 2px var(--alert-ring); }
 .dial__stage--react { box-shadow: inset 0 0 0 3px var(--signal); }
 .dial__legend-lanes { display: flex; gap: var(--s4); font-size: 12px; color: var(--muted-on-ink); padding: 0 var(--s3) var(--s2); flex-wrap: wrap; }
 .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
@@ -56,7 +56,7 @@
 .dial__ends { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted-on-ink); margin-top: -6px; }
 .dial__status { display: flex; gap: var(--s4); align-items: baseline; min-height: 3.2em; font-size: 18px; font-weight: 600; }
 .dial__num { font-size: 44px; font-weight: 880; color: var(--moss); flex: none; min-width: 2.4ch; }
-.dial__status--alert .dial__num { color: #F2C06B; }
+.dial__status--alert .dial__num { color: var(--alert-on-ink); }
 .dial__status--react .dial__num { color: var(--signal); }
 .dial__truth { color: var(--muted-on-ink); font-size: 15px; }
 .dial__truth b { color: var(--paper); }

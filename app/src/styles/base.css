@@ -9,7 +9,6 @@ body {
   line-height: 1.6;
   color: var(--ink);
   background: var(--paper);
-  font-feature-settings: "tnum" 0;
   -webkit-font-smoothing: antialiased;
   word-break: keep-all;
   overflow-wrap: break-word;

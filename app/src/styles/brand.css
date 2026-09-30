@@ -1,6 +1,7 @@
 /* Brand guide (/#/brand). Tokens only — see tokens.css. Prefix: bd- */
 
-.bd { overflow-x: clip; }
+/* base.css sets body{font-feature-settings:"tnum" 0}, which overrides font-variant-numeric and silently disables .num tabular-nums. Reset it for this page. */
+.bd { overflow-x: clip; font-feature-settings: normal; }
 .bd code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .86em; background: rgba(21,32,26,.07); padding: 1px 5px; border-radius: 5px; word-break: break-all; }
 .bd-sec--ink code { background: rgba(244,241,234,.1); }
 .bd h2:focus { outline: none; }
@@ -315,3 +316,5 @@
 @media (prefers-reduced-motion: reduce) { .bd-shot__img:hover { transform: none; } }
 /* signal-ink on paper-2 is 4.49:1 — keep small signal-ink text on paper, never on paper-2 */
 .bd-sec--paper2 .bd-table-wrap { background: var(--paper); padding: var(--s2) var(--s4); }
+@media (max-width: 560px) { .bd-construct__t { font-size: 28px; } .bd-clear, .bd-min { min-height: 150px; } }
+.bd-scale--fit { min-width: 0; }

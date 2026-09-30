@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Logo } from '../components/Logo'
+import { SkipLink } from '../components/SkipLink'
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
   return (
     <header className="siteheader">
-      <a className="skip" href="#main">본문 바로가기</a>
+      <SkipLink />
       <div className="wrap siteheader__bar">
         <Link to="/" className="siteheader__logo" aria-label="댕큐 홈"><Logo tone="paper" size={26} /></Link>
         <button className="siteheader__menu" aria-expanded={open} aria-controls="sitenav" onClick={() => setOpen((v) => !v)}>

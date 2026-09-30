@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react'
+import { TabIcon } from '../components/TabIcon'
 import { SiteHeader, SiteFooter } from './SiteChrome'
 import { Logo, Mark } from '../components/Logo'
 import { Dog } from '../components/Dog'
@@ -217,7 +218,7 @@ function Construction() {
   const X = (u: number) => ox + u * k, Y = (u: number) => oy + u * k
   const dim = MOSS
   return (
-    <svg className="bd-construct" viewBox="0 0 760 550" role="img" aria-label="마크 구성도: 48×36 단위 격자 위에 두 선과 두 점. 선 굵기 6, 아래 선은 점 하나(10단위)만큼 늦게 출발, 두 선 간격 18.">
+    <svg className="bd-construct" viewBox="-24 0 784 550" role="img" aria-label="마크 구성도: 48×36 단위 격자 위에 두 선과 두 점. 선 굵기 6, 아래 선은 점 하나(10단위)만큼 늦게 출발, 두 선 간격 18.">
       <g stroke="#3A4740" strokeWidth="1">
         {Array.from({ length: 17 }, (_, i) => <line key={`v${i}`} x1={X(i * 3)} x2={X(i * 3)} y1={Y(0)} y2={Y(36)} />)}
         {Array.from({ length: 13 }, (_, i) => <line key={`h${i}`} x1={X(0)} x2={X(48)} y1={Y(i * 3)} y2={Y(i * 3)} />)}
@@ -485,19 +486,11 @@ function GridSection() {
 }
 
 /* ------------------------------------------------------------------ 08 */
-/** Same shapes as TabIcon in product/ProductApp.tsx (kept in sync by hand). */
-function TabGlyph({ name, scale = 1 }: { name: string; scale?: number }) {
-  const common = { width: 26 * scale, height: 20 * scale, viewBox: '0 0 26 20', 'aria-hidden': true, fill: 'none', stroke: 'currentColor', strokeWidth: 2.4, strokeLinecap: 'round' as const }
-  if (name === '카드') return <svg {...common}><rect x="3" y="2" width="20" height="16" rx="4" /><line x1="7" y1="8" x2="14" y2="8" /><line x1="7" y1="13" x2="19" y2="13" /></svg>
-  if (name === '산책') return <svg {...common}><line x1="2" y1="14" x2="18" y2="14" /><circle cx="22" cy="14" r="2" fill="currentColor" /><line x1="6" y1="6" x2="12" y2="6" strokeDasharray="1 4" /></svg>
-  if (name === '나란히') return <svg {...common}><line x1="2" y1="6" x2="17" y2="6" /><line x1="7" y1="14" x2="17" y2="14" /><circle cx="22" cy="6" r="2" fill="currentColor" /><circle cx="22" cy="14" r="2" fill="currentColor" /></svg>
-  return <svg {...common}><line x1="3" y1="4" x2="23" y2="4" /><line x1="3" y1="10" x2="16" y2="10" /><line x1="3" y1="16" x2="10" y2="16" /></svg>
-}
 const ICONS = [
   { n: '카드', d: '카드 한 장 안의 두 줄: 카드에 적힌 거리와 부탁.' },
   { n: '산책', d: '한 선과 점 하나: 혼자 걷는 길, 앞은 점선.' },
   { n: '나란히', d: '마크 그대로: 늦게 출발한 두 번째 선.' },
-  { n: '기록', d: '점점 짧아지는 세 선: 좁혀진 거리.' },
+  { n: '사이', d: '점점 짧아지는 세 선: 좁혀진 거리.' },
 ]
 
 function IconSection() {
@@ -507,7 +500,7 @@ function IconSection() {
       <ul className="bd-icons">
         {ICONS.map((i) => (
           <li key={i.n}>
-            <span className="bd-icons__big"><TabGlyph name={i.n} scale={3} /></span>
+            <span className="bd-icons__big"><TabIcon name={i.n} scale={3} /></span>
             <b>{i.n}</b>
             <p>{i.d}</p>
           </li>
@@ -515,7 +508,7 @@ function IconSection() {
       </ul>
       <div className="bd-cols2">
         <div className="bd-tabbar" aria-hidden="true">
-          {ICONS.map((i, k) => <span key={i.n} className={k === 2 ? 'is-on' : ''}><TabGlyph name={i.n} /><small>{i.n}</small></span>)}
+          {ICONS.map((i, k) => <span key={i.n} className={k === 2 ? 'is-on' : ''}><TabIcon name={i.n} /><small>{i.n}</small></span>)}
         </div>
         <ul className="bd-rules bd-rules--tight">
           <li><b>격자</b> 26×20, 선 굵기 2.4, 둥근 끝.</li>
@@ -602,8 +595,8 @@ function MotionSection() {
         </div>
       </div>
       <div className="bd-cols2">
-        <div className="bd-table-wrap" tabIndex={0} role="region" aria-label="모션 토큰 표">
-          <table className="bd-scale">
+        <div className="bd-table-wrap">
+          <table className="bd-scale bd-scale--fit">
             <thead><tr><th scope="col">토큰</th><th scope="col">값</th><th scope="col">쓰는 곳</th></tr></thead>
             <tbody>
               <tr><th scope="row"><code>--t-fast</code></th><td className="num">160ms</td><td>버튼·칩 피드백</td></tr>
