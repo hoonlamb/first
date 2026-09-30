@@ -1,19 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { Logo } from '../components/Logo'
 import { SkipLink } from '../components/SkipLink'
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
+  const btnRef = useRef<HTMLButtonElement>(null)
+  const navRef = useRef<HTMLElement>(null)
+  useEffect(() => {
+    if (!open) return
+    navRef.current?.querySelector('a')?.focus()
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { setOpen(false); btnRef.current?.focus() } }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open])
   return (
     <header className="siteheader">
       <SkipLink />
       <div className="wrap siteheader__bar">
         <Link to="/" className="siteheader__logo" aria-label="댕큐 홈"><Logo tone="paper" size={26} /></Link>
-        <button className="siteheader__menu" aria-expanded={open} aria-controls="sitenav" onClick={() => setOpen((v) => !v)}>
+        <button ref={btnRef} className="siteheader__menu" aria-expanded={open} aria-controls="sitenav" onClick={() => setOpen((v) => !v)}>
           {open ? '닫기' : '메뉴'}
         </button>
-        <nav id="sitenav" className={`siteheader__nav ${open ? 'is-open' : ''}`} aria-label="주요 메뉴">
+        <nav ref={navRef} id="sitenav" className={`siteheader__nav ${open ? 'is-open' : ''}`} aria-label="주요 메뉴">
           <NavLink to="/" end onClick={() => setOpen(false)}>서비스</NavLink>
           <NavLink to="/brand" onClick={() => setOpen(false)}>브랜드 가이드</NavLink>
           <NavLink to="/case" onClick={() => setOpen(false)}>케이스 스터디</NavLink>

@@ -1,0 +1,18 @@
+const { launch, BASE, SHOTS } = require('./lib.cjs')
+;(async () => {
+  const { browser, page, errors } = await launch({ viewport: { width: 1440, height: 900 } })
+  const reqs = []
+  page.on('request', (r) => { if (/\.(png|jpg)/.test(r.url())) reqs.push('REQ ' + r.url()) })
+  page.on('requestfinished', (r) => { if (/\.(png|jpg)/.test(r.url())) reqs.push('FIN ' + r.url()) })
+  await page.goto(BASE + '#/brand', { waitUntil: 'load' })
+  await page.locator('#gallery').scrollIntoViewIfNeeded()
+  await page.waitForTimeout(3000)
+  const st = await page.evaluate(() => [...document.images].map((i) => [i.getAttribute('src'), i.complete, i.naturalWidth, Math.round(i.getBoundingClientRect().top)]))
+  console.log(JSON.stringify(st)); console.log(reqs.join('\n')); console.log(errors)
+  await page.screenshot({ path: SHOTS + 'c-brand-gallery-1440.png' })
+  await page.goto(BASE + '#/case', { waitUntil: 'load' })
+  await page.locator('.case__fig').scrollIntoViewIfNeeded(); await page.waitForTimeout(2500)
+  console.log(JSON.stringify(await page.evaluate(() => [...document.images].map((i) => [i.getAttribute('src'), i.complete, i.naturalWidth]))))
+  await page.screenshot({ path: SHOTS + 'c-case-artdir-1440.png' })
+  await browser.close()
+})()

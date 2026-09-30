@@ -22,7 +22,7 @@ await f.locator('.dial__stage').scrollIntoViewIfNeeded()
 await frame().evaluate(() => window.scrollBy(0, -60))
 await wait(700)
 const range = f.locator('.dial input[type=range]')
-for (const v of [4, 8, 11, 13, 15, 17, 19]) { await range.fill(String(v)); await wait(380) }
+for (const v of [17, 13, 10, 8, 6, 4, 2]) { await range.fill(String(v)); await wait(380) }
 await wait(900)
 // 2 — card
 mark('card')
@@ -55,20 +55,22 @@ await frame().evaluate(() => {
   s.requests = { dubu: { status: 'accepted', at: Date.now(), slot: 'evening' } }
   localStorage.setItem('dangq.demo.v1', JSON.stringify(s))
 })
+await p.evaluate(() => { document.getElementById('phone').style.opacity = '0' })
 await frame().evaluate(() => { location.hash = '/app/together/dubu/walk'; location.reload() })
-await wait(1200)
-await f.getByRole('button', { name: /에서 걷기 시작/ }).click(); await wait(1000)
+await wait(900)
+await p.evaluate(() => { document.getElementById('phone').style.opacity = '1' })
+await wait(500)
+await f.getByRole('button', { name: /에서 걷기 시작/ }).click(); await wait(1200)
 for (let k = 0; k < 4; k++) {
-  if (!(await f.getByRole('button', { name: '지금 확인' }).count())) break
-  await f.getByRole('button', { name: '지금 확인' }).click(); await wait(350)
-  await f.getByRole('button', { name: /둘 다 편안했어요/ }).click(); await wait(800)
+  if (!(await f.getByRole('button', { name: '둘 다 편해요?' }).count())) break
+  await f.getByRole('button', { name: '둘 다 편해요?' }).click(); await wait(400)
+  await f.getByRole('button', { name: /둘 다 편안했어요/ }).click(); await wait(1000)
 }
-if (await f.getByRole('button', { name: '짧게 인사했어요' }).count()) { await f.getByRole('button', { name: '짧게 인사했어요' }).click() }
-await wait(1100)
+await wait(900)
 // 5 — bond
 mark('bond')
 await p.evaluate(() => cap(5))
-await f.getByRole('link', { name: '사이 기록 보기' }).click()
+await f.getByRole('button', { name: '사이 기록 보기' }).click()
 await wait(2000)
 mark('end')
 await p.evaluate(() => end())

@@ -15,8 +15,8 @@ async function makeCard(page: Page, name = '뽀리') {
   await expect(page.getByText('이름을 적어 주세요')).toBeVisible()
   await page.getByLabel('이름').fill(name)
   await page.getByRole('button', { name: '다음' }).click()
-  await page.getByLabel('편한 거리(미터)').fill('10')
-  await expect(page.getByText('10m', { exact: false }).first()).toBeVisible()
+  await page.getByLabel('편한 거리(미터)').fill('6')
+  await expect(page.locator('.comfort__value')).toContainText('6m')
   await page.getByRole('button', { name: '다음' }).click()
   await page.getByRole('radio', { name: /천천히 인사해요/ }).check()
   await page.getByRole('radio', { name: '느긋하게' }).check()
@@ -34,9 +34,9 @@ test('hero distance dial reacts and leads to the product', async ({ page }) => {
   const status = page.locator('.dial__status')
   await expect(status).toContainText('편안해요')
   const range = page.locator('.dial input[type=range]')
-  await range.fill('14') // 7m for 뽀리(8m)
+  await range.fill('7') // 7m for 뽀리(8m)
   await expect(status).toContainText('귀가 섰어요')
-  await range.fill('20') // 1m
+  await range.fill('1') // 1m
   await expect(status).toContainText('너무 가까워요')
   await page.getByRole('radio', { name: /망고/ }).check()
   await expect(page.locator('.dial__truth')).toContainText('15m')
@@ -53,20 +53,20 @@ test('full journey: card → show → walk → nearby → 나란히 → 사이 �
   await page.keyboard.press('Escape')
   await expect(page.getByRole('link', { name: /보여주기/ })).toBeVisible()
 
-  // walk + encounter validation + suggestion
+  // walk: one-tap reaction, optional distance, widen suggestion
   await page.getByRole('link', { name: '산책', exact: true }).click()
   await page.getByRole('button', { name: '산책 시작' }).click()
-  await page.getByRole('button', { name: '마주침 기록' }).click()
-  await page.getByRole('button', { name: '기록하기' }).click()
-  await expect(page.getByRole('alert')).toContainText('거리와 반응')
-  await page.getByRole('radio', { name: '5m', exact: true }).check()
-  await page.getByRole('radio', { name: '편안했어요' }).check()
-  await page.getByRole('button', { name: '기록하기' }).click()
-  await expect(page.locator('.enc')).toHaveCount(1)
+  await page.getByRole('button', { name: '편안했어요' }).click()
+  await page.getByRole('radio', { name: '3m', exact: true }).check()
+  await page.getByRole('button', { name: '반응했어요' }).click()
+  await page.getByRole('radio', { name: '8m', exact: true }).check()
+  await expect(page.locator('.enc')).toHaveCount(2)
+  await expect(page.locator('.enc').first()).toContainText('3m')
   await page.getByRole('button', { name: '산책 끝내기' }).click()
-  await expect(page.getByText(/5m.*에서도 편안했어요/)).toBeVisible()
-  await page.getByRole('button', { name: '카드를 5m로 바꾸기' }).click()
-  await expect(page.getByRole('status').filter({ hasText: '5m로 바꿨어요' })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('동안 걸었어요')
+  await page.getByRole('button', { name: '카드를 10m로 넓히기' }).click()
+  await expect(page.locator('.notice')).toContainText('10m로 바꿨어요')
+  await expect(page.getByRole('button', { name: /카드를 .*m로/ })).toHaveCount(0) // no flip-flop after applying
 
   // nearby: location denied → manual → list → filter empty → detail → request
   // simulate the user denying the location prompt (headless leaves the real prompt pending)
@@ -95,21 +95,24 @@ test('full journey: card → show → walk → nearby → 나란히 → 사이 �
   await expect(page.getByRole('button', { name: '나란히 산책 시작' })).toBeVisible({ timeout: 6000 })
   await page.getByRole('button', { name: '나란히 산책 시작' }).click()
 
-  // guided walk: calm → tense → step back → calm → stop
-  await page.getByRole('button', { name: /에서 걷기 시작/ }).click()
-  await page.getByRole('button', { name: '지금 확인' }).click()
-  await page.getByRole('button', { name: /둘 다 편안했어요/ }).click()
-  await page.getByRole('button', { name: '지금 확인' }).click()
-  await page.getByRole('button', { name: '한쪽이 긴장했어요' }).click()
-  await page.getByRole('button', { name: /로 물러나 다시 걷기/ }).click()
+  // guided walk (10m card + 두부 6m → 12 → 8 → 6): calm → tense (1 tap) → step back → pause → stop
+  await page.getByRole('button', { name: /12m에서 걷기 시작/ }).click()
+  await page.getByRole('button', { name: '둘 다 편해요?' }).click()
+  await page.getByRole('button', { name: /둘 다 편안했어요 → 8m로/ }).click()
+  await page.getByRole('button', { name: '긴장했어요' }).click()
+  await page.getByRole('button', { name: /12m로 물러나 다시 걷기/ }).click()
+  // leaving mid-walk keeps progress
+  await page.goto('./#/app/together/dubu')
+  await expect(page.getByText('진행 중인 나란히가 있어요.')).toBeVisible()
+  await page.getByRole('button', { name: '이어서 걷기' }).click()
   await page.getByRole('button', { name: '잠깐 멈춤' }).click()
   await expect(page.getByRole('button', { name: '계속 걷기' })).toHaveAttribute('aria-pressed', 'true')
-  await page.getByRole('button', { name: '오늘은 여기까지' }).click()
+  await page.getByRole('button', { name: '그만하기' }).click()
   await page.getByRole('button', { name: '마치기' }).click()
-  await expect(page.getByRole('heading', { name: /까지 나란히 걸었어요/ })).toBeVisible()
-  await page.getByRole('link', { name: '사이 기록 보기' }).click()
+  await expect(page.getByRole('heading', { name: /12m까지 나란히 걸었어요/ })).toBeVisible()
+  await page.getByRole('button', { name: '사이 기록 보기' }).click()
   await expect(page.locator('.bond')).toHaveCount(1)
-  await expect(page.locator('.bond__next')).toContainText('m')
+  await expect(page.locator('.bond__next')).toContainText('15m')
 
   // persistence
   await page.reload()

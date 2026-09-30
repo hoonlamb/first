@@ -19,13 +19,23 @@ export interface DogCard {
   updatedAt: number
 }
 
-export interface Encounter { at: number; distance: number; reaction: Reaction }
-export interface Walk { id: string; startedAt: number; endedAt: number; encounters: Encounter[] }
+export interface Encounter { at: number; distance: number | null; reaction: Reaction }
+export interface Walk { id: string; startedAt: number; endedAt: number; encounters: Encounter[]; applied?: number }
 
 export interface TogetherStep { distance: number; result: 'both-calm' | 'tense' | 'stopped' }
 export interface Bond {
   neighborId: string
   sessions: { at: number; steps: TogetherStep[]; closest: number | null; endedEarly: boolean }[]
+}
+
+export interface ActiveTogether {
+  neighborId: string
+  steps: number[]
+  i: number
+  phase: 'intro' | 'walking' | 'check' | 'tense' | 'greet'
+  log: TogetherStep[]
+  canGreet: boolean
+  startedAt: number
 }
 
 export interface RequestState { status: 'pending' | 'accepted'; at: number; slot: Slot | null }
@@ -37,10 +47,12 @@ export interface State {
   bonds: Record<string, Bond>
   location: 'unknown' | 'granted' | 'denied' | 'manual'
   neighborhood: string | null
+  activeTogether: ActiveTogether | null
+  hidden: string[] // neighbours the user chose not to see (local block)
 }
 
 const KEY = 'dangq.demo.v1'
-const empty: State = { card: null, walks: [], activeWalk: null, requests: {}, bonds: {}, location: 'unknown', neighborhood: null }
+const empty: State = { card: null, walks: [], activeWalk: null, requests: {}, bonds: {}, location: 'unknown', neighborhood: null, activeTogether: null, hidden: [] }
 
 function load(): State {
   try {
@@ -97,7 +109,7 @@ export const REACTION_LABEL: Record<Reaction, string> = { calm: '편안했어요
 
 /** closest distance at which the dog stayed calm in logged encounters */
 export function closestCalm(walks: Walk[]): number | null {
-  const calm = walks.flatMap((w) => w.encounters).filter((e) => e.reaction === 'calm').map((e) => e.distance)
+  const calm = walks.flatMap((w) => w.encounters).filter((e) => e.reaction === 'calm' && e.distance !== null).map((e) => e.distance as number)
   return calm.length ? Math.min(...calm) : null
 }
 
@@ -106,6 +118,26 @@ export function reactionAt(distance: number, comfort: number): Reaction {
   if (distance >= comfort) return 'calm'
   if (distance >= comfort * 0.5) return 'alert'
   return 'react'
+}
+
+/**
+ * Card-distance suggestion after a walk. Widening (safer) always wins over narrowing.
+ * - widen: any tense/react encounter at or beyond the card distance → farthest such distance + 2m.
+ * - narrow: only with ≥3 calm encounters across ≥2 walks, all closer than the card, and no tense/react
+ *   within 2m of them in any walk → the closest distance that is still ≥ (farthest tense/react + 2m).
+ */
+export function suggestComfort(card: DogCard, walks: Walk[]): { to: number; kind: 'widen' | 'narrow' } | null {
+  const all = walks.flatMap((w) => w.encounters.map((e) => ({ ...e, walk: w.id }))).filter((e) => e.distance !== null) as (Encounter & { distance: number; walk: string })[]
+  const bad = all.filter((e) => e.reaction !== 'calm').map((e) => e.distance)
+  const worst = bad.length ? Math.max(...bad) : 0
+  if (worst >= card.comfort) return { to: Math.min(20, worst + 2), kind: 'widen' }
+  const calmClose = all.filter((e) => e.reaction === 'calm' && e.distance < card.comfort && e.distance >= worst + 2)
+  const walksWithCalm = new Set(calmClose.map((e) => e.walk)).size
+  if (calmClose.length >= 3 && walksWithCalm >= 2) {
+    const to = Math.max(...[Math.min(...calmClose.map((e) => e.distance)), worst + 2, 1])
+    if (to < card.comfort) return { to, kind: 'narrow' }
+  }
+  return null
 }
 
 export const uid = () => Math.random().toString(36).slice(2, 9)

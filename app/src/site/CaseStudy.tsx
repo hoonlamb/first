@@ -21,10 +21,10 @@ export default function CaseStudy() {
             <p className="eyebrow eyebrow--moss">케이스 스터디 · 댕큐 리프로젝트</p>
             <h1 className="case__title">만남을 약속하던 앱을,<br />거리를 약속하는 서비스로.</h1>
             <dl className="case__meta">
-              <div><dt>출발점</dt><dd>팀 프로젝트 ‘댕큐’ (강지훈·신수연). 반려견 스와이프 매칭, 보호자 프로필 유료 잠금, 채팅, 약속, 후기</dd></div>
+              <div><dt>출발점</dt><dd>2인 팀 프로젝트 ‘댕큐’. 반려견 스와이프 매칭, 보호자 프로필 유료 잠금, 채팅, 약속, 후기</dd></div>
               <div><dt>이번 범위</dt><dd>개인 확장. 조사, 전략, 브랜드, 제품 설계, 구현, 검수. AI 에이전트와 협업해 병렬로 진행</dd></div>
               <div><dt>결과물</dt><dd>브랜드 사이트, 작동하는 체험 모드 제품, 브랜드 가이드, 키비주얼, 출시 영상</dd></div>
-              <div><dt>검증 수준</dt><dd>자동화 테스트와 접근성 점검까지. <b>실제 사용자 인터뷰는 아직 하지 않았어요.</b></dd></div>
+              <div><dt>검증 수준</dt><dd>E2E 테스트, 독립 검수 2라운드, 접근성·성능 측정(Chromium). <b>실제 사용자 인터뷰는 아직 하지 않았어요.</b></dd></div>
             </dl>
             <figure className="case__film">
               <video controls playsInline preload="none" poster="./media/poster.jpg" width="1920" height="1080">
@@ -46,10 +46,9 @@ export default function CaseStudy() {
                 <li><b>바꾼 것.</b> 외모로 고르는 스와이프, 연애 요소가 섞인 유료 잠금. 흰 글자와 #FF4375의 대비가 3.33:1로 본문 기준(4.5:1)에 못 미친 점. 빈 화면·오류·로딩 상태가 없던 점.</li>
               </ul>
             </div>
-            <figure className="case__before">
-              <img src="./case/before-home.jpg" alt="기존 댕큐 홈 화면. 분홍색 강조와 강아지 사진 카드 중심" loading="lazy" width="520" height="1125" />
-              <img src="./case/before-swipe.jpg" alt="기존 댕큐 스와이프 매칭 화면. 강아지 사진 전체 화면과 하트 버튼" loading="lazy" width="520" height="1125" />
-              <figcaption>기존 팀 작업 (Figma ‘WEEK 12 · 1119’ 페이지). 사진 출처와 라이선스는 원본 파일에 기록되어 있지 않아요.</figcaption>
+            <figure className="case__before case__before--one">
+              <img src="./case/before-ia.jpg" alt="기존 댕큐 메뉴 구조 슬라이드. 메인, 큐레이션, 커뮤니티, 댕댕인증소, 마이페이지 다섯 탭" loading="lazy" width="1200" height="675" />
+              <figcaption>기존 팀 작업의 메뉴 구조(Figma ‘1217’ 페이지). 앱 화면 캡처는 출처를 모르는 개 사진이 들어 있어 싣지 않았고, 출처 미상의 3D 마스코트도 가렸어요.</figcaption>
             </figure>
           </div>
         </section>
@@ -60,11 +59,11 @@ export default function CaseStudy() {
             <h2 className="h-l">처음 가설을 스스로 반박했어요</h2>
             <p className="case__lead">출발 가설은 “우리 개에게 맞는 동네 산책 친구를 만나는 서비스”였어요. 자료를 모을수록 약점이 분명해졌어요.</p>
             <div className="case__evidence">
-              <article><p className="num case__big">89.4%</p><p>산책 중 비반려인의 행동으로 불편을 겪은 반려견 가구. 1위는 놀라게 하거나 겁주는 행동(48.7%), 2위는 허락 없이 만지기(39.2%)예요.<span className="case__src">KB금융지주 경영연구소 「2025 한국 반려동물 보고서」 보도 인용</span></p></article>
-              <article><p className="num case__big">71.0%</p><p>반려견 유치원 이용 이유 중 ‘사회화 훈련’. 월평균 이용료는 25만 4,800원이에요. 사회화에는 이미 돈을 쓰고 있어요.<span className="case__src">한국소비자원·서울시 실태조사 보도(2025)</span></p></article>
-              <article><p className="num case__big">3곳</p><p>반려견 소셜·산책 플랫폼의 실패 사례: Dogster 커뮤니티 종료(2019), Wag! 파산보호 신청(2025), 도그메이트 회생 절차 후 인수. 만남 자체를 파는 모델은 약해요.<span className="case__src">각 사 공지와 보도</span></p></article>
+              <article><p className="num case__big">89.4%</p><p>산책 중 비반려인의 행동으로 불편을 겪은 반려견 가구. 1위는 놀라게 하거나 겁주는 행동(48.7%), 2위는 허락 없이 만지기(39.2%)예요.<span className="case__src">KB금융지주 경영연구소 「2025 한국 반려동물 보고서」 보도 인용 · 원문 대조 전</span></p></article>
+              <article><p className="num case__big">71.0%</p><p>반려견 유치원 이용 이유 중 ‘사회화 훈련’. 월평균 이용료는 25만 4,800원이에요. 사회화에는 이미 돈을 쓰고 있어요.<span className="case__src">한국소비자원·서울시 실태조사 보도(2025) · 원문 대조 전</span></p></article>
+              <article><p className="num case__big">OR 3.10</p><p>개와 산책하면 이웃을 알게 될 가능성이 높아진다는 연구가 있지만, 다른 연구에서는 효과가 약했어요. 만남을 약속하기엔 근거가 얇아요. 반려견 커뮤니티 Dogster는 2019년에 문을 닫았고, 반대로 돌봄 마켓 Rover는 크게 성장했어요. 사람들이 돈을 쓰는 곳은 ‘만남’보다 ‘돌봄과 안전’ 쪽이에요.<span className="case__src">Wood 2015 외 · 각 사 공지와 보도 · 원문 대조 전</span></p></article>
             </div>
-            <p className="case__turn">문제는 친구가 없어서가 아니라, <b>서로의 거리를 몰라서</b> 생긴다고 판단했어요.</p>
+            <p className="case__turn">다가오는 사람은 어떻게 다가가면 되는지, 마주 오는 개의 보호자는 얼마나 떨어져야 하는지 몰라요. 문제는 친구가 없어서가 아니라 <b>서로의 거리를 몰라서</b> 생긴다고 판단했어요.</p>
             <p className="case__note">수치는 보도를 거쳐 인용했어요. 공개 전에 원문과 대조해야 해요. 전체 출처와 확인 날짜는 저장소의 outputs/01_research/sources.md에 있어요.</p>
           </div>
         </section>
@@ -94,13 +93,15 @@ export default function CaseStudy() {
             <div>
               <p className="case__no num">04</p>
               <h2 className="h-l">핵심 아이디어: 병행 산책</h2>
-              <p>훈련사들이 개를 처음 소개할 때 흔히 쓰는 방법이 있어요. 두 개를 멀리 떨어뜨려 같은 방향으로 걷게 하고, 둘 다 편할 때만 거리를 좁히는 ‘병행 산책(parallel walk)’이에요. 댕큐는 이 기법을 누구나 따라 할 수 있는 단계로 바꿨어요.</p>
+              <p>여러 반려견 훈련 자료가 개를 처음 소개할 때 권하는 방법이 있어요. 두 개를 멀리 떨어뜨려 같은 방향으로 걷게 하고, 둘 다 편할 때만 거리를 좁히는 ‘병행 산책(parallel walk)’이에요. 댕큐는 이 방법을 따라 하기 쉬운 단계로 나누고, 안전 규칙을 코드로 고정했어요.</p>
               <ul className="case__list">
-                <li>시작 거리는 둘 중 더 먼 쪽의 편한 거리에 여유를 더해 정해요.</li>
-                <li>한쪽이라도 긴장하면 멈추거나 한 단계 물러나요.</li>
-                <li>어느 단계에서 끝나도 기록되고, 다음엔 편안했던 거리에서 이어서 시작해요.</li>
+                <li>시작은 둘 중 더 먼 쪽의 편한 거리보다 2m 이상 멀리서.</li>
+                <li>첫 만남은 6m 또는 편한 거리의 60%보다 가까이 가지 않고, 인사하지 않아요. 6m는 AKC 시민견 테스트에서 다른 개와 마주치는 항목의 거리(약 20ft)를 참고했어요.</li>
+                <li>한 단계에 35%보다 많이 좁히지 않아요. 긴장하면 물러나기가 기본 선택지예요.</li>
+                <li>다음 산책은 지난번 편안했던 거리보다 한 단계 멀리서 몸을 풀고 시작해요.</li>
+                <li>둘 중 한 친구라도 12m 이상 필요하면 보호자끼리가 아니라 훈련사 동행으로만 열어요(준비 중).</li>
               </ul>
-              <p className="case__src">참고: Sniffspot, “How to Do a Parallel Walk with Dogs”. MLAR, “Dog-Dog Introductions: Parallel Walking” 외 훈련 자료</p>
+              <p className="case__src">참고: Sniffspot·Journey Dog Training·MLAR의 병행 산책 안내(S79–S81), AKC CGC 테스트 항목(S74). 수치 기준은 이 자료를 참고한 설계 가정이에요. 행동 전문가 검토 전이에요.</p>
             </div>
             <div className="case__lanes" aria-hidden="true">
               {[15, 8, 4].map((d) => <Lanes key={d} distance={d} me={{ name: 'A', state: 'calm' }} them={{ name: 'B', state: 'calm' }} theme="paper" height={200} />)}
@@ -169,7 +170,11 @@ export default function CaseStudy() {
           <div className="wrap">
             <p className="case__no num">08</p>
             <h2 className="h-l">검수</h2>
-            <p className="case__lead">제작과 분리된 독립 검수에서 나온 문제를 고치고 다시 확인했어요. 측정 조건과 결과, 확인하지 못한 환경은 저장소의 outputs/05_qa/에 그대로 남겼어요.</p>
+            <p className="case__lead">제작에 참여하지 않은 검수 에이전트가 1차에서 51건(중대 1, 주요 19, 경미 31)을 찾았어요. 가장 큰 문제는 나란히 단계가 개의 편한 거리를 무시하고 2m까지 좁히던 규칙이었어요. 규칙 자체를 다시 설계하고 단위 테스트로 고정했어요. 수정 결과와 2차 재확인, 확인하지 못한 환경은 저장소의 outputs/05_qa/에 남겼어요.</p>
+            <ul className="case__list">
+              <li><b>반박 검토에서 바꾼 것.</b> 산책길의 3초에 휴대폰을 꺼내기 어렵다는 지적에 리드줄 태그 인쇄를 더했어요. 보호자와 행인이 ‘8m’를 가늠하지 못한다는 지적에 모든 거리를 걸음 수와 함께 적었어요. 반응하는 순간에는 한 번만 누르면 기록되게 바꿨어요.</li>
+              <li><b>아직 남은 것.</b> 실제 보호자 인터뷰, 행동 전문가 검토, Safari·Firefox·실기기 확인, 상표 조사.</li>
+            </ul>
           </div>
         </section>
       </main>

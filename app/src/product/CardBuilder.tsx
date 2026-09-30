@@ -5,6 +5,7 @@ import { GREETING_ASK, GREETING_LABEL, PACE_LABEL, SIZE_LABEL, SLOT_LABEL, TRIGG
 import { CardFace } from '../components/CardFace'
 import { Lanes } from '../components/Lanes'
 import { Confirm } from './ui'
+import { distanceWords, josa, visibleLength } from '../lib/korean'
 
 type Draft = Omit<DogCard, 'updatedAt'>
 const BLANK: Draft = { name: '', size: 'medium', pace: 'steady', greeting: 'slow', comfort: 8, triggers: [], slots: [], note: '' }
@@ -12,10 +13,12 @@ const STEPS = ['이름', '편한 거리', '인사와 걸음', '조심할 것'] a
 
 /** 거리 기준 도움말: owners rarely know a number, so we translate everyday cues into meters. */
 const COMFORT_HINTS = [
-  { max: 3, text: '다른 개가 옆을 스쳐 가도 괜찮아요.' },
-  { max: 6, text: '길 건너편 정도면 편하게 지나가요.' },
-  { max: 10, text: '같은 인도에서 마주치면 긴장해요. 차도 하나 정도 떨어져야 편해요.' },
-  { max: 20, text: '멀리서 보이기만 해도 신경 써요. 공원 반대편 정도가 편해요.' },
+  { max: 2, text: '다른 개가 옆을 스쳐 가도 괜찮아요.' },
+  { max: 5, text: '좁은 골목 건너편 정도면 편하게 지나가요.' },
+  { max: 8, text: '같은 인도에서 마주치면 긴장해요. 2차선 길 건너편 정도가 편해요.' },
+  { max: 12, text: '4차선 길 건너편 정도는 떨어져야 편해요.' },
+  { max: 16, text: '멀리서 보이기만 해도 신경 써요. 놀이터 반대편 정도가 편해요.' },
+  { max: 20, text: '다른 개가 시야에 들어오면 긴장해요. 산책 시간을 피하는 게 편할 수 있어요.' },
 ]
 
 export function CardBuilder({ mode }: { mode: 'new' | 'edit' }) {
@@ -25,6 +28,8 @@ export function CardBuilder({ mode }: { mode: 'new' | 'edit' }) {
   const [step, setStep] = useState(0)
   const [nameError, setNameError] = useState<string | null>(null)
   const [leaving, setLeaving] = useState(false)
+  const existing = mode === 'new' ? getState().card : null
+  const [replaceAsk, setReplaceAsk] = useState(false)
   const nameRef = useRef<HTMLInputElement>(null)
   const headRef = useRef<HTMLHeadingElement>(null)
   const id = useId()
@@ -38,12 +43,14 @@ export function CardBuilder({ mode }: { mode: 'new' | 'edit' }) {
     if (step === 0) {
       const name = d.name.trim()
       if (!name) { setNameError('이름을 적어 주세요. 카드 맨 위에 크게 보여요.'); nameRef.current?.focus(); return }
-      if (name.length > 10) { setNameError('이름은 10자까지 쓸 수 있어요.'); nameRef.current?.focus(); return }
+      if (visibleLength(name) > 10) { setNameError('이름은 10글자까지 쓸 수 있어요.'); nameRef.current?.focus(); return }
       set('name', name)
     }
     if (step < STEPS.length) goto(step + 1)
   }
   const save = () => {
+    if (existing && !replaceAsk) { setReplaceAsk(true); return }
+    setReplaceAsk(false)
     setState((s) => ({ ...s, card: { ...d, name: d.name.trim(), note: d.note.trim(), updatedAt: Date.now() } }))
     nav('/app', { replace: true })
   }
@@ -63,12 +70,15 @@ export function CardBuilder({ mode }: { mode: 'new' | 'edit' }) {
         )}
       </div>
 
+      {step === 0 && existing && (
+        <p className="notice" role="status">이미 {existing.name}의 카드가 있어요. 새로 만들면 지금 카드를 바꾸게 돼요. <a href="#/app/card/edit">지금 카드 고치기</a></p>
+      )}
       {step === 0 && (
         <section className="builder__step">
           <h1 ref={headRef} tabIndex={-1} className="builder__title">어떤 친구의<br />카드인가요?</h1>
           <div className="field">
             <label htmlFor={`${id}-name`}>이름</label>
-            <input id={`${id}-name`} ref={nameRef} className="input" value={d.name} maxLength={12} autoComplete="off"
+            <input id={`${id}-name`} ref={nameRef} className="input" value={d.name} maxLength={40} autoComplete="off"
               aria-invalid={!!nameError} aria-describedby={nameError ? `${id}-name-err` : undefined}
               onChange={(e) => { set('name', e.target.value); setNameError(null) }}
               onKeyDown={(e) => { if (e.key === 'Enter') next() }} placeholder="예: 뽀리" />
@@ -87,17 +97,17 @@ export function CardBuilder({ mode }: { mode: 'new' | 'edit' }) {
 
       {step === 1 && (
         <section className="builder__step">
-          <h1 ref={headRef} tabIndex={-1} className="builder__title">{d.name}는 다른 개가<br />얼마나 떨어져야 편한가요?</h1>
+          <h1 ref={headRef} tabIndex={-1} className="builder__title">{josa(d.name, '은/는')} 다른 개가<br />얼마나 떨어져야 편한가요?</h1>
           <div className="comfort">
             <div className="comfort__stage" aria-hidden="true">
               <Lanes distance={d.comfort} me={{ name: d.name, state: 'calm' }} them={{ name: '다른 개', state: 'calm' }} theme="ink" height={300} walking />
             </div>
             <label htmlFor={`${id}-comfort`} className="sr-only">편한 거리(미터)</label>
             <input id={`${id}-comfort`} type="range" className="range range--paper" min={1} max={20} value={d.comfort}
-              onChange={(e) => set('comfort', Number(e.target.value))} aria-valuetext={`${d.comfort}미터. ${hint.text}`}
+              onChange={(e) => set('comfort', Number(e.target.value))} aria-valuetext={`${d.comfort}미터, ${distanceWords(d.comfort)}. ${hint.text}`}
               style={{ ['--fill' as string]: `${((d.comfort - 1) / 19) * 100}%` }} />
             <div className="comfort__ends" aria-hidden="true"><span>1m 가까이</span><span>20m 멀리</span></div>
-            <p className="comfort__value" aria-live="polite"><span className="num">{d.comfort}m</span> {hint.text}</p>
+            <p className="comfort__value" aria-live="polite"><span className="num">{d.comfort}m</span><span className="comfort__steps">{distanceWords(d.comfort)}</span> {hint.text}</p>
           </div>
           <p className="fineprint">정확하지 않아도 괜찮아요. 산책 기록이 쌓이면 댕큐가 조정을 제안해요.</p>
         </section>
@@ -168,6 +178,8 @@ export function CardBuilder({ mode }: { mode: 'new' | 'edit' }) {
         {done && <button className="btn btn-signal builder__next" onClick={save}>{mode === 'edit' ? '고친 내용 저장' : '카드 저장하기'}</button>}
       </div>
 
+      <Confirm open={replaceAsk} title={`${existing?.name ?? ''} 카드를 새 카드로 바꿀까요?`} body="지금 카드는 사라지고 새 카드가 저장돼요. 산책·사이 기록은 그대로 남아요."
+        confirmLabel="새 카드로 바꾸기" cancelLabel="취소" danger onCancel={() => setReplaceAsk(false)} onConfirm={save} />
       <Confirm open={leaving} title="작성 중인 내용이 있어요" body={mode === 'edit' ? '고친 내용은 저장되지 않아요.' : '지금 나가면 입력한 내용이 사라져요.'}
         confirmLabel="나가기" cancelLabel="계속 쓰기" danger onCancel={() => setLeaving(false)} onConfirm={() => { setLeaving(false); nav('/app') }} />
     </div>

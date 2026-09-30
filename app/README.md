@@ -1,32 +1,9 @@
-# React + TypeScript + Vite
+# 댕큐(DANGQ) — 사이트와 체험 모드 제품
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+`npm install` → `npm run dev` (http://localhost:5173)
+- `#/` 브랜드 사이트 · `#/app` 체험 모드 · `#/brand` 브랜드 가이드 · `#/case` 케이스 스터디
+- 빌드 `npm run build` (정적 파일, HashRouter, base `./`)
+- 테스트 `npx playwright test` (E2E + 나란히 규칙 단위 테스트)
+- 문구를 바꾸면 `python3 scripts/subset-font.py`로 폰트 서브셋을 다시 만든다(fonttools, brotli 필요).
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+인수인계 전체: `../outputs/07_handoff/HANDOFF.md`

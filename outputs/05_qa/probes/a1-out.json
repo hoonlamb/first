@@ -1,0 +1,358 @@
+{
+ "390 #/": {
+  "violations": [],
+  "headings": [
+   "H1:가까워지는 데는 순서가 있어요.",
+   "H2:“귀엽다”며 다가오는 손이 어떤 개에게는 가",
+   "H2:거리를 말하고, 지키고, 기억해요.",
+   "H3:산책 카드",
+   "H3:뽀리",
+   "H3:나란히 첫 산책",
+   "H3:사이 기록",
+   "H2:말 대신 화면 한 장.",
+   "H2:서두르지 않겠다는 약속",
+   "H2:우리 개의 거리부터 알려 주세요."
+  ],
+  "h1count": 1
+ },
+ "390 #/brand": {
+  "violations": [
+   {
+    "id": "aria-prohibited-attr",
+    "impact": "serious",
+    "n": 1,
+    "sample": [
+     ".bd-ratio :: Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+    ]
+   },
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 5,
+    "sample": [
+     ".bd-legend > code :: Element has insufficient color contrast of 4.31 (foreground color: #58625c, background color: #d9d5ca, font size: 9.0pt (12.04px), font weight: normal). Expecte",
+     "tr:nth-child(13) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 4.49 (foreground color: #b83a0a, background color: #e8e3d7, font size: 13.5pt (18px), font weight: bold). Expected co",
+     "tr:nth-child(14) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 2.85 (foreground color: #ffffff, background color: #ff6a2b, font size: 13.5pt (18px), font weight: bold). Expected co",
+     "tr:nth-child(15) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 2.53 (foreground color: #ff6a2b, background color: #f4f1ea, font size: 13.5pt (18px), font weight: bold). Expected co"
+    ]
+   }
+  ],
+  "headings": [
+   "H1:두 선이 나란히 걷는 브랜드.",
+   "H2:포지셔닝",
+   "H3:포지셔닝 문장",
+   "H3:이름의 뜻",
+   "H3:우리는 / 우리가 아닌 것",
+   "H2:메시지 구조",
+   "H3:산책 카드",
+   "H3:나란히 첫 산책",
+   "H3:사이 기록",
+   "H2:보이스 & 톤",
+   "H3:개가 주어예요",
+   "H3:부탁하되 탓하지 않아요",
+   "H3:서두르지 않아요",
+   "H3:숫자는 정확하게, 말은 짧게"
+  ],
+  "h1count": 1
+ },
+ "390 #/case": {
+  "violations": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 1,
+    "sample": [
+     ".case__sec--soft > .case__two.wrap > div:nth-child(1) > .case__no.num :: Element has insufficient color contrast of 4.49 (foreground color: #b83a0a, background color: #e8e3d7, font size: 12.8pt (17px), font weight: bold). Expected co"
+    ]
+   }
+  ],
+  "headings": [
+   "H1:만남을 약속하던 앱을, 거리를 약속하는 서비",
+   "H2:기존 댕큐에서 시작했어요",
+   "H2:처음 가설을 스스로 반박했어요",
+   "H2:다섯 방향을 비교해 둘을 골랐어요",
+   "H2:핵심 아이디어: 병행 산책",
+   "H2:브랜드: 세 방향 중 ‘나란히 두 선’",
+   "H2:기억에 남기려고 만든 다섯 장면",
+   "H2:만든 것과 아직 아닌 것",
+   "H3:이 결과가 나오면 전략을 바꿔요",
+   "H2:검수"
+  ],
+  "h1count": 1
+ },
+ "390 #/app": {
+  "violations": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 1,
+    "sample": [
+     ".home__showhint :: Element has insufficient color contrast of 4.39 (foreground color: #442f1d, background color: #ff6a2b, font size: 9.0pt (12px), font weight: bold). Expected con"
+    ]
+   },
+   {
+    "id": "page-has-heading-one",
+    "impact": "moderate",
+    "n": 1,
+    "sample": [
+     "html :: Fix all of the following:\n  Page must have a level-one heading"
+    ]
+   }
+  ],
+  "headings": [
+   "H3:뽀리",
+   "H2:오늘의 산책",
+   "H2:나란히"
+  ],
+  "h1count": 0
+ },
+ "390 #/app/walk": {
+  "violations": [],
+  "headings": [
+   "H1:0:13"
+  ],
+  "h1count": 1
+ },
+ "390 #/app/together": {
+  "violations": [],
+  "headings": [
+   "H1:뽀리와 나란히 걸을 이웃"
+  ],
+  "h1count": 1
+ },
+ "390 #/app/together/dubu": {
+  "violations": [
+   {
+    "id": "page-has-heading-one",
+    "impact": "moderate",
+    "n": 1,
+    "sample": [
+     "html :: Fix all of the following:\n  Page must have a level-one heading"
+    ]
+   }
+  ],
+  "headings": [
+   "H3:뽀리",
+   "H3:두부",
+   "H2:첫 나란히 산책 계획"
+  ],
+  "h1count": 0
+ },
+ "390 #/app/together/dubu/walk": {
+  "violations": [],
+  "headings": [
+   "H1:뽀리와 두부, 나란히 걸어요."
+  ],
+  "h1count": 1
+ },
+ "390 #/app/bond": {
+  "violations": [],
+  "headings": [
+   "H1:뽀리의 사이",
+   "H2:보리"
+  ],
+  "h1count": 1
+ },
+ "390 #/app/show": {
+  "violations": [],
+  "headings": [],
+  "h1count": 0
+ },
+ "390 #/app/card/edit": {
+  "violations": [],
+  "headings": [
+   "H1:어떤 친구의 카드인가요?"
+  ],
+  "h1count": 1
+ },
+ "390 #/app/settings": {
+  "violations": [],
+  "headings": [
+   "H1:체험 모드 안내"
+  ],
+  "h1count": 1
+ },
+ "390 SHOWPASS": {
+  "violations": [],
+  "headings": [],
+  "h1count": 0
+ },
+ "1440 #/": {
+  "violations": [],
+  "headings": [
+   "H1:가까워지는 데는 순서가 있어요.",
+   "H2:“귀엽다”며 다가오는 손이 어떤 개에게는 가",
+   "H2:거리를 말하고, 지키고, 기억해요.",
+   "H3:산책 카드",
+   "H3:뽀리",
+   "H3:나란히 첫 산책",
+   "H3:사이 기록",
+   "H2:말 대신 화면 한 장.",
+   "H2:서두르지 않겠다는 약속",
+   "H2:우리 개의 거리부터 알려 주세요."
+  ],
+  "h1count": 1
+ },
+ "1440 #/brand": {
+  "violations": [
+   {
+    "id": "aria-prohibited-attr",
+    "impact": "serious",
+    "n": 1,
+    "sample": [
+     ".bd-ratio :: Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute."
+    ]
+   },
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 5,
+    "sample": [
+     ".bd-legend > code :: Element has insufficient color contrast of 4.31 (foreground color: #58625c, background color: #d9d5ca, font size: 9.0pt (12.04px), font weight: normal). Expecte",
+     "tr:nth-child(13) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 4.49 (foreground color: #b83a0a, background color: #e8e3d7, font size: 13.5pt (18px), font weight: bold). Expected co",
+     "tr:nth-child(14) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 2.85 (foreground color: #ffffff, background color: #ff6a2b, font size: 13.5pt (18px), font weight: bold). Expected co",
+     "tr:nth-child(15) > td:nth-child(1) > .bd-contrast__ex :: Element has insufficient color contrast of 2.53 (foreground color: #ff6a2b, background color: #f4f1ea, font size: 13.5pt (18px), font weight: bold). Expected co"
+    ]
+   }
+  ],
+  "headings": [
+   "H1:두 선이 나란히 걷는 브랜드.",
+   "H2:포지셔닝",
+   "H3:포지셔닝 문장",
+   "H3:이름의 뜻",
+   "H3:우리는 / 우리가 아닌 것",
+   "H2:메시지 구조",
+   "H3:산책 카드",
+   "H3:나란히 첫 산책",
+   "H3:사이 기록",
+   "H2:보이스 & 톤",
+   "H3:개가 주어예요",
+   "H3:부탁하되 탓하지 않아요",
+   "H3:서두르지 않아요",
+   "H3:숫자는 정확하게, 말은 짧게"
+  ],
+  "h1count": 1
+ },
+ "1440 #/case": {
+  "violations": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 1,
+    "sample": [
+     ".case__sec--soft > .case__two.wrap > div:nth-child(1) > .case__no.num :: Element has insufficient color contrast of 4.49 (foreground color: #b83a0a, background color: #e8e3d7, font size: 12.8pt (17px), font weight: bold). Expected co"
+    ]
+   }
+  ],
+  "headings": [
+   "H1:만남을 약속하던 앱을, 거리를 약속하는 서비",
+   "H2:기존 댕큐에서 시작했어요",
+   "H2:처음 가설을 스스로 반박했어요",
+   "H2:다섯 방향을 비교해 둘을 골랐어요",
+   "H2:핵심 아이디어: 병행 산책",
+   "H2:브랜드: 세 방향 중 ‘나란히 두 선’",
+   "H2:기억에 남기려고 만든 다섯 장면",
+   "H2:만든 것과 아직 아닌 것",
+   "H3:이 결과가 나오면 전략을 바꿔요",
+   "H2:검수"
+  ],
+  "h1count": 1
+ },
+ "1440 #/app": {
+  "violations": [
+   {
+    "id": "color-contrast",
+    "impact": "serious",
+    "n": 1,
+    "sample": [
+     ".home__showhint :: Element has insufficient color contrast of 4.39 (foreground color: #442f1d, background color: #ff6a2b, font size: 9.0pt (12px), font weight: bold). Expected con"
+    ]
+   },
+   {
+    "id": "page-has-heading-one",
+    "impact": "moderate",
+    "n": 1,
+    "sample": [
+     "html :: Fix all of the following:\n  Page must have a level-one heading"
+    ]
+   }
+  ],
+  "headings": [
+   "H3:뽀리",
+   "H2:오늘의 산책",
+   "H2:나란히"
+  ],
+  "h1count": 0
+ },
+ "1440 #/app/walk": {
+  "violations": [],
+  "headings": [
+   "H1:0:45"
+  ],
+  "h1count": 1
+ },
+ "1440 #/app/together": {
+  "violations": [],
+  "headings": [
+   "H1:뽀리와 나란히 걸을 이웃"
+  ],
+  "h1count": 1
+ },
+ "1440 #/app/together/dubu": {
+  "violations": [
+   {
+    "id": "page-has-heading-one",
+    "impact": "moderate",
+    "n": 1,
+    "sample": [
+     "html :: Fix all of the following:\n  Page must have a level-one heading"
+    ]
+   }
+  ],
+  "headings": [
+   "H3:뽀리",
+   "H3:두부",
+   "H2:첫 나란히 산책 계획"
+  ],
+  "h1count": 0
+ },
+ "1440 #/app/together/dubu/walk": {
+  "violations": [],
+  "headings": [
+   "H1:뽀리와 두부, 나란히 걸어요."
+  ],
+  "h1count": 1
+ },
+ "1440 #/app/bond": {
+  "violations": [],
+  "headings": [
+   "H1:뽀리의 사이",
+   "H2:보리"
+  ],
+  "h1count": 1
+ },
+ "1440 #/app/show": {
+  "violations": [],
+  "headings": [],
+  "h1count": 0
+ },
+ "1440 #/app/card/edit": {
+  "violations": [],
+  "headings": [
+   "H1:어떤 친구의 카드인가요?"
+  ],
+  "h1count": 1
+ },
+ "1440 #/app/settings": {
+  "violations": [],
+  "headings": [
+   "H1:체험 모드 안내"
+  ],
+  "h1count": 1
+ },
+ "1440 SHOWPASS": {
+  "violations": [],
+  "headings": [],
+  "h1count": 0
+ }
+}

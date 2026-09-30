@@ -4,17 +4,24 @@ import { DistanceDial } from './DistanceDial'
 import { Lanes } from '../components/Lanes'
 import { CardFace } from '../components/CardFace'
 import { SiteHeader, SiteFooter } from './SiteChrome'
+import { planFor } from '../lib/demo'
 
 const SAMPLE_CARD = {
   name: '뽀리', size: 'medium' as const, pace: 'slow' as const, greeting: 'slow' as const, comfort: 8,
   triggers: ['bike' as const, 'kids' as const], slots: ['evening' as const], note: '처음엔 옆보다 조금 뒤가 편해요.',
 }
 
+// Built from the real product rule (lib/demo planFor) for 뽀리(8m) and 두부(6m), so the site never shows other numbers than the app.
+const FIRST = planFor({ comfort: 8, greeting: 'slow' }, { comfort: 6, greeting: 'slow' })
+const SECOND = planFor({ comfort: 8, greeting: 'slow' }, { comfort: 6, greeting: 'slow' }, [{ closest: FIRST.floor }])
+const COPY = [
+  { title: '멀리서, 같은 방향으로', body: '마주 보지 않고 같은 쪽으로 걸어요. 서로를 알아채기만 해도 충분해요.' },
+  { title: '둘 다 편하면 조금 더 가까이', body: '한쪽이라도 긴장하면 거리를 다시 벌려요. 물러나는 것도 순서예요.' },
+  { title: '첫날은 여기까지', body: `첫 만남에는 ${FIRST.floor}m보다 가까이 가지 않고, 인사도 하지 않아요.` },
+]
 const LADDER = [
-  { d: 15, title: '멀리서, 같은 방향으로', body: '마주 보지 않고 같은 쪽으로 걸어요. 서로를 알아채기만 해도 충분해요.' },
-  { d: 8, title: '둘 다 편하면 조금 더 가까이', body: '긴장하면 거리를 다시 벌려요. 뒤로 가는 것도 순서의 일부예요.' },
-  { d: 4, title: '나란히, 한 블록 더', body: '리드줄은 느슨하게. 걷는 동안 긴장이 풀려요.' },
-  { d: 2, title: '인사는 선택', body: '둘 다 원할 때만 짧게. 오늘은 걷기만 해도 성공이에요.' },
+  ...FIRST.steps.map((d, k) => ({ d, ...COPY[Math.min(k, COPY.length - 1)] })),
+  { d: SECOND.start, title: '다음 산책은 이어서', body: `처음부터가 아니라 ${SECOND.start}m에서 몸을 풀고 시작해요. 가까워지는 건 여러 번에 걸쳐서요.` },
 ]
 
 function LadderPreview() {
@@ -27,7 +34,7 @@ function LadderPreview() {
       </div>
       <ol className="ladder__steps">
         {LADDER.map((s, idx) => (
-          <li key={s.d}>
+          <li key={`${s.d}-${idx}`}>
             <button className={`ladder__step ${idx === i ? 'is-on' : ''}`} aria-current={idx === i ? 'step' : undefined} onClick={() => setI(idx)}>
               <span className="num">{s.d}m</span>
               <span>{s.title}</span>
@@ -71,7 +78,7 @@ export function Home() {
             </div>
           </div>
           <div className="wrap">
-            <p className="problem__turn">문제는 친구가 없어서가 아니라, <b>서로의 거리를 몰라서</b> 생겨요.</p>
+            <p className="problem__turn">다가오는 사람은 <b>어떻게 다가가면 되는지</b>, 마주 오는 개의 보호자는 <b>얼마나 떨어져야 하는지</b> 몰라요. 불편은 친구가 없어서가 아니라, 서로의 거리를 몰라서 생겨요.</p>
           </div>
         </section>
 
@@ -85,7 +92,7 @@ export function Home() {
               <div className="how__text">
                 <p className="how__no num">01</p>
                 <h3 className="h-l">산책 카드</h3>
-                <p>1분이면 우리 개의 편한 거리, 인사 방식, 조심할 것이 한 장에 담겨요. 산책길에서 누가 다가오면 화면을 보여 주세요. 설명하느라 당황할 필요가 없어요.</p>
+                <p>다가오는 사람에게 하는 부탁 한 줄, 다른 개와 편한 거리, 조심할 것이 한 장에 담겨요. 거리는 “큰 걸음 10번쯤”처럼 누구나 가늠할 수 있게 적어요. 휴대폰을 꺼낼 틈이 없다면 같은 문장을 리드줄 태그로 달 수도 있어요.</p>
                 <Link to="/app/card/new" className="btn btn-ink">카드 만들어 보기</Link>
               </div>
               <div className="how__visual how__visual--card"><CardFace card={SAMPLE_CARD} /></div>
@@ -94,7 +101,7 @@ export function Home() {
               <div className="how__text">
                 <p className="how__no num">02</p>
                 <h3 className="h-l">나란히 첫 산책</h3>
-                <p>이웃 개와의 첫 만남은 마주 보는 인사가 아니라 멀리서 같은 방향으로 걷기부터 시작해요. 훈련사들이 개를 처음 소개할 때 쓰는 ‘병행 산책’을 누구나 따라 할 수 있게 단계로 나눴어요.</p>
+                <p>이웃 개와의 첫 만남은 마주 보는 인사가 아니라 멀리서 같은 방향으로 걷기부터 시작해요. 여러 반려견 훈련 자료가 개를 처음 소개할 때 권하는 ‘병행 산책’을 단계로 나눴어요. 첫날은 정해진 거리까지만, 인사 없이 걸어요.</p>
               </div>
               <div className="how__visual"><LadderPreview /></div>
             </article>
@@ -118,13 +125,13 @@ export function Home() {
           <div className="wrap show__grid">
             <div className="show__phone" aria-hidden="true">
               <p className="show__big">냄새 먼저,<br />손은 나중에.</p>
-              <p className="show__small">뽀리는 <span className="num">8m</span>부터 편안해요.</p>
+              <p className="show__small">개와 함께라면 큰 걸음 10번쯤 떨어져 지나가 주세요.</p>
               <p className="show__thanks">거리를 지켜 줘서, 댕큐.</p>
             </div>
             <div>
               <p className="eyebrow eyebrow--moss">보여주기 모드</p>
               <h2 id="show-title" className="h-xl">말 대신<br />화면 한 장.</h2>
-              <p className="show__text">누군가 다가올 때 버튼 한 번이면 카드가 큰 글씨로 바뀌어요. 마지막 줄은 언제나 고마움이에요. 거리를 지켜 준 사람에게 하는 인사, 그게 이름 ‘댕큐’의 뜻이에요.</p>
+              <p className="show__text">첫 줄은 지금 해 줬으면 하는 행동, 둘째 줄은 걸음 수로 적은 거리예요. 마지막 줄은 언제나 고마움이에요. 거리를 지켜 준 사람에게 하는 인사, 그게 이름 ‘댕큐’의 뜻이에요.</p>
             </div>
           </div>
         </section>

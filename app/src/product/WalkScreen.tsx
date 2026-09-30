@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import type { Reaction, Walk } from '../lib/store'
-import { REACTION_LABEL, closestCalm, getState, setState, uid, useStore } from '../lib/store'
+import type { Reaction } from '../lib/store'
+import { REACTION_LABEL, closestCalm, getState, setState, suggestComfort, uid, useStore } from '../lib/store'
+import { focusMainHeading } from '../lib/a11y'
+import { josa } from '../lib/korean'
 import { Lanes } from '../components/Lanes'
-import { Confirm, Dialog, PageHead, Toast } from './ui'
+import { Confirm, PageHead, Toast } from './ui'
 
 const DISTANCES = [1, 2, 3, 5, 8, 12, 15]
 
@@ -19,50 +21,58 @@ function useClock(start: number | null) {
 const mmss = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
 const dateLabel = (t: number) => new Date(t).toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' })
 
+/**
+ * Walk logging is built for the moment a dog reacts: one tap records the reaction;
+ * the distance is optional and can be added right after (or never).
+ */
 export function WalkScreen() {
   const card = useStore((s) => s.card)!
   const active = useStore((s) => s.activeWalk)
   const walks = useStore((s) => s.walks)
-  const [logOpen, setLogOpen] = useState(false)
-  const [dist, setDist] = useState<number | null>(null)
-  const [reaction, setReaction] = useState<Reaction | null>(null)
-  const [formError, setFormError] = useState<string | null>(null)
   const [confirmDiscard, setConfirmDiscard] = useState(false)
-  const [summary, setSummary] = useState<Walk | null>(null)
+  const [summaryId, setSummaryId] = useState<string | null>(null)
   const [toast, setToast] = useState<string | null>(null)
   const secs = useClock(active?.startedAt ?? null)
+  const summary = summaryId ? walks.find((w) => w.id === summaryId) ?? null : null
 
   const flash = (m: string) => { setToast(m); setTimeout(() => setToast(null), 2400) }
 
   const start = () => {
     if (getState().activeWalk) return // guard against double start
-    setSummary(null)
+    setSummaryId(null)
     setState((s) => ({ ...s, activeWalk: { id: uid(), startedAt: Date.now(), endedAt: 0, encounters: [] } }))
+    focusMainHeading('.walk__react button')
   }
-  const saveEncounter = () => {
-    if (dist === null || reaction === null) { setFormError('거리와 반응을 모두 골라 주세요.'); return }
-    setState((s) => s.activeWalk ? ({ ...s, activeWalk: { ...s.activeWalk, encounters: [...s.activeWalk.encounters, { at: Date.now(), distance: dist, reaction }] } }) : s)
-    setLogOpen(false); setDist(null); setReaction(null); setFormError(null)
-    flash('마주침을 기록했어요')
+  const log = (reaction: Reaction) => {
+    setState((s) => s.activeWalk ? ({ ...s, activeWalk: { ...s.activeWalk, encounters: [...s.activeWalk.encounters, { at: Date.now(), distance: null, reaction }] } }) : s)
+    flash(`${REACTION_LABEL[reaction]} · 거리는 아래에서 고를 수 있어요`)
+  }
+  const setLastDistance = (m: number) => {
+    setState((s) => {
+      if (!s.activeWalk || !s.activeWalk.encounters.length) return s
+      const enc = [...s.activeWalk.encounters]
+      enc[enc.length - 1] = { ...enc[enc.length - 1], distance: m }
+      return { ...s, activeWalk: { ...s.activeWalk, encounters: enc } }
+    })
   }
   const finish = () => {
     const w = getState().activeWalk
     if (!w) return
     const done = { ...w, endedAt: Date.now() }
     setState((s) => ({ ...s, activeWalk: null, walks: [done, ...s.walks] }))
-    setSummary(done)
+    setSummaryId(done.id)
+    focusMainHeading()
   }
-  const discard = () => { setState((s) => ({ ...s, activeWalk: null })); setConfirmDiscard(false); flash('이번 산책은 기록하지 않았어요') }
-  const applySuggestion = (m: number) => {
-    setState((s) => s.card ? ({ ...s, card: { ...s.card, comfort: m, updatedAt: Date.now() } }) : s)
+  const discard = () => { setState((s) => ({ ...s, activeWalk: null })); setConfirmDiscard(false); flash('이번 산책은 기록하지 않았어요'); focusMainHeading() }
+  const apply = (walkId: string, m: number) => {
+    setState((s) => s.card ? ({ ...s, card: { ...s.card, comfort: m, updatedAt: Date.now() }, walks: s.walks.map((w) => (w.id === walkId ? { ...w, applied: m } : w)) }) : s)
     flash(`카드의 편한 거리를 ${m}m로 바꿨어요`)
   }
 
   if (summary) {
     const calmHere = closestCalm([summary])
     const reacts = summary.encounters.filter((e) => e.reaction !== 'calm')
-    const suggest = calmHere !== null && calmHere < card.comfort ? calmHere : null
-    const tighter = reacts.length > 0 && Math.max(...reacts.map((e) => e.distance)) >= card.comfort ? Math.min(20, Math.max(...reacts.map((e) => e.distance)) + 2) : null
+    const sug = summary.applied === undefined ? suggestComfort(card, walks) : null
     return (
       <div className="stack">
         <PageHead kicker="산책 끝" title={`${mmss(Math.round((summary.endedAt - summary.startedAt) / 1000))} 동안 걸었어요`} />
@@ -72,19 +82,20 @@ export function WalkScreen() {
           <div><span className="num summary__n">{reacts.length}</span><span>긴장·반응</span></div>
         </div>
         {summary.encounters.length === 0 && <p className="panel__note">마주친 개가 없었어요. 조용한 산책도 좋은 기록이에요.</p>}
-        {suggest !== null && (
+        {summary.applied !== undefined && <p className="notice" role="status">카드의 편한 거리를 <span className="num">{summary.applied}m</span>로 바꿨어요.</p>}
+        {sug?.kind === 'widen' && (
           <div className="suggest" role="note">
-            <p><b>{card.name}가 <span className="num">{suggest}m</span>에서도 편안했어요.</b> 카드에는 {card.comfort}m로 적혀 있어요.</p>
-            <button className="btn btn-ink" onClick={() => applySuggestion(suggest)}>카드를 {suggest}m로 바꾸기</button>
+            <p><b><span className="num">{card.comfort}m</span> 밖에서도 긴장한 순간이 있었어요.</b> 카드의 거리를 넓혀 두면 다가오는 사람과 개가 더 조심해요.</p>
+            <button className="btn btn-ink" onClick={() => apply(summary.id, sug.to)}>카드를 {sug.to}m로 넓히기</button>
           </div>
         )}
-        {suggest === null && tighter !== null && (
+        {sug?.kind === 'narrow' && (
           <div className="suggest" role="note">
-            <p><b><span className="num">{card.comfort}m</span> 밖에서도 긴장한 순간이 있었어요.</b> 편한 거리를 조금 넓혀 두면 다가오는 사람이 더 조심해요.</p>
-            <button className="btn btn-ink" onClick={() => applySuggestion(tighter)}>카드를 {tighter}m로 바꾸기</button>
+            <p><b>여러 번의 산책에서 <span className="num">{sug.to}m</span>까지 편안했어요.</b> 카드에는 {card.comfort}m로 적혀 있어요. 서두를 필요는 없어요.</p>
+            <button className="btn btn-ink" onClick={() => apply(summary.id, sug.to)}>카드를 {sug.to}m로 바꾸기</button>
           </div>
         )}
-        <button className="btn btn-ghost btn-block" onClick={() => setSummary(null)}>산책 기록으로 돌아가기</button>
+        <button className="btn btn-ghost btn-block" onClick={() => { setSummaryId(null); focusMainHeading() }}>산책 기록으로 돌아가기</button>
         <Toast message={toast} />
       </div>
     )
@@ -95,16 +106,30 @@ export function WalkScreen() {
     return (
       <div className="stack">
         <PageHead kicker="산책 중" title={mmss(secs)}>
-          <p>마주친 개가 있으면 거리와 {card.name}의 반응을 남겨 주세요.</p>
+          <p>다른 개를 마주치면 {josa(card.name, '이/가')} 어땠는지 한 번만 눌러 주세요.</p>
         </PageHead>
         <div className="walk__stage" aria-hidden="true">
-          <Lanes distance={last ? last.distance : 12} me={{ name: card.name, state: last ? last.reaction : 'calm' }} them={last ? { name: '마주친 개', state: 'calm' } : null} theme="ink" height={240} walking />
+          <Lanes distance={last?.distance ?? 12} me={{ name: card.name, state: last ? last.reaction : 'calm' }} them={last ? { name: '마주친 개', state: 'calm' } : null} theme="paper" height={200} showLabel={last?.distance != null} />
         </div>
-        <button className="btn btn-signal btn-block" onClick={() => setLogOpen(true)}>마주침 기록</button>
+        <div className="walk__react" role="group" aria-label="마주침 기록">
+          {(['calm', 'alert', 'react'] as Reaction[]).map((r) => (
+            <button key={r} className={`react-btn react-btn--${r}`} onClick={() => log(r)}>{REACTION_LABEL[r]}</button>
+          ))}
+        </div>
+        {last && (
+          <fieldset className="field walk__dist">
+            <legend className="label">방금 마주친 개와 몇 m쯤이었나요? <span className="hint">(선택)</span></legend>
+            <div className="choices">
+              {DISTANCES.map((m) => (
+                <label key={m} className="choice"><input type="radio" name={`d-${last.at}`} checked={last.distance === m} onChange={() => setLastDistance(m)} /><span className="num">{m === 15 ? '15m+' : `${m}m`}</span></label>
+              ))}
+            </div>
+          </fieldset>
+        )}
         {active.encounters.length > 0 ? (
           <ol className="enc-list" aria-label="이번 산책의 마주침">
             {active.encounters.map((e, i) => (
-              <li key={e.at} className={`enc enc--${e.reaction}`}><span>{i + 1}번째</span><span className="num">{e.distance}m</span><span>{REACTION_LABEL[e.reaction]}</span></li>
+              <li key={e.at} className={`enc enc--${e.reaction}`}><span>{i + 1}번째</span><span className="num">{e.distance !== null ? `${e.distance}m` : '거리 모름'}</span><span>{REACTION_LABEL[e.reaction]}</span></li>
             ))}
           </ol>
         ) : <p className="panel__note">아직 마주침이 없어요.</p>}
@@ -112,30 +137,6 @@ export function WalkScreen() {
           <button className="btn btn-ghost" onClick={() => setConfirmDiscard(true)}>기록 안 하고 끝내기</button>
           <button className="btn btn-ink" onClick={finish}>산책 끝내기</button>
         </div>
-
-        <Dialog open={logOpen} onClose={() => { setLogOpen(false); setFormError(null) }} title="마주침 기록">
-          <fieldset className="field">
-            <legend className="label">얼마나 떨어져 있었나요?</legend>
-            <div className="choices">
-              {DISTANCES.map((m) => (
-                <label key={m} className="choice"><input type="radio" name="enc-dist" checked={dist === m} onChange={() => { setDist(m); setFormError(null) }} /><span className="num">{m === 15 ? '15m 이상' : `${m}m`}</span></label>
-              ))}
-            </div>
-          </fieldset>
-          <fieldset className="field">
-            <legend className="label">{card.name}는 어땠나요?</legend>
-            <div className="choices">
-              {(['calm', 'alert', 'react'] as Reaction[]).map((r) => (
-                <label key={r} className={`choice choice--${r}`}><input type="radio" name="enc-react" checked={reaction === r} onChange={() => { setReaction(r); setFormError(null) }} /><span>{REACTION_LABEL[r]}</span></label>
-              ))}
-            </div>
-          </fieldset>
-          {formError && <p className="error" role="alert">{formError}</p>}
-          <div className="sheet__actions">
-            <button className="btn btn-ghost" onClick={() => { setLogOpen(false); setFormError(null) }}>취소</button>
-            <button className="btn btn-ink" onClick={saveEncounter}>기록하기</button>
-          </div>
-        </Dialog>
         <Confirm open={confirmDiscard} title="이번 산책을 기록하지 않을까요?" body={`마주침 ${active.encounters.length}개가 함께 사라져요.`}
           confirmLabel="기록 안 하기" danger onCancel={() => setConfirmDiscard(false)} onConfirm={discard} />
         <Toast message={toast} />
@@ -146,7 +147,7 @@ export function WalkScreen() {
   return (
     <div className="stack">
       <PageHead kicker="산책" title="오늘도 우리 속도로.">
-        <p>산책하면서 마주친 개와의 거리를 남기면, {card.name}의 편한 거리가 점점 정확해져요.</p>
+        <p>산책하면서 마주친 개에게 {josa(card.name, '이/가')} 어땠는지 남기면, 편한 거리가 점점 정확해져요.</p>
       </PageHead>
       <button className="btn btn-ink btn-block" onClick={start}>산책 시작</button>
       <section className="panel" aria-labelledby="hist-title">

@@ -1,0 +1,18 @@
+const { launch, BASE, SHOTS } = require('./lib.cjs')
+const now = Date.now()
+const SEED = { card: { name: '뽀리', size: 'medium', pace: 'slow', greeting: 'slow', comfort: 8, triggers: ['smalldog'], slots: ['night'], note: '', updatedAt: now }, walks: [], activeWalk: null, requests: { dubu: { status: 'accepted', at: now - 9e4, slot: null }, sol: { status: 'accepted', at: now - 9e4, slot: null } }, bonds: { dubu: { neighborId: 'dubu', sessions: [{ at: now - 86400e3, steps: [{ distance: 10, result: 'both-calm' }, { distance: 6, result: 'both-calm' }, { distance: 4, result: 'both-calm' }, { distance: 2, result: 'both-calm' }], closest: 2, endedEarly: false }] } }, location: 'manual', neighborhood: '망원동' }
+;(async () => {
+  const { browser, page } = await launch({ viewport: { width: 390, height: 844 } })
+  await page.goto(BASE); await page.evaluate((s) => localStorage.setItem('dangq.demo.v1', JSON.stringify(s)), SEED)
+  await page.goto(BASE + '#/app/together/dubu/walk'); await page.reload(); await page.waitForTimeout(800)
+  console.log('second session intro:', (await page.locator('.together__panel').innerText()).replace(/\n+/g, ' | '))
+  await page.getByRole('button', { name: /에서 걷기 시작/ }).click(); await page.waitForTimeout(700)
+  console.log('progress items:', await page.locator('.progress li').count())
+  await page.screenshot({ path: SHOTS + 'f-together-second-session-2m.png' })
+  await page.goto(BASE + '#/app/together'); await page.waitForTimeout(1200)
+  console.log('list dubu:', (await page.locator('.ncard', { hasText: '두부' }).innerText()).replace(/\n+/g, ' | '))
+  await page.goto(BASE + '#/app/together/sol'); await page.waitForTimeout(600)
+  console.log('sol detail:', (await page.locator('main').innerText()).match(/솔[는와][^\n]*/g))
+  await page.screenshot({ path: SHOTS + 'f-particle-sol.png', fullPage: true })
+  await browser.close()
+})()

@@ -1,0 +1,20 @@
+const { launch, makeCard, BASE, SHOTS } = require('./lib.cjs')
+;(async () => {
+  for (const vp of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
+  const { browser, page } = await launch({ viewport: vp })
+  await makeCard(page)
+  await page.goto(BASE + '#/app/walk')
+  await page.getByRole('button', { name: '산책 시작' }).click()
+  await page.getByRole('button', { name: '마주침 기록' }).click()
+  await page.locator('dialog[open]').getByRole('radio', { name: '3m', exact: true }).check()
+  await page.locator('dialog[open]').getByRole('radio', { name: '편안했어요' }).check()
+  const box = await page.locator('dialog[open]').getByRole('button', { name: '기록하기' }).boundingBox()
+  const under = await page.evaluate(({x,y}) => { const d=document.querySelector('dialog[open]'); d.style.visibility='hidden'; const el=document.elementFromPoint(x,y); d.style.visibility=''; return el && el.outerHTML.slice(0,120) }, { x: box.x + box.width/2, y: box.y + box.height/2 })
+  await page.locator('dialog[open]').getByRole('button', { name: '기록하기' }).dblclick()
+  await page.waitForTimeout(400)
+  const st = await page.evaluate(() => JSON.parse(localStorage.getItem('dangq.demo.v1')))
+  console.log(JSON.stringify({ vp, elementUnderSaveButton: under, url: page.url(), activeWalk: !!st.activeWalk, walks: st.walks.length, dialogs: await page.locator('dialog[open] h2').allInnerTexts(), head: await page.locator('.pagehead').innerText().catch(()=>null) }, null, 1))
+  await page.screenshot({ path: SHOTS + `f-walk-dblclick-${vp.width}.png` })
+  await browser.close()
+  }
+})()

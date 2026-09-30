@@ -2,7 +2,8 @@ import { Link, useLocation } from 'react-router-dom'
 import { closestCalm, useStore } from '../lib/store'
 import { CardFace } from '../components/CardFace'
 import { Lanes } from '../components/Lanes'
-import { NEIGHBORS } from '../lib/demo'
+import { NEIGHBORS, planFor } from '../lib/demo'
+import { josa } from '../lib/korean'
 
 export function AppHome() {
   const card = useStore((s) => s.card)
@@ -32,15 +33,20 @@ export function AppHome() {
   const pending = Object.entries(requests).filter(([id, v]) => v.status === 'accepted' && !bonds[id]).length
   const lastBond = Object.values(bonds).map((b) => ({ b, last: b.sessions[b.sessions.length - 1] })).sort((x, y) => y.last.at - x.last.at)[0]
   const lastNeighbor = lastBond && NEIGHBORS.find((n) => n.id === lastBond.b.neighborId)
+  const nextStart = lastBond && lastNeighbor ? planFor(card, lastNeighbor, lastBond.b.sessions).start : null
 
   return (
     <div className="stack">
+      <h1 className="sr-only">{card.name}의 산책 카드</h1>
       <div className="home__card">
-        <CardFace card={card} />
+        <CardFace card={card} headingLevel={2} />
       </div>
       <div className="home__actions">
         <Link to="/app/show" className="btn btn-signal btn-block home__show">보여주기 <span className="home__showhint">누가 다가올 때</span></Link>
-        <Link to="/app/card/edit" className="btn btn-ghost btn-block">카드 고치기</Link>
+        <div className="row2">
+          <Link to="/app/tag" className="btn btn-ghost">리드줄 태그 만들기</Link>
+          <Link to="/app/card/edit" className="btn btn-ghost">카드 고치기</Link>
+        </div>
       </div>
 
       <section className="panel" aria-labelledby="today-title">
@@ -58,7 +64,7 @@ export function AppHome() {
       <section className="panel" aria-labelledby="next-title">
         <h2 id="next-title" className="panel__title">나란히</h2>
         {lastBond && lastNeighbor ? (
-          <Link to="/app/bond" className="rowlink"><span><b>{lastNeighbor.name}와 다음 산책</b><small><span className="num">{lastBond.last.closest ?? '-'}m</span>에서 이어서 시작해요</small></span><span aria-hidden="true">→</span></Link>
+          <Link to={`/app/together/${lastNeighbor.id}`} className="rowlink"><span><b>{josa(lastNeighbor.name, '과/와')} 다음 산책</b><small><span className="num">{nextStart}m</span>에서 시작해요</small></span><span aria-hidden="true">→</span></Link>
         ) : (
           <Link to="/app/together" className="rowlink"><span><b>동네 이웃 개 찾기</b><small>{pending ? '수락된 요청이 있어요' : '걷는 속도와 거리가 맞는 이웃'}</small></span><span aria-hidden="true">→</span></Link>
         )}

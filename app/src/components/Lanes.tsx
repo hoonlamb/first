@@ -1,5 +1,6 @@
 import { Dog } from './Dog'
 import type { Reaction } from '../lib/store'
+import { useEffect, useState } from 'react'
 import { useTween } from '../lib/motion'
 
 interface DogSpec { name: string; state: Reaction }
@@ -25,6 +26,15 @@ export function Lanes({ distance, max = 20, me, them, walking = false, theme = '
   const H = height
   const mid = H / 2 + 28
   const shown = useTween(distance)
+  // Walking animation plays for a few seconds after each change, then rests (no endless motion, less battery).
+  const key = `${distance}-${me.state}-${them?.state ?? ''}`
+  const [restedKey, setRestedKey] = useState<string | null>(null)
+  const moving = walking && restedKey !== key
+  useEffect(() => {
+    if (!walking) return
+    const t = setTimeout(() => setRestedKey(key), 5000)
+    return () => clearTimeout(t)
+  }, [walking, key])
   const t = Math.min(Math.max(shown / max, 0), 1)
   const gap = 104 + t * (H - 236)
   const yMe = mid - gap / 2
@@ -35,19 +45,19 @@ export function Lanes({ distance, max = 20, me, them, walking = false, theme = '
   const bracketX = 850
 
   return (
-    <svg className={`lanes lanes--${theme} ${walking ? 'is-walking' : ''}`} viewBox={`0 0 ${W} ${H}`} role="img"
+    <svg className={`lanes lanes--${theme} ${moving ? 'is-walking' : ''}`} viewBox={`0 0 ${W} ${H}`} role="img"
       aria-label={`${me.name}${them ? `와 ${them.name}` : ''} 사이의 거리 ${distance}미터`}>
       {/* lanes: walked part solid, ahead dashed */}
       <g className="lane" transform={`translate(0,${yMe})`}>
         <line x1="40" y1="0" x2={dogX - 70} y2="0" stroke={meColor} strokeWidth="6" strokeLinecap="round" />
         <line className="lane__ahead" x1={dogX + 80} y1="0" x2={W - 40} y2="0" stroke={meColor} strokeWidth="6" strokeLinecap="round" strokeDasharray="2 22" opacity=".55" />
-        <g transform={`translate(${dogX},-40) scale(1.5)`}><Dog state={me.state} color={meColor} detail={meDetail} walking={walking} /></g>
+        <g transform={`translate(${dogX},-40) scale(1.5)`}><Dog state={me.state} color={meColor} detail={meDetail} walking={moving} /></g>
       </g>
       {them && (
         <g className="lane" transform={`translate(0,${yThem})`}>
           <line x1="80" y1="0" x2={dogX - 90} y2="0" stroke="#FF6A2B" strokeWidth="6" strokeLinecap="round" />
           <line className="lane__ahead" x1={dogX + 60} y1="0" x2={W - 40} y2="0" stroke="#FF6A2B" strokeWidth="6" strokeLinecap="round" strokeDasharray="2 22" opacity=".55" />
-          <g transform={`translate(${dogX - 20},-40) scale(1.5)`}><Dog state={them.state} color="#FF6A2B" detail="#15201A" walking={walking} /></g>
+          <g transform={`translate(${dogX - 20},-40) scale(1.5)`}><Dog state={them.state} color="#FF6A2B" detail="#15201A" walking={moving} /></g>
         </g>
       )}
       {showLabel && them && (

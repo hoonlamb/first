@@ -318,3 +318,4 @@
 .bd-sec--paper2 .bd-table-wrap { background: var(--paper); padding: var(--s2) var(--s4); }
 @media (max-width: 560px) { .bd-construct__t { font-size: 28px; } .bd-clear, .bd-min { min-height: 150px; } }
 .bd-scale--fit { min-width: 0; }
+.bd-legend code { color: var(--ink); background: rgba(21,32,26,.05); }

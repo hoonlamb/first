@@ -1,4 +1,5 @@
 import type { DogCard, Greeting, Pace, Slot } from './store'
+import { josa } from './korean'
 
 /** Demo neighbours. Fictional dogs, no real people or photos. Used only in 체험 모드. */
 export interface Neighbor extends Omit<DogCard, 'updatedAt' | 'note'> {
@@ -23,23 +24,80 @@ const PACE_ORDER: Pace[] = ['slow', 'steady', 'brisk']
 
 export interface Fit {
   score: number // 0–3, count of matched conditions
-  start: number // start distance for 나란히 = larger comfort of the two, rounded up to a step
   reasons: string[]
   cautions: string[]
   sharedSlots: Slot[]
 }
 
-export const STEP_DISTANCES = [20, 15, 12, 10, 8, 6, 4, 3, 2]
+/**
+ * 나란히 rules (single source; see outputs/03_strategy/strategy.md §6).
+ * - Start: the first step value at least 2m beyond the farther dog's comfortable distance (and ≥1.5× the floor).
+ * - Floor: a session never guides closer than its floor.
+ *     first session: max(6m, 60% of the larger comfort)   — 6m ≈ AKC CGC "reaction to another dog" test distance (~20ft, S74)
+ *     later sessions: max(3m, 40% of the larger comfort)
+ * - Each step closes at most 35% of the current distance.
+ * - Next session starts one step farther than the last calm distance (warm-up), never at it.
+ * - Greeting: never in the first session; later only if both greet and both comforts ≤ 8m.
+ * - Pro gate: if either dog needs 12m or more, the walk is offered only with a trainer (준비 중).
+ */
+export const STEP_DISTANCES = [30, 25, 20, 18, 15, 12, 10, 8, 6, 5, 4, 3, 2]
+const ASC = [...STEP_DISTANCES].sort((a, b) => a - b)
+export const PRO_THRESHOLD = 12
 
 export function startDistance(a: number, b: number) {
-  const need = Math.max(a, b) + 2 // start a little farther than either dog needs
-  return [...STEP_DISTANCES].reverse().find((d) => d >= need) ?? 20
+  // At least 2m beyond the farther dog, and far enough above the first-session floor to leave room for steps.
+  const need = Math.max(Math.max(a, b) + 2, floorDistance(a, b, 0) * 1.5)
+  return ASC.find((d) => d >= need) ?? 30
 }
 
-/** 나란히 ladder: start → ~2/3 → ~2/5 → 2m. Snapped to STEP_DISTANCES, unique, descending. */
-export function ladder(start: number) {
-  const snap = (x: number) => STEP_DISTANCES.reduce((best, d) => (Math.abs(d - x) < Math.abs(best - x) ? d : best), 20)
-  return [...new Set([start, snap(start * 0.66), snap(start * 0.4), 2])].filter((d) => d <= start).sort((x, y) => y - x)
+export function floorDistance(a: number, b: number, sessionIndex: number) {
+  const m = Math.max(a, b)
+  return sessionIndex === 0 ? Math.max(6, Math.round(m * 0.6)) : Math.max(3, Math.round(m * 0.4))
+}
+
+export function ladder(start: number, floor: number) {
+  const out = [start]
+  let cur = start
+  for (;;) {
+    const next = ASC.find((d) => d < cur && d >= Math.max(floor, cur * 0.65))
+    if (next === undefined) break
+    out.push(next)
+    cur = next
+  }
+  return out
+}
+
+export function stepAbove(d: number) {
+  return ASC.find((x) => x > d) ?? 30
+}
+
+export interface Plan {
+  sessionIndex: number
+  start: number
+  floor: number
+  steps: number[]
+  canGreet: boolean
+  needsPro: boolean
+  resumed: boolean
+}
+
+type Comfy = Pick<DogCard, 'comfort' | 'greeting'>
+/** The one function every screen uses for "where do we start and how far do we go". */
+export function planFor(me: Comfy, n: Comfy, sessions: { closest: number | null }[] = []): Plan {
+  const sessionIndex = sessions.length
+  const lastCalm = [...sessions].reverse().find((s) => s.closest !== null)?.closest ?? null
+  const floor = floorDistance(me.comfort, n.comfort, sessionIndex)
+  const fresh = startDistance(me.comfort, n.comfort)
+  const start = lastCalm !== null ? Math.max(stepAbove(lastCalm), floor) : fresh
+  return {
+    sessionIndex,
+    start,
+    floor,
+    steps: ladder(start, floor),
+    canGreet: sessionIndex > 0 && me.greeting !== 'pass' && n.greeting !== 'pass' && Math.max(me.comfort, n.comfort) <= 8,
+    needsPro: Math.max(me.comfort, n.comfort) >= PRO_THRESHOLD,
+    resumed: lastCalm !== null,
+  }
 }
 
 export function fit(me: Pick<DogCard, 'pace' | 'greeting' | 'comfort' | 'slots' | 'size' | 'triggers'>, n: Neighbor): Fit {
@@ -57,10 +115,10 @@ export function fit(me: Pick<DogCard, 'pace' | 'greeting' | 'comfort' | 'slots' 
   const sharedSlots = me.slots.filter((s) => n.slots.includes(s))
   if (sharedSlots.length) reasons.push('산책 시간대가 겹쳐요')
 
-  if (me.triggers.includes('bigdog') && n.size === 'large') cautions.push(`${n.name}는 대형견이에요`)
-  if (me.triggers.includes('smalldog') && n.size === 'small') cautions.push(`${n.name}는 소형견이에요`)
+  if (me.triggers.includes('bigdog') && n.size === 'large') cautions.push(`${josa(n.name, '은/는')} 대형견이에요`)
+  if (me.triggers.includes('smalldog') && n.size === 'small') cautions.push(`${josa(n.name, '은/는')} 소형견이에요`)
 
-  return { score: reasons.length, start: startDistance(me.comfort, n.comfort), reasons, cautions, sharedSlots }
+  return { score: reasons.length, reasons, cautions, sharedSlots }
 }
 
 function greetingCompatible(a: Greeting, b: Greeting) {

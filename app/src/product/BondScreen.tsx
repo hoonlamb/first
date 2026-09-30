@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useStore } from '../lib/store'
-import { NEIGHBORS } from '../lib/demo'
+import { NEIGHBORS, planFor } from '../lib/demo'
 import { PageHead } from './ui'
 
 const dateLabel = (t: number) => new Date(t).toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' })
@@ -25,17 +25,17 @@ export function BondScreen() {
   return (
     <div className="stack">
       <PageHead kicker="사이" title={`${card.name}의 사이`}>
-        <p>선이 짧아질수록 가까워진 거예요. 다음 산책은 마지막으로 편안했던 거리에서 시작해요.</p>
+        <p>선이 짧아질수록 가까워진 거예요. 다음 산책은 마지막으로 편안했던 거리보다 한 단계 멀리서 몸을 풀고 시작해요.</p>
       </PageHead>
       {list.map((b) => {
         const n = NEIGHBORS.find((x) => x.id === b.neighborId)
         if (!n) return null
-        const last = b.sessions[b.sessions.length - 1]
+        const next = planFor(card, n, b.sessions)
         return (
           <section key={b.neighborId} className="bond" aria-labelledby={`bond-${n.id}`}>
             <header className="bond__head">
               <h2 id={`bond-${n.id}`} className="bond__name">{n.name}</h2>
-              <span className="bond__next">다음 시작 <b className="num">{last.closest ?? '처음 거리'}{last.closest !== null ? 'm' : ''}</b></span>
+              <span className="bond__next">다음 시작 <b className="num">{next.start}m</b>{next.needsPro ? ' · 훈련사 동행 권장' : ''}</span>
             </header>
             <ol className="bond__sessions">
               {b.sessions.map((s, k) => (

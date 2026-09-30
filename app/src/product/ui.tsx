@@ -1,5 +1,11 @@
 import { useEffect, useRef } from 'react'
 
+/** Swallow the second tap of a double-tap so it can't hit whatever was under a closing sheet (ghost tap). */
+function settle() {
+  document.body.classList.add('is-settling')
+  setTimeout(() => document.body.classList.remove('is-settling'), 350)
+}
+
 /** Native <dialog> modal: focus trap + Esc for free. */
 export function Dialog({ open, onClose, title, children, labelledBy }: {
   open: boolean; onClose: () => void; title: string; children: React.ReactNode; labelledBy?: string
@@ -9,8 +15,15 @@ export function Dialog({ open, onClose, title, children, labelledBy }: {
     const d = ref.current
     if (!d) return
     if (open && !d.open) d.showModal()
-    if (!open && d.open) d.close()
+    if (!open && d.open) {
+      d.close()
+      settle()
+    }
   }, [open])
+  useEffect(() => {
+    const d = ref.current
+    return () => { if (d?.open) settle() } // unmounted while open (e.g. action navigated away)
+  }, [])
   const id = labelledBy ?? `dlg-${title.replace(/\s/g, '')}`
   return (
     <dialog ref={ref} className="sheet" aria-labelledby={id} onClose={onClose} onCancel={(e) => { e.preventDefault(); onClose() }}

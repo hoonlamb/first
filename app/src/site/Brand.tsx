@@ -57,8 +57,9 @@ function MarkSvg({ a, b, size = 64, children, label }: { a: string; b: string; s
   )
 }
 
-function Tag({ kind, children }: { kind: 'fact' | 'hypo'; children?: ReactNode }) {
-  return <span className={`bd-tag bd-tag--${kind}`}>{kind === 'fact' ? '사실' : '가설'}{children && <> · {children}</>}</span>
+function Tag({ kind, children }: { kind: 'fact' | 'press' | 'hypo'; children?: ReactNode }) {
+  const label = kind === 'fact' ? '사실' : kind === 'press' ? '보도 인용' : '가설'
+  return <span className={`bd-tag bd-tag--${kind === 'press' ? 'fact' : kind}`}>{label}{children && <> · {children}</>}</span>
 }
 
 /* ------------------------------------------------------------------ 01 */
@@ -109,7 +110,7 @@ const PILLARS = [
   {
     n: '01', name: '산책 카드', verb: '거리를 말해요', line: '우리 개의 편한 거리, 인사 방식, 조심할 것을 한 장에. 다가오는 사람에게 설명 대신 보여 줘요.',
     proofs: [
-      { k: 'fact' as const, src: 'S05', t: '반려견 가구 89.4%가 산책 중 낯선 사람의 행동으로 불편을 겪었고, ‘허락 없이 만지기’가 39.2%예요.' },
+      { k: 'press' as const, src: 'S05', t: '반려견 가구 89.4%가 산책 중 낯선 사람의 행동으로 불편을 겪었고, ‘허락 없이 만지기’가 39.2%예요.' },
       { k: 'fact' as const, src: 'S26', t: '노란 리본(2012~, 40여 개국)처럼 표식으로 거리를 알리려는 시도는 이미 있어요.' },
       { k: 'hypo' as const, src: '', t: '‘다가오지 마세요’보다 ‘이렇게 다가와 주세요’가 더 잘 지켜진다. 카드만으로 혼자서도 쓸 이유가 된다(확인 기준: 카드 완성률 50%).' },
     ],
@@ -118,15 +119,15 @@ const PILLARS = [
     n: '02', name: '나란히 첫 산책', verb: '거리를 지켜요', line: '첫 만남은 마주 보는 인사가 아니라 멀리서 같은 방향으로 걷기부터. 15m에서 시작해 한 단계씩.',
     proofs: [
       { k: 'fact' as const, src: 'S25', t: '훈련사 칼럼: 개끼리 인사가 당연하다는 건 오해이고, 인사하지 않고 지나가기도 예절이에요.' },
-      { k: 'fact' as const, src: 'S20', t: '반려견 유치원 이용 이유의 71.0%가 사회화, 월평균 25만4,800원. 보호자는 이미 사회화에 돈을 써요.' },
+      { k: 'press' as const, src: 'S20', t: '반려견 유치원 이용 이유의 71.0%가 사회화, 월평균 25만4,800원. 보호자는 이미 사회화에 돈을 써요.' },
       { k: 'hypo' as const, src: '', t: '거리를 단계로 나누면 첫 만남의 긴장이 줄어든다. 사용자 검증 전이에요.' },
     ],
   },
   {
     n: '03', name: '사이 기록', verb: '거리를 기억해요', line: '얼마나 가까이서 편안했는지 쌓여요. 다음 나란히 산책은 지난번 편안했던 거리에서 시작해요.',
     proofs: [
-      { k: 'fact' as const, src: 'S03', t: '반려견 가구 59.3%가 주 4일 이상 밖에 나가요. 기록할 순간이 거의 매일 있어요.' },
-      { k: 'fact' as const, src: 'S71·S72', t: '산책은 이웃을 알게 할 가능성을 높이지만(OR 3.10), 다른 연구에선 효과가 약했어요. 그래서 만남보다 거리를 약속해요.' },
+      { k: 'press' as const, src: 'S03', t: '반려견 가구 59.3%가 주 4일 이상 밖에 나가요. 기록할 순간이 거의 매일 있어요.' },
+      { k: 'press' as const, src: 'S71·S72', t: '산책은 이웃을 알게 할 가능성을 높이지만(OR 3.10), 다른 연구에선 효과가 약했어요. 그래서 만남보다 거리를 약속해요.' },
       { k: 'hypo' as const, src: '', t: '“다음엔 8m부터”처럼 이어지는 기록이 다시 올 이유가 된다(확인 기준: 2주 뒤 기록 유지 20%).' },
     ],
   },
@@ -156,7 +157,7 @@ function Message() {
           </li>
         ))}
       </ol>
-      <p className="bd-legend"><Tag kind="fact" /> 출처 번호(S)는 <code>outputs/01_research/sources.md</code>를 따라요. 보도 인용 수치는 원문 대조 전이에요. <Tag kind="hypo" /> 검증 전이라 약속하는 문장으로 쓰지 않아요.</p>
+      <p className="bd-legend"><Tag kind="fact" /> <Tag kind="press" /> 출처 번호(S)는 <code>outputs/01_research/sources.md</code>를 따라요. ‘보도 인용’은 원문 대조 전이에요. <Tag kind="hypo" /> 검증 전이라 약속하는 문장으로 쓰지 않아요.</p>
     </Section>
   )
 }
@@ -352,7 +353,7 @@ function ColorSection() {
           </li>
         ))}
       </ul>
-      <div className="bd-ratio" aria-label="브랜드 순간의 색 비율 가이드: 잉크 55, 페이퍼 30, 시그널 10, 모스 5">
+      <div className="bd-ratio" role="img" aria-label="브랜드 순간의 색 비율 가이드: 잉크 55, 페이퍼 30, 시그널 10, 모스 5">
         <span style={{ flex: 55, background: INK }} /><span style={{ flex: 30, background: PAPER, boxShadow: 'inset 0 0 0 1.5px #D6CFBF' }} /><span style={{ flex: 10, background: SIGNAL }} /><span style={{ flex: 5, background: MOSS }} />
       </div>
       <p className="bd-note">브랜드 순간(포스터·키 비주얼)의 비율 가이드 <span className="num">55 : 30 : 10 : 5</span>. 제품 화면은 페이퍼가 주인공이고 시그널은 한 곳에만 써요.</p>
@@ -698,6 +699,7 @@ function Records() {
             <tr><th scope="row">로고·아이콘·개·선</th><td>코드로 직접 그림 (<code>components/Logo·Dog·Lanes</code>, <code>render/build.mjs</code>)</td><td>프로젝트 자체 제작</td></tr>
             <tr><th scope="row">키 비주얼·응용물</th><td>SVG + HTML → Chromium(Playwright) 렌더링</td><td>프로젝트 자체 제작</td></tr>
             <tr><th scope="row">사진</th><td>사용하지 않음</td><td>실존 인물·개 사진 없음</td></tr>
+            <tr><th scope="row">기존 작업 캡처</th><td>케이스 스터디의 기존 팀 작업 메뉴 구조(Figma)</td><td>팀 공동 저작물 · 출처 미상 마스코트는 가림</td></tr>
             <tr><th scope="row">스톡 · AI 생성 이미지</th><td>사용하지 않음</td><td>—</td></tr>
             <tr><th scope="row">통계</th><td><code>outputs/01_research/sources.md</code> (S03·S05·S20·S25·S26·S71·S72)</td><td>보도 인용 수치는 원문 대조 전</td></tr>
             <tr><th scope="row">이름·상표</th><td>댕큐 / DANGQ</td><td>상표 가용성 미조사</td></tr>
