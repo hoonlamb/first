@@ -29,7 +29,9 @@ npx playwright test    # E2E (desktop + mobile). Chromium 경로: /opt/pw-browse
 | `app/src/lib/demo.ts` | 시연용 이웃 6마리, 호환도 `fit()`, 시작 거리 `startDistance()`, 단계 `ladder()` |
 | `app/src/site/` | 브랜드 사이트(Home, DistanceDial, Brand, CaseStudy, SiteChrome) |
 | `app/src/product/` | 체험 모드 앱 화면들. `ProductApp.tsx`가 라우트와 가드 |
-| `app/e2e/journey.spec.ts` | 핵심 여정 E2E |
+| `app/e2e/journey.spec.ts`, `rules.spec.ts` | 핵심 여정 E2E, 나란히·조사 규칙 단위 테스트 |
+| `app/src/styles/fonts/dangq-sans.woff2` | 사이트 문구 전용 폰트 서브셋. 문구를 바꾸면 `python3 scripts/subset-font.py`를 다시 실행 |
+| `#/app/tag` | 리드줄 태그 인쇄(휴대폰 없는 보여주기) |
 | `app/film/`, `app/scripts/record-film.mjs` | 출시 영상 컴포지션과 녹화 스크립트(빌드 제외) |
 | `outputs/` | 조사(01), 감사(02), 전략(03), 브랜드(04), 검수(05), 영상(08), Figma(09) |
 
@@ -38,10 +40,18 @@ npx playwright test    # E2E (desktop + mobile). Chromium 경로: /opt/pw-browse
 - paper 위에서 signal 색 텍스트가 필요하면 `--signal-ink`를 쓴다.
 - 상태색(calm/alert/react)은 **반드시 텍스트 라벨과 함께** 쓴다.
 - 거리 → 반응 규칙은 `reactionAt(distance, comfort)` 하나만 쓴다. 기준: `≥comfort` 편안, `≥50%` 경계, 그 미만 회피.
-- 나란히 산책 규칙:
-  - 시작 거리 = max(두 개의 편한 거리) + 2m 이상인 단계값
-  - 긴장하면 물러나기가 기본 선택지
-  - 어느 단계에서 끝나도 기록하고, 다음번은 마지막으로 편안했던 거리에서 시작한다.
+- **나란히 규칙은 `lib/demo.ts`의 `planFor()` 한 곳에만 있다.** 사이트, 앱, 브랜드 가이드, 키비주얼이 모두 이 규칙을 따른다. 바꾸면 `e2e/rules.spec.ts`를 함께 고친다.
+  - 시작 거리: 먼 쪽 편한 거리 +2m 이상이면서, 첫날 하한의 1.5배 이상인 단계값
+  - 첫 만남 하한: max(6m, 60%)
+  - 두 번째부터 하한: max(3m, 40%)
+  - 단계당 좁히는 폭: 35% 이내
+  - 다음 회차 시작: 지난번 편안했던 거리보다 한 단계 멀리
+  - 인사: 두 번째 만남부터, 둘 다 인사를 원하고 둘 다 편한 거리가 8m 이하일 때만
+  - 둘 중 한 마리라도 편한 거리가 12m 이상: 훈련사 동행만 가능(준비 중)
+  - 진행 중인 세션은 `activeTogether`로 저장되어, 화면을 떠나거나 새로고침해도 이어진다.
+- **거리 표기:** 미터 옆에 항상 걸음 수를 붙인다. `korean.ts`의 `distanceWords`, 큰 걸음 ≈0.8m.
+- **이름 뒤 조사:** 항상 `josa()`를 쓴다. 조사를 하드코딩하지 않는다.
+- **카드 거리 제안:** 넓히는 제안이 줄이는 제안보다 먼저다. 줄이는 제안은 편안한 마주침 3회 이상, 산책 2회 이상일 때만 한다(`store.ts suggestComfort`).
 - 체험 모드 표기(배지, 자동 응답 안내)를 지우지 않는다. 실제 전송·예약·결제처럼 보이게 만들지 않는다.
 
 ## 5. 체험 모드의 한계 (실서비스 전 필수)
@@ -60,3 +70,20 @@ npx playwright test    # E2E (desktop + mobile). Chromium 경로: /opt/pw-browse
 - 현재 **공개 배포하지 않았다**(승인 필요).
 - `app/dist`는 정적 파일이라 Netlify, Vercel, GitHub Pages, Cloudflare Pages 어디든 올릴 수 있다.
 - 기존 djdb.kr 운영 사이트는 교체하지 않는다.
+
+## 8. 기여와 출처
+- **기존 팀 작업:** 2인 팀 '댕큐'. Figma 기준 강지훈·신수연. 원본 파일 `4dPmKvcezjlNoqSP5rw4A1`은 수정하지 않았다.
+  - 팀 작업의 결과물: 조사, IA, UI, 기존 브랜드(핑크 #FF4375, 워드마크), 슬라이드.
+  - 공개 페이지에는 팀원 실명을 쓰지 않았다. 동의를 받으면 추가할 수 있다.
+- **이번 개인 확장(리프로젝트):** 사용자와 AI 에이전트가 협업했다.
+  - 조사·전략 재정의, 브랜드 체계(AD2), 제품 설계·구현, 사이트, 케이스 스터디, 키비주얼·응용물, 영상, 검수.
+  - 병렬로 돌린 역할: 리서치, Figma 감사, 브랜드 자산, Figma 정리, 독립 검수 2회.
+- **서체:** Pretendard(SIL OFL 1.1). 서브셋과 윤곽선 변환은 라이선스가 허용한다.
+- **이미지·음악:** 모든 그래픽은 코드로 그렸다. 스톡, AI 생성 이미지, 음악은 쓰지 않았다.
+  - 케이스 스터디의 기존 작업 캡처는 메뉴 구조 1장뿐이다. 출처를 모르는 마스코트는 가렸다.
+- **통계:** `outputs/01_research/sources.md`. ★ 표시는 보도를 통해 인용한 것이라 원문 대조가 필요하다.
+- **DJDB:** 사용자 스크린샷 1장으로 원리만 참고했다(`outputs/02_audit/djdb/`). 사이트에 직접 접속해 분석하지는 못했다.
+
+## 9. Figma
+- 새 파일: https://www.figma.com/design/hVf75nORi4pMlShmha3Hts
+- 이미지 프레임은 비어 있다. `mcp.figma.com` 업로드가 차단되었기 때문이다. `outputs/09_figma/README.md`의 노드 ID 목록을 보고 PNG를 넣으면 된다.
