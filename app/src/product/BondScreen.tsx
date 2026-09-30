@@ -9,7 +9,8 @@ const dateLabel = (t: number) => new Date(t).toLocaleDateString('ko-KR', { month
 export function BondScreen() {
   const card = useStore((s) => s.card)!
   const bonds = useStore((s) => s.bonds)
-  const list = Object.values(bonds).sort((a, b) => b.sessions[b.sessions.length - 1].at - a.sessions[a.sessions.length - 1].at)
+  const hidden = useStore((s) => s.hidden)
+  const list = Object.values(bonds).filter((b) => !hidden.includes(b.neighborId)).sort((a, b) => b.sessions[b.sessions.length - 1].at - a.sessions[a.sessions.length - 1].at)
 
   if (list.length === 0) {
     return (

@@ -153,9 +153,9 @@ function pager(i, tone) {
 // 1st walk 10 → 8 → 6 (floor 6m, no greeting) · 2nd walk 8 → 6 → 4 → 3 (greeting only if both want)
 const LADDER = [
   { d: 10, label: '첫날, 멀리서 같은 방향으로' },
+  { d: 8, label: '둘 다 편하면 조금 더' },
   { d: 6, label: '첫날은 여기까지' },
-  { d: 4, label: '다음 산책, 이어서 조금 더' },
-  { d: 3, label: '인사는 둘 다 원할 때만' },
+  { d: 4, label: '다음 산책, 이어서' },
 ]
 
 const assets = {}
@@ -177,7 +177,7 @@ assets['kv-1920x1080'] = [1920, 1080, shell(1920, 1080, C.ink,
 assets['kv-1080x1350'] = [1080, 1350, shell(1080, 1350, C.ink,
   stage(1080, 1350, stepped({
     x0: 72, late: 64, yTop: 600, gap: (d) => 104 + 21 * d, T: 40, dogX: 770, s: 1.35, xEnd: 1008, sw: 7, numPlace: 'below', inset: 16,
-    steps: [{ d: 10, L: 190, size: 150 }, { d: 6, L: 130, size: 108 }, { d: 4, L: 92, size: 76 }, { d: 3, size: 64 }],
+    steps: [{ d: 10, L: 190, size: 150 }, { d: 8, L: 130, size: 108 }, { d: 6, L: 92, size: 76 }, { d: 4, size: 64 }],
   }) + logo({ x: 72, y: 1236, size: 36, tone: 'paper' })) +
   `<p class="a eb" style="left:72px;top:80px;font-size:24px;color:${C.moss}">동네 산책을 위한 거리 약속</p>
    <h1 class="a hd" style="left:68px;top:124px;font-size:112px">가까워지는 데는<br>순서가 있어요.</h1>
@@ -188,7 +188,7 @@ assets['kv-1080x1350'] = [1080, 1350, shell(1080, 1350, C.ink,
 assets['og-1200x630'] = [1200, 630, shell(1200, 630, C.ink,
   stage(1200, 630, stepped({
     x0: 64, late: 50, yTop: 372, gap: (d) => 84 + 9.5 * d, T: 36, dogX: 930, s: 1.0, xEnd: 1136, sw: 6,
-    steps: [{ d: 10, L: 300, size: 92 }, { d: 6, L: 200, size: 66 }, { d: 4, L: 150, size: 48 }, { d: 3, size: 44 }],
+    steps: [{ d: 10, L: 300, size: 92 }, { d: 8, L: 200, size: 66 }, { d: 6, L: 150, size: 48 }, { d: 4, size: 44 }],
   }) + logo({ x: 64, y: 52, size: 32, tone: 'paper' })) +
   `<h1 class="a hd" style="left:60px;top:118px;font-size:78px">가까워지는 데는<br>순서가 있어요.</h1>
    <p class="a" style="right:64px;top:58px;font-size:20px;font-weight:700;color:${C['muted-on-ink']}">우리 개의 편한 거리를 먼저 알려요</p>`)]
@@ -290,7 +290,7 @@ assets['app-icon-1024'] = [1024, 1024, shell(1024, 1024, C.ink, stage(1024, 1024
 // Instagram 2/3 — idea: the mark IS the sequence
 {
   const W = 1080, H = 1350
-  const rows = [{ d: 10, gap: 118, t: '첫날, 멀리서 같은 방향으로' }, { d: 6, gap: 74, t: '첫날은 여기까지' }, { d: 4, gap: 44, t: '다음 산책, 이어서' }, { d: 3, gap: 28, t: '인사는 둘 다 원할 때만' }]
+  const rows = [{ d: 10, gap: 118, t: '첫날, 멀리서 같은 방향으로' }, { d: 8, gap: 92, t: '둘 다 편하면 조금 더' }, { d: 6, gap: 68, t: '첫날은 여기까지' }, { d: 4, gap: 46, t: '다음 산책, 이어서' }]
   let g = pager(1, 'ink'), y = 470
   rows.forEach((r, i) => {
     const y2 = y + r.gap
@@ -304,7 +304,7 @@ assets['app-icon-1024'] = [1024, 1024, shell(1024, 1024, C.ink, stage(1024, 1024
   assets['insta-2-idea'] = [W, H, shell(W, H, C.ink, stage(W, H, g) + `
     <p class="a eb" style="right:80px;top:70px;font-size:20px;color:${C['muted-on-ink']}">댕큐 · 나란히 첫 산책</p>
     <h1 class="a hd" style="left:76px;top:140px;font-size:96px">마주 보지 말고,<br>나란히 걸어요.</h1>
-    <p class="a" style="left:80px;top:1150px;width:920px;font-size:28px;font-weight:600;line-height:1.5;color:${C['muted-on-ink']}">훈련사들이 개를 처음 소개할 때 쓰는 ‘병행 산책’을 네 단계로 나눴어요. <b style="color:${C.paper}">가까워지는 데는 순서가 있어요.</b></p>`)]
+    <p class="a" style="left:80px;top:1150px;width:920px;font-size:28px;font-weight:600;line-height:1.5;color:${C['muted-on-ink']}">훈련 자료들이 권하는 ‘병행 산책’처럼, 둘 다 편할 때만 한 단계씩. 첫날은 6m까지. <b style="color:${C.paper}">가까워지는 데는 순서가 있어요.</b></p>`)]
 }
 
 // Instagram 3/3 — product: the walk card

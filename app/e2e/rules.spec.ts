@@ -49,3 +49,16 @@ test('stopped-before-calm sessions keep first-meeting rules', () => {
   expect(p.canGreet).toBe(false)
   expect(Math.min(...p.steps)).toBeGreaterThanOrEqual(6)
 })
+
+// QA R2-03 / R3-02: suggestion rules.
+import { suggestComfort, type DogCard, type Walk } from '../src/lib/store'
+const card: DogCard = { name: '뽀리', size: 'medium', pace: 'slow', greeting: 'slow', comfort: 8, triggers: [], slots: [], note: '', updatedAt: 0 }
+const walk = (id: string, enc: [number | null, 'calm' | 'alert' | 'react'][]): Walk => ({ id, startedAt: 0, endedAt: 1, encounters: enc.map(([distance, reaction], i) => ({ at: i, distance, reaction })) })
+test('suggestion: widen wins, narrowing needs evidence', () => {
+  expect(suggestComfort(card, [walk('a', [[3, 'calm'], [9, 'react']])])).toEqual({ to: 11, kind: 'widen' })
+  expect(suggestComfort(card, [walk('a', [[5, 'calm']])])).toBeNull() // one calm is not enough
+  expect(suggestComfort(card, [walk('a', [[5, 'calm'], [6, 'calm']]), walk('b', [[5, 'calm']])])).toEqual({ to: 5, kind: 'narrow' })
+  expect(suggestComfort(card, [walk('a', [[5, 'calm'], [6, 'calm'], [null, 'react']]), walk('b', [[5, 'calm']])])).toBeNull() // reaction without distance blocks narrowing
+  const old = walk('z', [[null, 'react']])
+  expect(suggestComfort(card, [walk('a', [[5, 'calm'], [6, 'calm']]), walk('b', [[5, 'calm']]), walk('c', []), walk('d', []), walk('e', []), old])?.kind).toBe('narrow') // only the 5 most recent walks count: the old distance-less reaction no longer blocks
+})

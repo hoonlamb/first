@@ -1,0 +1,47 @@
+// F-05: particles after names on every screen (솔, 보름, Max, 🐶), plus demo data (콩이, 솔 caution)
+const { launch, seed, seedState, card, getS, hash, BASE, SHOTS, now } = require('./lib.cjs')
+const grab = (page, re) => page.locator('body').innerText().then((t) => (t.match(re) || []).map((s) => s.replace(/\s+/g, ' ')))
+;(async () => {
+  const out = {}
+  const { browser, page, errors } = await launch()
+  for (const name of ['솔', '보름', 'Max', '🐶']) {
+    const r = {}
+    const st = seedState({ card: card({ name, triggers: ['bike', 'smalldog'] }), requests: { dubu: { status: 'accepted', at: now - 9e4, slot: 'evening' } }, bonds: { bori: { neighborId: 'bori', sessions: [{ at: now, steps: [], closest: 8, endedEarly: false }] } } })
+    await seed(page, st, '#/app')
+    const esc = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const re = new RegExp(esc + '[^ ]* [^ \\n]{0,8}', 'g')
+    r.home = await grab(page, new RegExp('[^\\n]{0,4}' + esc + '[^\\n]{0,14}', 'g'))
+    await page.goto(BASE + '#/app/card/edit'); await page.waitForTimeout(200); await page.getByRole('button', { name: '다음' }).click(); await page.waitForTimeout(200)
+    r.builder = await page.locator('h1').innerText().then((t) => t.replace(/\s+/g, ' '))
+    await page.goto(BASE + '#/app/show'); await page.waitForTimeout(300)
+    r.show = await page.locator('.showmode__care').innerText().catch(() => null)
+    await page.goto(BASE + '#/app'); await page.waitForTimeout(200)
+    await page.goto(BASE + '#/app/walk'); await page.waitForTimeout(200)
+    r.walk = await page.locator('.pagehead__sub').innerText()
+    await page.goto(BASE + '#/app/together'); await page.waitForTimeout(1300)
+    r.nearby = await page.locator('h1').innerText()
+    await page.goto(BASE + '#/app/together/dubu/walk'); await page.waitForTimeout(300)
+    r.together = await page.locator('h1').innerText()
+    await page.goto(BASE + '#/app/together/dubu'); await page.waitForTimeout(300)
+    r.detailH1 = await page.locator('h1').innerText().catch(() => null)
+    r.cautions = await page.locator('.why--caution').allInnerTexts()
+    out[name] = r
+  }
+  // demo data: caution for 콩이/솔/두부 with smalldog trigger; hide confirm for 솔; toast
+  await seed(page, seedState({ card: card({ triggers: ['smalldog', 'bigdog'] }) }), '#/app/together/sol')
+  out.demo_sol_caution = await page.locator('.why--caution').allInnerTexts()
+  await page.getByRole('button', { name: '이 이웃 숨기기' }).click(); await page.waitForTimeout(200)
+  out.demo_sol_hideTitle = await page.locator('dialog[open] h2').innerText()
+  await page.goto(BASE + '#/app/together/kong'); await page.waitForTimeout(200)
+  out.leak_hideDialogAfterParamChange = await page.locator('dialog[open] h2').allInnerTexts()
+  await page.screenshot({ path: SHOTS + 'k-dialog-state-leaks-to-other-neighbour.png' })
+  await page.reload(); await page.waitForTimeout(300)
+  out.demo_kong_caution = await page.locator('.why--caution').allInnerTexts()
+  await page.getByRole('button', { name: '나란히 산책 요청하기' }).click(); await page.locator('dialog[open]').getByRole('button', { name: '요청 보내기' }).click(); await page.waitForTimeout(3200)
+  out.demo_kong_toast = await page.locator('.toast.is-on').allInnerTexts()
+  out.demo_kong_accepted = await page.locator('.status-box').innerText().then((t) => t.split('\n')[0])
+  await page.screenshot({ path: SHOTS + 'k-josa-kong-accepted.png' })
+  out.errors = errors
+  console.log(JSON.stringify(out, null, 1))
+  await browser.close()
+})().catch((e) => { console.error(e); process.exit(1) })

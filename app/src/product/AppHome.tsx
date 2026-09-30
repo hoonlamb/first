@@ -12,6 +12,7 @@ export function AppHome() {
   const bonds = useStore((s) => s.bonds)
   const requests = useStore((s) => s.requests)
   const activeT = useStore((s) => s.activeTogether)
+  const hidden = useStore((s) => s.hidden)
   const location = useLocation()
   const needCard = (location.state as { needCard?: boolean } | null)?.needCard
 
@@ -32,7 +33,7 @@ export function AppHome() {
 
   const calm = closestCalm(walks)
   const pending = Object.entries(requests).filter(([id, v]) => v.status === 'accepted' && !bonds[id]).length
-  const lastBond = Object.values(bonds).map((b) => ({ b, last: b.sessions[b.sessions.length - 1] })).sort((x, y) => y.last.at - x.last.at)[0]
+  const lastBond = Object.values(bonds).filter((b) => !hidden.includes(b.neighborId)).map((b) => ({ b, last: b.sessions[b.sessions.length - 1] })).sort((x, y) => y.last.at - x.last.at)[0]
   const lastNeighbor = lastBond && NEIGHBORS.find((n) => n.id === lastBond.b.neighborId)
   const nextStart = lastBond && lastNeighbor ? planFor(card, lastNeighbor, lastBond.b.sessions).start : null
 

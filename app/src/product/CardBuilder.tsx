@@ -183,7 +183,7 @@ export function CardBuilder({ mode }: { mode: 'new' | 'edit' }) {
         {done && <button className="btn btn-signal builder__next" onClick={save}>{mode === 'edit' ? '고친 내용 저장' : '카드 저장하기'}</button>}
       </div>
 
-      <Confirm open={replaceAsk} title={`${existing?.name ?? ''} 카드를 새 카드로 바꿀까요?`} body="다른 개의 카드라면 지금 카드와 산책·사이 기록, 보낸 요청이 모두 지워져요. 같은 개라면 ‘지금 카드 고치기’를 써 주세요."
+      <Confirm open={replaceAsk} title={`${existing?.name ?? ''} 카드를 새 카드로 바꿀까요?`} body="새 카드를 저장하면 지금 카드와 산책·사이 기록, 보낸 요청이 모두 지워져요. 같은 개의 정보를 바꾸려면 취소하고 ‘지금 카드 고치기’를 써 주세요."
         confirmLabel="새 카드로 바꾸기" cancelLabel="취소" danger onCancel={() => setReplaceAsk(false)} onConfirm={save} />
       <Confirm open={leaving} title="작성 중인 내용이 있어요" body={mode === 'edit' ? '고친 내용은 저장되지 않아요.' : '지금 나가면 입력한 내용이 사라져요.'}
         confirmLabel="나가기" cancelLabel="계속 쓰기" danger onCancel={() => setLeaving(false)} onConfirm={() => { setLeaving(false); nav('/app') }} />

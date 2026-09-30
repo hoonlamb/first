@@ -1,0 +1,123 @@
+{
+ "R201_tenseStop": {
+  "title": "첫 나란히 산책 계획",
+  "steps": "10m 8m 6m 인사 없이 끝",
+  "sessions": [
+   null
+  ]
+ },
+ "R201_sheet": "이 규칙이 함께 전달돼요: 10m 떨어져 같은 방향으로 걷기부터, 오늘은 6m까지만, 인사 없이.",
+ "R202_directUrl": {
+  "url": "/app/together/bori",
+  "active": "dubu",
+  "i": 1,
+  "notice": [
+   "두부와의 나란히가 진행 중이에요. 그 산책을 먼저 마쳐 주세요. 이어서 걷기"
+  ]
+ },
+ "R210_home": {
+  "text": "두부와 걷는 중\n8m 단계에서 이어서 걸어요\n→"
+ },
+ "R210_afterClick": {
+  "url": "/app/together/dubu/walk",
+  "panel": "2단계 · 나란히 걷는 중 8m 큰 걸음 10번쯤 떨어져 같은 방향으로. 걸음은 그대로. 긴장했어요 잠깐 멈춤 둘 다 편해요?"
+ },
+ "R211_hideActive": {
+  "hidden": [
+   "dubu"
+  ],
+  "active": "dubu",
+  "boriNotice": [
+   "두부와의 나란히가 진행 중이에요. 그 산책을 먼저 마쳐 주세요. 이어서 걷기"
+  ]
+ },
+ "R213_activeThenGate": {
+  "url": "/app/together/dubu/walk",
+  "panel": "2단계 · 나란히 걷는 중 8m 큰 걸음 10번쯤 떨어져 같은 방향으로. 걸음은 그대로. 긴장했어요 잠깐 멈춤 둘 다 편해요?",
+  "buttons": [
+   "긴장했어요",
+   "잠깐 멈춤",
+   "둘 다 편해요?"
+  ]
+ },
+ "R213_detail": {
+  "status": [
+   "이 조합은 훈련사와 함께 걸어요. 둘 중 한 친구가 12m 이상 떨어져야 편해서, 보호자끼리만 걷는 나란히는 권하지 않아요.\n\n훈련사 동행 나란히는 준비 중이에요. 체험 모드에서는 요청할 수 없어요."
+  ],
+  "resumeBtn": 0
+ },
+ "R213_home": "나란히 두부와 걷는 중 8m 단계에서 이어서 걸어요 →",
+ "R214_boriChosen": "on",
+ "R214_kong": {
+  "dialogOpen": 0
+ },
+ "R214_kongChosen": "on",
+ "R214_kongOptions": [
+  "on",
+  "on"
+ ],
+ "R215_greet": {
+  "title": "짧게 인사해 볼까요?",
+  "stopVisible": 1
+ },
+ "R207_dialSamples": "오늘 산책길에서 만난 개 뽀리 천천히 인사해요 망고 인사 없이 지나가요 콩이 인사 좋아해요 20m 뽀리 다가가는 당신의 개 슬라이더를 왼쪽으로 옮겨 다가가 보세요 가까이 1m 멀리 20m 20m 뽀리는 편안해요. 이 거리라면 편하게 지나갈 수 있어요. 뽀리의 편한 거리는 8m(큰 걸음 10번쯤). 같은 20m라도 개마다 다르게 느껴요.",
+ "brandToc": 14,
+ "brandTocClick": {
+  "url": "/brand",
+  "y0": 0,
+  "y1": 2775,
+  "active": "message-t"
+ },
+ "R204_desk_A4_pages": 1,
+ "R204_desk_Letter_pages": 1,
+ "R204_desk_printDocMm": 238.1,
+ "R204_desk_tagsMm": [
+  [
+   0,
+   80,
+   0,
+   50
+  ],
+  [
+   86,
+   166,
+   0,
+   50
+  ]
+ ],
+ "R204_desk-longnote_A4_pages": 1,
+ "R204_desk-longnote_Letter_pages": 1,
+ "R204_desk-longnote_printDocMm": 238.1,
+ "R204_desk-longnote_tagsMm": [
+  [
+   0,
+   80,
+   0,
+   50
+  ],
+  [
+   86,
+   166,
+   0,
+   50
+  ]
+ ],
+ "R204_m-longnote_A4_pages": 1,
+ "R204_m-longnote_Letter_pages": 1,
+ "R204_m-longnote_printDocMm": 238.1,
+ "R204_m-longnote_tagsMm": [
+  [
+   0,
+   80,
+   0,
+   50
+  ],
+  [
+   86,
+   166,
+   0,
+   50
+  ]
+ ],
+ "errors": []
+}

@@ -126,7 +126,8 @@ export function reactionAt(distance: number, comfort: number): Reaction {
  * - narrow: never if any tense/react was logged without a distance; otherwise only with ≥3 calm encounters across ≥2 walks, all closer than the card, and no tense/react
  *   within 2m of them in any walk → the closest distance that is still ≥ (farthest tense/react + 2m).
  */
-export function suggestComfort(card: DogCard, walks: Walk[]): { to: number; kind: 'widen' | 'narrow' } | null {
+export function suggestComfort(card: DogCard, allWalks: Walk[]): { to: number; kind: 'widen' | 'narrow' } | null {
+  const walks = allWalks.slice(0, 5) // newest first: judge by recent walks only
   const all = walks.flatMap((w) => w.encounters.map((e) => ({ ...e, walk: w.id }))).filter((e) => e.distance !== null) as (Encounter & { distance: number; walk: string })[]
   const bad = all.filter((e) => e.reaction !== 'calm').map((e) => e.distance)
   const worst = bad.length ? Math.max(...bad) : 0

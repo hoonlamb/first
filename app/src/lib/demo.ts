@@ -11,7 +11,7 @@ export interface Neighbor extends Omit<DogCard, 'updatedAt' | 'note'> {
 
 export const NEIGHBORS: Neighbor[] = [
   { id: 'dubu', name: '두부', size: 'small', pace: 'slow', greeting: 'slow', comfort: 6, triggers: ['bike'], slots: ['morning', 'evening'], hood: '망원동', walkedTogether: '망원한강공원 산책로', note: '처음엔 뒤에서 따라 걷는 걸 좋아해요.' },
-  { id: 'mango', name: '망고', size: 'medium', pace: 'steady', greeting: 'pass', comfort: 12, triggers: ['bigdog', 'noise'], slots: ['dawn', 'night'], hood: '망원동', walkedTogether: '성미산 둘레길', note: '인사보다 같이 걷는 걸 더 편해해요.' },
+  { id: 'mango', name: '망고', size: 'medium', pace: 'steady', greeting: 'pass', comfort: 15, triggers: ['bigdog', 'noise'], slots: ['dawn', 'night'], hood: '망원동', walkedTogether: '성미산 둘레길', note: '인사보다 같이 걷는 걸 더 편해해요.' },
   { id: 'kong', name: '콩이', size: 'small', pace: 'brisk', greeting: 'hello', comfort: 3, triggers: ['touch'], slots: ['morning', 'evening'], hood: '합정동', walkedTogether: '합정 당인리 길', note: '사람은 좋아하지만 손이 갑자기 오면 놀라요.' },
   { id: 'bori', name: '보리', size: 'large', pace: 'slow', greeting: 'slow', comfort: 8, triggers: ['kids', 'bike'], slots: ['evening', 'night'], hood: '망원동', walkedTogether: '망원시장 뒷길', note: '큰 덩치지만 겁이 많아요.' },
   { id: 'hodu', name: '호두', size: 'medium', pace: 'brisk', greeting: 'hello', comfort: 4, triggers: [], slots: ['dawn', 'morning'], hood: '서교동', walkedTogether: '경의선숲길', note: '에너지가 많아요. 긴 산책을 좋아해요.' },

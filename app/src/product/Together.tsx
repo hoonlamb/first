@@ -47,6 +47,7 @@ export function Together() {
   const plan = planFor(card, n, bond?.sessions)
   // Guards: trainer-only pairs and a second walk while another is in progress can't start from a direct URL.
   if (!done && !active && (plan.needsPro || otherActive)) return <Navigate to={`/app/together/${n.id}`} replace />
+  const gated = !done && !!active && plan.needsPro // card changed to ≥12m mid-walk
   const steps = active?.steps ?? plan.steps
   const d = steps[i]
   const update = (patch: Partial<ActiveTogether>) =>
@@ -95,7 +96,7 @@ export function Together() {
       <div className="together__top">
         {phase === 'intro' || phase === 'done'
           ? <button className="btn-quiet" onClick={() => nav(`/app/together/${n.id}`)}>{phase === 'done' ? '닫기' : '← 계획'}</button>
-          : <button className="btn-quiet" onClick={() => setConfirmStop(true)}>그만하기</button>}
+          : phase !== 'greet' && !gated ? <button className="btn-quiet" onClick={() => setConfirmStop(true)}>그만하기</button> : <span />}
         {phase !== 'intro' && phase !== 'done' && (
           <ol className="progress" aria-label={`${steps.length}단계 중 ${i + 1}단계`}>
             {steps.map((s, k) => <li key={`${s}-${k}`} className={k <= i ? 'is-on' : ''} />)}
@@ -108,7 +109,15 @@ export function Together() {
           theme="paper" height={260} walking={phase === 'walking' && !paused} />
       </div>
 
-      {phase === 'intro' && (
+      {gated && (
+        <section className="together__panel" role="alert">
+          <h1 ref={headRef} tabIndex={-1} className="together__title">이 산책은 여기서 멈춰 주세요.</h1>
+          <p className="together__line">카드의 편한 거리가 바뀌어서, 이제 이 조합은 훈련사와 함께 걷는 게 좋아요. 지금까지 걸은 거리는 기록돼요.</p>
+          <button className="btn btn-ink btn-block" onClick={() => finish(true)}>여기까지 기록하고 마치기</button>
+        </section>
+      )}
+
+      {!gated && phase === 'intro' && (
         <section className="together__panel">
           <h1 ref={headRef} tabIndex={-1} className="together__title">{josa(card.name, '과/와')} {n.name}, 나란히 걸어요.</h1>
           <ul className="rules">
@@ -122,7 +131,7 @@ export function Together() {
         </section>
       )}
 
-      {phase === 'walking' && (
+      {!gated && phase === 'walking' && (
         <section className="together__panel">
           <p className="together__kicker">{i + 1}단계 · {paused ? '잠깐 멈춤' : '나란히 걷는 중'}</p>
           <h1 ref={headRef} tabIndex={-1} className="together__num"><span className="num">{d}m</span></h1>
@@ -137,7 +146,7 @@ export function Together() {
         </section>
       )}
 
-      {phase === 'check' && (
+      {!gated && phase === 'check' && (
         <section className="together__panel">
           <p className="together__kicker"><span className="num">{d}m</span>에서</p>
           <h1 ref={headRef} tabIndex={-1} className="together__title">둘 다 어땠나요?</h1>
@@ -148,7 +157,7 @@ export function Together() {
         </section>
       )}
 
-      {phase === 'tense' && (
+      {!gated && phase === 'tense' && (
         <section className="together__panel">
           <h1 ref={headRef} tabIndex={-1} className="together__title">괜찮아요. 물러나는 것도 순서예요.</h1>
           <p className="together__line">귀가 서거나 걸음이 멈추면 거리를 벌려 주세요.</p>
@@ -160,7 +169,7 @@ export function Together() {
         </section>
       )}
 
-      {phase === 'greet' && (
+      {!gated && phase === 'greet' && (
         <section className="together__panel">
           <h1 ref={headRef} tabIndex={-1} className="together__title">짧게 인사해 볼까요?</h1>
           <p className="together__line">둘 다 원할 때만요. 잠깐 냄새를 맡고, 다시 같은 방향으로 걸어요. 망설여지면 인사 없이 마쳐도 좋아요.</p>

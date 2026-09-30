@@ -109,7 +109,7 @@ export function Home() {
               <div className="how__text">
                 <p className="how__no num">03</p>
                 <h3 className="h-l">사이 기록</h3>
-                <p>얼마나 가까이서 편안했는지 기록이 쌓여요. 다음 나란히 산책은 처음부터가 아니라 지난번 편안했던 거리에서 시작해요.</p>
+                <p>얼마나 가까이서 편안했는지 기록이 쌓여요. 다음 나란히 산책은 처음부터가 아니라, 지난번 편안했던 거리보다 한 단계 멀리서 몸을 풀고 이어서 시작해요.</p>
                 <Link to="/app" className="btn btn-ink">체험 모드로 써 보기</Link>
               </div>
               <div className="how__visual how__visual--bond" aria-hidden="true">
@@ -142,7 +142,7 @@ export function Home() {
             <ul className="principles__list">
               <li><b>사진보다 성향.</b> 외모로 고르지 않아요. 속도, 인사 방식, 거리로 맞춰요.</li>
               <li><b>첫 만남은 인사 없이.</b> 모든 나란히 산책은 멀리서 같은 방향으로 시작해요.</li>
-              <li><b>멈춤도 성공.</b> 어느 단계에서 끝나도 기록이 남고, 다음번엔 거기서 이어져요.</li>
+              <li><b>멈춤도 성공.</b> 어느 단계에서 끝나도 기록이 남고, 다음번엔 그보다 한 단계 멀리서 이어져요.</li>
               <li><b>보호자 정보는 뒤로.</b> 개의 카드가 먼저예요. 연락처나 사람 사진은 필요하지 않아요.</li>
             </ul>
           </div>
