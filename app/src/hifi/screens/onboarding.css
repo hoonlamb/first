@@ -116,7 +116,7 @@ input:focus-visible + .ob-upload { outline: 3px solid var(--pink-600); outline-o
 
 /* ---------- step 4: greeting + pace ---------- */
 .ob-options { display: grid; gap: 10px; }
-.ob-option { display: grid; grid-template-columns: 48px 1fr 24px; align-items: center; gap: 12px; padding: 14px 16px; min-height: 76px; border-radius: 18px; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line), var(--shadow); cursor: pointer; transition: background .15s, box-shadow .15s, transform .12s; }
+.ob-option { position: relative; display: grid; grid-template-columns: 48px 1fr 24px; align-items: center; gap: 12px; padding: 14px 16px; min-height: 76px; border-radius: 18px; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line), var(--shadow); cursor: pointer; transition: background .15s, box-shadow .15s, transform .12s; }
 .ob-option:active { transform: scale(.985); }
 .ob-option.is-on { background: var(--pink-50); box-shadow: inset 0 0 0 2px var(--pink-500), 0 6px 18px rgba(255, 67, 117, .14); }
 .ob-option:has(input:focus-visible) { outline: 3px solid var(--pink-600); outline-offset: 2px; }

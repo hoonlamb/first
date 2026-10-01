@@ -93,7 +93,7 @@ export function Home() {
                 <p className="how__no num">01</p>
                 <h3 className="h-l">산책 카드</h3>
                 <p>다가오는 사람에게 하는 부탁 한 줄, 다른 개와 편한 거리, 조심할 것이 한 장에 담겨요. 거리는 “큰 걸음 10번쯤”처럼 누구나 가늠할 수 있게 적어요. 휴대폰을 꺼낼 틈이 없다면 같은 문장을 리드줄 태그로 달 수도 있어요.</p>
-                <Link to="/app/card/new" className="btn btn-ink">카드 만들어 보기</Link>
+                <Link to="/app/start" className="btn btn-ink">카드 만들어 보기</Link>
               </div>
               <div className="how__visual how__visual--card"><CardFace card={SAMPLE_CARD} /></div>
             </article>

@@ -78,7 +78,7 @@ export function DistanceDial() {
         {dog.name}의 편한 거리는 <b className="num">{dog.comfort}m</b>({distanceWords(dog.comfort)}). 같은 {distance}m라도 개마다 다르게 느껴요.
       </p>
       {touched && (
-        <Link className="btn btn-signal dial__cta" to="/app/card/new">우리 개의 거리로 카드 만들기 <span aria-hidden="true">→</span></Link>
+        <Link className="btn btn-signal dial__cta" to="/app/start">우리 개의 거리로 카드 만들기 <span aria-hidden="true">→</span></Link>
       )}
     </div>
   )
