@@ -12,7 +12,7 @@
 ```bash
 cd app
 npm install
-npm run dev            # http://localhost:5173  (#/ 사이트, #/app 제품, #/brand, #/case)
+npm run dev            # http://localhost:5173  (#/ 사이트, #/app 하이파이 앱, #/brand, #/case)
 npm run build          # dist/ — 정적 호스팅 어디든 (base './', HashRouter)
 npx vite preview       # 빌드 결과 확인
 npx playwright test    # E2E (desktop + mobile). Chromium 경로: /opt/pw-browsers/... 또는 PW_CHROMIUM 환경변수
@@ -28,8 +28,11 @@ npx playwright test    # E2E (desktop + mobile). Chromium 경로: /opt/pw-browse
 | `app/src/lib/store.ts` | 상태·타입·라벨 문구(단일 출처)·localStorage 저장(`dangq.demo.v1`)·`reactionAt` 규칙 |
 | `app/src/lib/demo.ts` | 시연용 이웃 6마리, 호환도 `fit()`, 시작 거리 `startDistance()`, 단계 `ladder()` |
 | `app/src/site/` | 브랜드 사이트(Home, DistanceDial, Brand, CaseStudy, SiteChrome) |
-| `app/src/product/` | 체험 모드 앱 화면들. `ProductApp.tsx`가 라우트와 가드 |
-| `app/e2e/journey.spec.ts`, `rules.spec.ts` | 핵심 여정 E2E, 나란히·조사 규칙 단위 테스트 |
+| `app/src/hifi/` | **하이파이 앱(2026-10-01, 구 `src/product` 대체).** `HfApp.tsx` 라우트·가드·탭바·데모 응답, `hifi.css` 앱 전용 토큰(`.hf` 범위: pink-500 #FF4375 채움 / pink-600 #D42A58 흰 글자 버튼·링크 / pink-700 #C0244F 연분홍 위 글자), `ui/kit.tsx` 공용 컴포넌트, `screens/*` 화면 |
+| `app/src/lib/chat.ts`, `badges.ts`, `places.ts` | 채팅·약속(Meet), 인증소 배지, 멍슐랭 장소(가상, 공원 제외) |
+| `app/public/photos/` | 원본 팀 Figma 사진(1x, 라이선스 미기록) — **비공개 프로토타입 전용, 공개 전 교체 필수** (`outputs/10_hifi/photo-sources.md`) |
+| `outputs/10_hifi/` | 원본 Figma 스펙 추출(`figma-spec.md`), 참조 화면 |
+| `app/e2e/journey.spec.ts`, `rules.spec.ts` | 하이파이 여정 E2E(온보딩→나란히 요청→채팅→약속→가이드 산책→인증소→초기화), 나란히·조사 규칙 단위 테스트 (20/20) |
 | `app/src/styles/fonts/dangq-sans.woff2` | 사이트 문구 전용 폰트 서브셋. 문구를 바꾸면 `python3 scripts/subset-font.py`를 다시 실행 |
 | `#/app/tag` | 리드줄 태그 인쇄(휴대폰 없는 보여주기) |
 | `app/film/`, `app/scripts/record-film.mjs` | 출시 영상 컴포지션과 녹화 스크립트(빌드 제외) |
@@ -55,7 +58,9 @@ npx playwright test    # E2E (desktop + mobile). Chromium 경로: /opt/pw-browse
 - 체험 모드 표기(배지, 자동 응답 안내)를 지우지 않는다. 실제 전송·예약·결제처럼 보이게 만들지 않는다.
 
 ## 5. 체험 모드의 한계 (실서비스 전 필수)
-- 이웃과 수락 응답은 시연용이다. 서버, 매칭, 알림은 없다.
+- 이웃·수락(2.5초)·약속 확정(1.5초)·채팅 답장은 시연용이다. 서버, 매칭, 알림은 없다.
+- 첫 만남 시작 시간 상한(서울 월별 일몰 −1시간)은 근사치다(S82, 검증 필요).
+- 사진은 원본 Figma에서 가져온 저해상도(1x) 이미지다. 공개 전 라이선스 확인된 고해상도 사진으로 교체.
 - 위치 권한은 실제로 묻지만 좌표는 저장하지 않고, 동네는 고정 데이터를 쓴다.
 - 신고·차단, 보호자 인증, 결제, 위치정보법·개인정보 검토, 상표 조사, 훈련사 제휴는 모두 미구현이다.
 - 사용자 인터뷰는 0건이다. 모든 니즈는 가설이다. 전략 수정 조건은 `outputs/03_strategy/strategy.md` §3.
@@ -68,7 +73,7 @@ npx playwright test    # E2E (desktop + mobile). Chromium 경로: /opt/pw-browse
 
 ## 7. 배포
 - 비공개 미리보기(소유자만 열람): https://claude.ai/artifact/ULrWBYxwqW2tMJm7rQt5Mw
-  - `app/dist`를 그대로 올린 것이다.
+  - `app/dist`를 그대로 올린 것이다. 첫 화면은 `#/app`(하이파이 앱)으로 연다. 소개 사이트·케이스 스터디는 앱 하단 링크.
   - 미리보기 창의 보안 제약 때문에 두 기능이 동작하지 않는다.
     - 위치 권한: 자동으로 거부되며, 거부 흐름으로 처리된다.
     - 태그의 '인쇄하기': 아무 일도 일어나지 않는다. 로컬이나 실제 배포에서는 정상 동작한다.
