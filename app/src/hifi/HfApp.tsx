@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link, NavLink, Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom'
 import { Home as HomeIcon, Compass, Footprints, Award, User, Wifi, BatteryFull, SignalHigh } from 'lucide-react'
-import { setState, useStore } from '../lib/store'
+import { getState, setState, useStore } from '../lib/store'
+import { MEET_CONFIRM_MS, confirmMeet, unreadIds } from '../lib/chat'
 import { NEIGHBORS } from '../lib/demo'
 import { josa } from '../lib/korean'
 import { Toast } from './ui/kit'
@@ -54,16 +55,33 @@ function useDemoReplies() {
       }, Math.max(0, DEMO_REPLY_MS - (Date.now() - r.at))))
     return () => timers.forEach(clearTimeout)
   }, [requests])
+  // proposed meets get confirmed by the demo partner ~1.5s after proposal (survives reloads)
+  const meets = useStore((s) => s.meets)
+  useEffect(() => {
+    const timers = Object.entries(meets).filter(([, m]) => !m.confirmed).map(([id, m]) =>
+      setTimeout(() => confirmMeet(id), Math.max(0, MEET_CONFIRM_MS - (Date.now() - (m.proposedAt ?? 0)))))
+    return () => timers.forEach(clearTimeout)
+  }, [meets])
   return toast
 }
 
 function StatusBar() {
   const { pathname } = useLocation()
-  const overlay = /\/app\/(together\/[^/]+$|places\/[^/]+$)/.test(pathname)
+  const overlayRoute = /\/app\/(together\/[^/]+$|places\/[^/]+$)/.test(pathname)
+  // over a full-bleed photo the status bar is white; once the photo scrolls away it turns dark again
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const el = document.getElementById('hf-scroll')
+    if (!el || !overlayRoute) return
+    const on = () => setScrolled(el.scrollTop > 300)
+    on(); el.addEventListener('scroll', on, { passive: true })
+    return () => el.removeEventListener('scroll', on)
+  }, [overlayRoute, pathname])
+  const overlay = overlayRoute
   const [now, setNow] = useState(() => new Date())
   useEffect(() => { const t = setInterval(() => setNow(new Date()), 30000); return () => clearInterval(t) }, [])
   return (
-    <div className={`hf-status ${overlay ? 'is-overlay hf-status--light' : ''}`} aria-hidden="true">
+    <div className={`hf-status ${overlay ? `is-overlay ${scrolled ? 'is-solid' : 'hf-status--light'}` : ''}`} aria-hidden="true">
       <span className="num">{now.getHours()}:{String(now.getMinutes()).padStart(2, '0')}</span>
       <span className="hf-status__icons"><SignalHigh size={17} strokeWidth={2.6} /><Wifi size={17} strokeWidth={2.6} /><BatteryFull size={22} strokeWidth={2} /></span>
     </div>
@@ -75,10 +93,10 @@ function KeyedProfile() { const { id } = useParams(); return <NeighborProfile ke
 export function HfApp() {
   const { pathname } = useLocation()
   const card = useStore((s) => s.card)
-  const threads = useStore((s) => s.threads)
+  useStore((s) => s.threads); useStore((s) => s.seen) // re-render on chat changes
   const toast = useDemoReplies()
   const scrollRef = useRef<HTMLDivElement>(null)
-  const unread = Object.values(threads).filter((t) => t.length && t[t.length - 1].from === 'them').length
+  const unread = unreadIds(getState()).length
   const tabRoots = ['/app', '/app/places', '/app/together', '/app/badges', '/app/me']
   const showTabs = !!card && tabRoots.includes(pathname.replace(/\/$/, '') || '/app')
 

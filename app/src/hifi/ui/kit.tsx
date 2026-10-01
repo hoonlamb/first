@@ -1,8 +1,9 @@
-import { useEffect, useRef, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, useNavigate } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
 
-export const asset = (p: string) => (p.startsWith('data:') || p.startsWith('http') ? p : `./${p}`)
+import { asset } from './asset'
 
 /** Header for tab roots: logo left, actions right. */
 export function RootHeader({ children }: { children?: ReactNode }) {
@@ -48,8 +49,10 @@ export function Section({ title, sub, more, children, id }: { title: string; sub
 }
 
 /** Bottom sheet on native <dialog> (focus trap + Esc). */
-export function Sheet({ open, onClose, title, children, center = false }: { open: boolean; onClose: () => void; title: string; children: ReactNode; center?: boolean }) {
+export function Sheet({ open, onClose, title, children, center = false, className = '' }: { open: boolean; onClose: () => void; title: string; children: ReactNode; center?: boolean; className?: string }) {
   const ref = useRef<HTMLDialogElement>(null)
+  const openRef = useRef(open)
+  useEffect(() => { openRef.current = open }, [open])
   useEffect(() => {
     const d = ref.current
     if (!d) return
@@ -59,7 +62,8 @@ export function Sheet({ open, onClose, title, children, center = false }: { open
   useEffect(() => { const d = ref.current; return () => { if (d?.open) settle() } }, [])
   const id = `sheet-${title.replace(/\s/g, '')}`
   return (
-    <dialog ref={ref} className={`hf-sheet ${center ? 'hf-sheet--center' : ''}`} aria-labelledby={id} onClose={onClose}
+    <dialog ref={ref} className={`hf-sheet ${center ? 'hf-sheet--center' : ''} ${className}`} aria-labelledby={id}
+      onClose={() => { if (openRef.current) onClose() } /* only user-initiated closes (Esc/backdrop); programmatic closes don't re-fire */}
       onCancel={(e) => { e.preventDefault(); onClose() }} onClick={(e) => { if (e.target === ref.current) onClose() }}>
       {!center && <div className="hf-sheet__grab" aria-hidden="true" />}
       <div className="hf-sheet__inner">
@@ -75,8 +79,11 @@ function settle() {
   setTimeout(() => document.body.classList.remove('is-settling'), 350)
 }
 
+/** Toast rendered into the phone screen (not the scroll content), so it stays in view on long pages. */
 export function Toast({ message }: { message: string | null }) {
-  return <div className={`hf-toast ${message ? 'is-on' : ''}`} role="status" aria-live="polite">{message}</div>
+  const [host] = useState<Element | null>(() => (typeof document !== 'undefined' ? document.querySelector('.hf-screen') : null))
+  const node = <div className={`hf-toast ${message ? 'is-on' : ''}`} role="status" aria-live="polite">{message}</div>
+  return host ? createPortal(node, host) : node
 }
 
 export function Avatar({ src, alt = '', size }: { src?: string; alt?: string; size?: 'sm' | 'lg' }) {

@@ -5,7 +5,6 @@ import './styles/tokens.css'
 import './styles/base.css'
 import './styles/components.css'
 import './styles/site.css'
-import './styles/product.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

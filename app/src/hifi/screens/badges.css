@@ -1,0 +1,107 @@
+/* 댕댕인증소 — summary, 사이 기록, badges, challenges (figma-spec §6: 뱃지 카드, 챌린지 카드) */
+
+.bd-page { gap: 30px; padding-top: 4px; }
+.bd-titlebar { display: grid; gap: 4px; margin-bottom: -10px; }
+.bd-sec { display: grid; gap: 14px; }
+
+/* tags (original 개인 #EFE5F6/#BC61FC, 숙소 #D5E9F5/#1591D9 — text darkened for AA) */
+.bd-tag { display: inline-flex; align-items: center; gap: 3px; height: 24px; padding: 0 9px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: -0.01em; }
+.bd-tag--pink { background: var(--pink-100); color: var(--pink-600); }
+.bd-tag--green { background: var(--calm-bg); color: var(--calm); }
+.bd-tag--purple { background: #EFE5F6; color: #8A3FC0; }
+.bd-tag--blue { background: #D5E9F5; color: #0B6FA8; }
+.bd-tag--grey { background: rgba(255,255,255,.9); color: var(--ink-700); box-shadow: inset 0 0 0 1px var(--line); }
+.bd-tag--done { background: var(--pink-600); color: #fff; }
+
+/* summary */
+.bd-summary { position: relative; overflow: hidden; border-radius: 22px; padding: 20px 20px 18px; display: grid; gap: 14px; color: #fff; background: radial-gradient(160px 160px at 92% 18%, rgba(255,255,255,.35), transparent 70%), linear-gradient(135deg, #FF5C88 0%, #FF4375 45%, #E0306A 100%); box-shadow: 0 14px 30px rgba(255, 67, 117, .3); }
+.bd-summary::before { content: ""; position: absolute; width: 180px; height: 180px; right: -50px; bottom: -90px; border-radius: 50%; background: rgba(255,255,255,.12); }
+.bd-summary__top { display: flex; justify-content: space-between; align-items: flex-start; position: relative; }
+.bd-summary__kicker { font-size: 14px; font-weight: 700; opacity: .92; }
+.bd-summary__count { display: flex; align-items: baseline; gap: 6px; margin-top: 2px; }
+.bd-summary__count b { font-size: 44px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+.bd-summary__count span { font-size: 18px; font-weight: 700; opacity: .85; }
+.bd-summary__mascot { width: 76px; height: 76px; object-fit: contain; margin: -6px -4px -10px 0; filter: drop-shadow(0 6px 12px rgba(120, 0, 40, .25)); }
+.bd-progress { position: relative; height: 10px; border-radius: 5px; background: rgba(255,255,255,.3); overflow: hidden; }
+.bd-progress span { position: absolute; inset: 0 auto 0 0; border-radius: 5px; background: #fff; box-shadow: 0 0 10px rgba(255,255,255,.6); transition: width .6s var(--ease); }
+.bd-summary__next { position: relative; font-size: 13px; line-height: 1.5; font-weight: 500; opacity: .96; }
+.bd-summary__next b { font-weight: 800; }
+
+/* 사이 기록 */
+.bd-bonds { display: grid; gap: 12px; }
+.bd-bond { display: grid; gap: 14px; padding: 16px; border-radius: 20px; background: var(--surface); box-shadow: var(--shadow); transition: transform .15s var(--ease); }
+.bd-bond:active { transform: scale(.985); }
+.bd-bond__head { display: flex; align-items: center; gap: 12px; }
+.bd-bond__avatar { width: 48px; height: 48px; box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--pink-100); }
+.bd-bond__who { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.bd-bond__who b { font-size: 17px; font-weight: 800; letter-spacing: -0.02em; }
+.bd-bond__who small { font-size: 12px; color: var(--ink-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bd-bond__times { font-size: 12px; font-weight: 700; color: var(--pink-600); background: var(--pink-50); padding: 4px 9px; border-radius: 999px; white-space: nowrap; }
+.bd-bond__chev { color: var(--ink-300); flex: none; margin-right: -4px; }
+
+.bd-bars { display: grid; gap: 8px; }
+.bd-bar { display: grid; grid-template-columns: 32px 1fr 48px; align-items: center; gap: 8px; }
+.bd-bar__n { font-size: 12px; font-weight: 700; color: var(--ink-500); }
+.bd-bar__track { height: 12px; border-radius: 6px; background: var(--bg); overflow: hidden; position: relative; }
+.bd-bar__fill { position: absolute; inset: 0 auto 0 0; border-radius: 6px; background: linear-gradient(90deg, #FF8FB0, var(--pink-500)); }
+.bd-bar__v { font-size: 13px; font-weight: 800; color: var(--ink-900); text-align: right; }
+.bd-bar.is-intro .bd-bar__fill { background: repeating-linear-gradient(135deg, var(--pink-100) 0 6px, #FFF0F5 6px 12px); }
+.bd-bar.is-intro .bd-bar__v { color: var(--ink-500); font-weight: 600; font-size: 12px; }
+.bd-bar:last-child:not(.is-intro) .bd-bar__fill { box-shadow: 0 0 0 2px rgba(255, 67, 117, .15); }
+.bd-bond__next { display: flex; align-items: center; gap: 6px; padding: 10px 12px; border-radius: 12px; background: var(--pink-50); font-size: 13px; font-weight: 600; color: var(--ink-700); }
+.bd-bond__next svg { color: var(--pink-500); }
+.bd-bond__next b { color: var(--pink-600); font-weight: 800; }
+
+.bd-empty { display: grid; justify-items: center; text-align: center; gap: 12px; padding: 28px 20px 22px; border-radius: 20px; background: var(--surface); box-shadow: var(--shadow); }
+.bd-empty img { width: 96px; }
+.bd-empty > div { display: grid; gap: 4px; }
+.bd-empty__title { font-size: 16px; font-weight: 800; letter-spacing: -0.02em; }
+
+/* badge grid */
+.bd-count { font-size: 13px; font-weight: 800; color: var(--pink-600); background: var(--pink-100); padding: 4px 10px; border-radius: 999px; }
+.bd-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.bd-grid > li { display: grid; }
+.bd-badge { display: grid; justify-items: center; align-content: start; gap: 8px; padding: 16px 6px 14px; border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); text-align: center; min-height: 138px; transition: transform .15s var(--ease); }
+.bd-badge:active { transform: scale(.96); }
+.bd-badge__medal { position: relative; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, #fff 0%, var(--pink-100) 60%, #FFD0DF 100%); box-shadow: 0 6px 14px rgba(255, 67, 117, .2), inset 0 -3px 6px rgba(255, 67, 117, .12); }
+.bd-badge__emoji { font-size: 30px; line-height: 1; }
+.bd-badge__title { font-size: 13px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.3; color: var(--ink-900); }
+.bd-badge__got { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 700; color: var(--pink-600); background: var(--pink-50); padding: 3px 8px; border-radius: 999px; }
+.bd-badge__how { font-size: 11px; line-height: 1.35; color: var(--ink-500); letter-spacing: -0.02em; }
+.bd-badge.is-locked { background: #FBFBFD; box-shadow: inset 0 0 0 1px var(--line); }
+.bd-badge.is-locked .bd-badge__medal { background: #EFEFF3; box-shadow: none; }
+.bd-badge.is-locked .bd-badge__emoji { filter: grayscale(1); opacity: .35; }
+.bd-badge.is-locked .bd-badge__title { color: var(--ink-500); }
+.bd-badge__lock { position: absolute; right: -2px; bottom: -2px; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--ink-500); color: #fff; box-shadow: 0 0 0 2px #FBFBFD; }
+
+/* challenges (original 인증소 cards: photo fill + white overlay, tags top-left) */
+.bd-challenges { display: grid; gap: 12px; }
+.bd-ch { position: relative; overflow: hidden; border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); isolation: isolate; min-height: 172px; }
+.bd-ch__photo { position: absolute; top: 0; right: 0; bottom: 0; width: 50%; height: 100%; object-fit: cover; z-index: -2; }
+.bd-ch::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #fff 0%, #fff 50%, rgba(255,255,255,.82) 62%, rgba(255,255,255,.3) 82%, rgba(255,255,255,0) 100%); }
+.bd-ch__body { padding: 16px 18px 14px; display: grid; gap: 6px; max-width: 70%; }
+.bd-ch__tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 2px; }
+.bd-ch__title { font-size: 17px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.35; }
+.bd-ch__desc { font-size: 13px; line-height: 1.5; color: var(--ink-700); }
+.bd-ch__foot { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.bd-ch__bar { flex: 1; height: 8px; border-radius: 4px; background: rgba(42,42,42,.08); overflow: hidden; position: relative; }
+.bd-ch__bar span { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--pink-500); transition: width .6s var(--ease); }
+.bd-ch__num { font-size: 13px; color: var(--ink-500); font-weight: 600; }
+.bd-ch__num b { font-size: 15px; color: var(--pink-600); font-weight: 800; }
+.bd-ch__period { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--ink-500); font-weight: 600; }
+.bd-ch.is-done { box-shadow: var(--shadow), inset 0 0 0 2px var(--pink-500); }
+
+/* detail sheet */
+.hf-sheet__inner:has(> .bd-detail) { padding-top: 26px; }
+.hf-sheet__inner:has(> .bd-detail) > .hf-sheet__title { text-align: center; }
+.bd-detail { display: grid; justify-items: center; text-align: center; gap: 10px; }
+.bd-detail__tags { display: flex; gap: 6px; margin-top: -6px; }
+.bd-detail__medal { position: relative; width: 112px; height: 112px; border-radius: 50%; display: grid; place-items: center; background: #EFEFF3; margin: 0 0 4px; }
+.bd-detail__medal > span:first-child { font-size: 54px; line-height: 1; filter: grayscale(1); opacity: .35; }
+.bd-detail__medal.is-on { background: radial-gradient(circle at 35% 30%, #fff 0%, var(--pink-100) 55%, #FFC9DA 100%); box-shadow: 0 10px 24px rgba(255, 67, 117, .25), inset 0 -6px 12px rgba(255, 67, 117, .15); }
+.bd-detail__medal.is-on > span:first-child { filter: none; opacity: 1; }
+.bd-detail__lock { position: absolute; right: 4px; bottom: 4px; width: 32px; height: 32px; border-radius: 50%; background: var(--ink-500); color: #fff; display: grid; place-items: center; box-shadow: 0 0 0 3px #fff; }
+.bd-detail__status { display: inline-flex; align-items: center; gap: 4px; height: 24px; font-size: 12px; font-weight: 700; color: var(--ink-500); background: var(--bg); padding: 0 10px; border-radius: 999px; }
+.bd-detail__status.is-on { color: var(--pink-600); background: var(--pink-50); }
+.bd-detail__how { font-size: 15px; color: var(--ink-700); line-height: 1.5; }
+.bd-detail__actions { width: 100%; display: grid; gap: 8px; margin-top: 6px; }

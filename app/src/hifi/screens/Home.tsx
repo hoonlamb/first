@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MessageCircle, MapPin, Bookmark, Footprints, Megaphone, RefreshCw, ChevronRight } from 'lucide-react'
-import { GREETING_ASK, closestCalm, setState, useStore } from '../../lib/store'
+import { GREETING_ASK, closestCalm, getState, setState, useStore } from '../../lib/store'
+import { unreadIds } from '../../lib/chat'
 import { NEIGHBORS, planFor } from '../../lib/demo'
 import { PLACES } from '../../lib/places'
 import { distanceWords, josa } from '../../lib/korean'
-import { RootHeader, Section, asset } from '../ui/kit'
+import { RootHeader, Section } from '../ui/kit'
+import { asset } from '../ui/asset'
 import './home.css'
 
 const QUESTIONS = [
@@ -34,13 +36,14 @@ export function HomeScreen() {
   const answers = useStore((s) => s.answers)
   const bonds = useStore((s) => s.bonds)
   const walks = useStore((s) => s.walks)
-  const threads = useStore((s) => s.threads)
+  useStore((s) => s.threads)
   const hidden = useStore((s) => s.hidden)
   const activeT = useStore((s) => s.activeTogether)
   const [qi, setQi] = useState(0)
   const question = QUESTIONS[qi]
   const answered = question.options.find((o) => o.t === answers[question.id])
-  const unread = Object.values(threads).filter((t) => t.length && t[t.length - 1].from === 'them').length
+  useStore((s) => s.seen)
+  const unread = unreadIds(getState()).length
   const neighbors = NEIGHBORS.filter((n) => !hidden.includes(n.id)).map((n) => ({ n, p: planFor(card, n, bonds[n.id]?.sessions) }))
     .sort((a, b) => Number(a.p.needsPro) - Number(b.p.needsPro))
   const calm = closestCalm(walks)

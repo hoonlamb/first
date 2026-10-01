@@ -24,7 +24,7 @@ export interface DogCard {
 }
 
 export interface Message { id: string; from: 'me' | 'them' | 'system'; at: number; text?: string; meet?: Meet }
-export interface Meet { date: string; time: string; placeId: string | null; confirmed: boolean }
+export interface Meet { date: string; time: string; placeId: string | null; confirmed: boolean; proposedAt?: number }
 export interface Review { neighborId: string; at: number; tags: string[]; note: string }
 
 export interface Encounter { at: number; distance: number | null; reaction: Reaction }
@@ -63,10 +63,11 @@ export interface State {
   badges: string[] // earned badge ids
   saved: string[] // saved place ids
   answers: Record<string, string> // daily question answers
+  seen: Record<string, number> // chat: thread length the user has read
 }
 
 const KEY = 'dangq.demo.v1'
-const empty: State = { card: null, walks: [], activeWalk: null, requests: {}, bonds: {}, location: 'unknown', neighborhood: null, activeTogether: null, hidden: [], threads: {}, meets: {}, reviews: [], badges: [], saved: [], answers: {} }
+const empty: State = { card: null, walks: [], activeWalk: null, requests: {}, bonds: {}, location: 'unknown', neighborhood: null, activeTogether: null, hidden: [], threads: {}, meets: {}, reviews: [], badges: [], saved: [], answers: {}, seen: {} }
 
 function load(): State {
   try {
