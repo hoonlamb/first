@@ -69,7 +69,7 @@ export function WalkLog() {
   }
   const log = (reaction: Reaction) => {
     setState((s) => s.activeWalk ? ({ ...s, activeWalk: { ...s.activeWalk, encounters: [...s.activeWalk.encounters, { at: Date.now(), distance: null, reaction }] } }) : s)
-    flash(`${REACT_EMOJI[reaction]} ${REACTION_LABEL[reaction]} · 거리는 아래에서 고를 수 있어요`)
+    flash(`${REACT_EMOJI[reaction]} ${REACTION_LABEL[reaction]} · 거리는 위에서 고를 수 있어요`)
   }
   const setLastDistance = (m: number) => {
     setState((s) => {

@@ -9,7 +9,7 @@ import { GREETING_LABEL, PACE_LABEL, SLOT_LABEL, getState, setState, useStore } 
 import { NEIGHBORS, PRO_THRESHOLD, fit, planFor } from '../../lib/demo'
 import type { Neighbor, Plan } from '../../lib/demo'
 import { PLACES } from '../../lib/places'
-import { sendMessage } from '../../lib/chat'
+import { sendMessage, unreadIds } from '../../lib/chat'
 import { distanceWords, josa } from '../../lib/korean'
 import { RootHeader, Sheet } from '../ui/kit'
 import { asset } from '../ui/asset'
@@ -46,12 +46,13 @@ export function TogetherList() {
   const hidden = useStore((s) => s.hidden)
   const bonds = useStore((s) => s.bonds)
   const requests = useStore((s) => s.requests)
-  const threads = useStore((s) => s.threads)
+  useStore((s) => s.threads) // re-render on new messages
   const hood = useStore((s) => s.neighborhood) ?? '망원동'
   const [sameSlot, setSameSlot] = useState(false)
   const [calm, setCalm] = useState(false)
   const [near, setNear] = useState(false)
-  const unread = Object.values(threads).filter((t) => t.length && t[t.length - 1].from === 'them').length
+  useStore((s) => s.seen)
+  const unread = unreadIds(getState()).length
 
   const visible = useMemo(() => NEIGHBORS.filter((n) => !hidden.includes(n.id)), [hidden])
   const results = useMemo(() => {
@@ -165,7 +166,7 @@ export function TogetherList() {
                         <div className="hf-photo__over">
                           <p className="hf-photo__name">{n.name}<small>{sexMark(n.sex)}</small><small className="num">{n.age}살</small></p>
                           <p className="tg-tile__meta">{n.breed}{near ? ` · ${n.hood}` : ''}</p>
-                          <p className="tg-tile__why">{p.needsPro ? `${PRO_THRESHOLD}m 이상 거리가 필요해요` : f.reasons[0] ?? f.cautions[0] ?? PACE_LABEL[n.pace]}</p>
+                          <p className="tg-tile__why">{p.needsPro ? (card.comfort >= PRO_THRESHOLD ? '우리 개 거리가 멀어 훈련사 동행' : `${n.name}${'의'} 거리가 멀어 훈련사 동행`) : f.reasons[0] ?? f.cautions[0] ?? PACE_LABEL[n.pace]}</p>
                         </div>
                       </Link>
                     </li>
@@ -204,6 +205,7 @@ export function NeighborProfile() {
   const bond = useStore((s) => (id ? s.bonds[id] : undefined))
   const meet = useStore((s) => (id ? s.meets[id] : undefined))
   const active = useStore((s) => s.activeTogether)
+  const isHidden = useStore((s) => !!id && s.hidden.includes(id)) // hidden = not shown anywhere, incl. direct links
   const nav = useNavigate()
   const [sheet, setSheet] = useState<null | 'ask' | 'menu' | 'report' | 'cancel'>(null)
   const [slot, setSlot] = useState<Slot | null>(null)
@@ -212,7 +214,7 @@ export function NeighborProfile() {
   // A dialog's close event arrives after we may have switched to the next sheet: only clear our own.
   const closeSheet = (k: NonNullable<typeof sheet>) => setSheet((cur) => (cur === k ? null : cur))
 
-  if (!n) return <Navigate to="/app/together" replace />
+  if (!n || isHidden) return <Navigate to="/app/together" replace />
   const f = fit(card, n)
   const plan = planFor(card, n, bond?.sessions)
   const first = plan.sessionIndex === 0
@@ -341,8 +343,8 @@ export function NeighborProfile() {
           <p className="tg-rule">
             <ShieldAlert size={16} strokeWidth={2.2} aria-hidden="true" />
             <span>
-              <b>{first ? '첫날은' : '오늘은'} <span className="num">{plan.floor}m</span>까지 · {plan.canGreet ? '인사는 둘 다 원할 때만' : '인사 없이'}</b>
-              <small>{plan.floor}m는 {distanceWords(plan.floor)}예요. 이보다 가까이 가지 않아요.</small>
+              <b>{first ? '첫날은' : '오늘은'} <span className="num">{plan.target}m</span>까지 · {plan.canGreet ? '인사는 둘 다 원할 때만' : '인사 없이'}</b>
+              <small>{plan.target}m는 {distanceWords(plan.target)}이에요. 이보다 가까이 가지 않아요.</small>
             </span>
           </p>
         </section>
@@ -411,7 +413,7 @@ export function NeighborProfile() {
           </div>
           <ul className="tg-asksum__rules">
             <li><Check size={14} strokeWidth={3} aria-hidden="true" /><span><b className="num">{plan.start}m</b>({distanceWords(plan.start)}) 떨어져 같은 방향으로 시작</span></li>
-            <li><Check size={14} strokeWidth={3} aria-hidden="true" /><span>{first ? '첫날은' : '오늘은'} <b className="num">{plan.floor}m</b>까지만 가까워져요</span></li>
+            <li><Check size={14} strokeWidth={3} aria-hidden="true" /><span>{first ? '첫날은' : '오늘은'} <b className="num">{plan.target}m</b>까지만 가까워져요</span></li>
             <li><Check size={14} strokeWidth={3} aria-hidden="true" /><span>{plan.canGreet ? '인사는 둘 다 원할 때만' : '인사 없이 나란히만 걸어요'}</span></li>
           </ul>
           <p className="hf-meta">이 규칙이 요청과 함께 전달돼요.</p>
@@ -547,7 +549,7 @@ function BondHistory({ name, sessions, next }: { name: string; sessions: { at: n
             <li key={s.at + i}>
               <span className="tg-bond__when"><b>{i + 1}회차</b><small className="num">{d.getMonth() + 1}월 {d.getDate()}일</small></span>
               <span className="tg-bond__bar" aria-hidden="true">
-                {s.closest !== null && <span style={{ width: `${Math.max(12, 100 - (s.closest / scale) * 100)}%` }} />}
+                {s.closest !== null && <span style={{ width: `${Math.max(12, (s.closest / scale) * 100)}%` }} />}
               </span>
               <span className="tg-bond__val">
                 {s.closest !== null ? <><b className="num">{s.closest}m</b><small>{s.endedEarly ? '일찍 마침' : '편안'}</small></> : <small>시작 전 멈춤</small>}
@@ -557,7 +559,7 @@ function BondHistory({ name, sessions, next }: { name: string; sessions: { at: n
         })}
       </ol>
       <p className="tg-bond__next"><ChevronRight size={16} aria-hidden="true" /><span>다음엔 <b className="num">{next}m</b>부터 몸을 풀어요</span></p>
-      <p className="hf-meta">막대가 길수록 더 가까이에서 편안했어요.</p>
+      <p className="hf-meta">막대는 두 친구 사이의 거리예요. 짧을수록 더 가까이에서 편안했어요.</p>
     </section>
   )
 }

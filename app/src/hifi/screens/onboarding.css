@@ -132,7 +132,7 @@ input:focus-visible + .ob-upload { outline: 3px solid var(--pink-600); outline-o
 .ob-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .ob-chip { position: relative; display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0 16px 0 12px; border-radius: 999px; background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--pink-200); font-size: 14.5px; font-weight: 700; color: var(--ink-700); cursor: pointer; transition: background .15s, color .15s, transform .12s; }
 .ob-chip:active { transform: scale(.96); }
-.ob-chip.is-on { background: var(--pink-500); color: #fff; box-shadow: 0 4px 12px rgba(255, 67, 117, .28); }
+.ob-chip.is-on { background: var(--pink-600); color: #fff; box-shadow: 0 4px 12px rgba(255, 67, 117, .28); }
 .ob-chip:has(input:focus-visible) { outline: 3px solid var(--pink-600); outline-offset: 2px; }
 .ob-chip__e { font-size: 20px; line-height: 1; }
 

@@ -121,7 +121,9 @@ export function TogetherWalk() {
       const prev = s.bonds[n.id] ?? { neighborId: n.id, sessions: [] }
       const requests = { ...s.requests }
       delete requests[n.id] // one request = one walk
-      return { ...s, requests, activeTogether: null, bonds: { ...s.bonds, [n.id]: { ...prev, sessions: [...prev.sessions, { at: Date.now(), steps: all, closest, endedEarly: stopped }] } } }
+      const meets = { ...s.meets }
+      delete meets[n.id] // …and one meet: the next walk gets a new one
+      return { ...s, requests, meets, activeTogether: null, bonds: { ...s.bonds, [n.id]: { ...prev, sessions: [...prev.sessions, { at: Date.now(), steps: all, closest, endedEarly: stopped }] } } }
     })
     // Badges: queued now, shown one at a time after the review sheet.
     const earned = [
@@ -232,7 +234,7 @@ export function TogetherWalk() {
                 <Rule icon={<MoveRight size={20} />} title="같은 방향으로">마주 보고 다가가지 않아요.</Rule>
                 <Rule icon={<Spline size={20} />} title="리드줄은 느슨하게">당기는 줄이 긴장을 만들어요.</Rule>
                 <Rule icon={<HeartHandshake size={20} />} title="둘 다 편할 때만 가까이">한쪽이라도 긴장하면 멈추거나 물러나요.</Rule>
-                <Rule icon={<Flag size={20} />} title={<>오늘은 <span className="num">{plan.floor}m</span>까지만</>}>
+                <Rule icon={<Flag size={20} />} title={<>오늘은 <span className="num">{plan.target}m</span>까지만</>}>
                   {plan.sessionIndex === 0 ? '첫 만남에는 인사하지 않아요.' : plan.canGreet ? '둘 다 원하면 마지막에 짧게 인사할 수 있어요.' : '이번에도 인사 없이 걸어요.'}
                 </Rule>
               </ul>

@@ -152,7 +152,7 @@
 .wk-rv__label small { font-size: 12px; font-weight: 500; color: var(--ink-500); }
 .wk-rv__chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .wk-rv__chip { display: inline-flex; align-items: center; gap: 5px; min-height: 40px; padding: 0 14px; border-radius: 12px; background: var(--chip-grey); font-size: 14px; font-weight: 600; color: var(--ink-700); transition: background .15s, color .15s, box-shadow .15s; }
-.wk-rv__chip[aria-pressed="true"] { background: var(--pink-100); color: var(--pink-600); box-shadow: inset 0 0 0 1.5px var(--pink-500); }
+.wk-rv__chip[aria-pressed="true"] { background: var(--pink-100); color: var(--pink-700); box-shadow: inset 0 0 0 1.5px var(--pink-500); }
 .wk-rv__note { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border-radius: 12px; box-shadow: inset 0 0 0 1px var(--ink-300); color: var(--ink-500); }
 .wk-rv__note:focus-within { box-shadow: inset 0 0 0 2px var(--pink-500); color: var(--pink-600); }
 .wk-rv__note input:focus-visible { outline: none; }

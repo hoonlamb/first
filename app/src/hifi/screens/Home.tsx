@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { MessageCircle, MapPin, Bookmark, Footprints, Megaphone, RefreshCw, ChevronRight } from 'lucide-react'
 import { GREETING_ASK, closestCalm, getState, setState, useStore } from '../../lib/store'
 import { unreadIds } from '../../lib/chat'
-import { NEIGHBORS, planFor } from '../../lib/demo'
+import { NEIGHBORS, fit, planFor } from '../../lib/demo'
 import { PLACES } from '../../lib/places'
 import { distanceWords, josa } from '../../lib/korean'
 import { RootHeader, Section } from '../ui/kit'
@@ -44,8 +44,8 @@ export function HomeScreen() {
   const answered = question.options.find((o) => o.t === answers[question.id])
   useStore((s) => s.seen)
   const unread = unreadIds(getState()).length
-  const neighbors = NEIGHBORS.filter((n) => !hidden.includes(n.id)).map((n) => ({ n, p: planFor(card, n, bonds[n.id]?.sessions) }))
-    .sort((a, b) => Number(a.p.needsPro) - Number(b.p.needsPro))
+  const neighbors = NEIGHBORS.filter((n) => !hidden.includes(n.id)).map((n) => ({ n, p: planFor(card, n, bonds[n.id]?.sessions), score: fit(card, n).score }))
+    .sort((a, b) => Number(a.p.needsPro) - Number(b.p.needsPro) || b.score - a.score)
   const calm = closestCalm(walks)
   const photo = card.photo ?? 'photos/dog-03-bori-terrier.jpg'
   const ask = GREETING_ASK[card.greeting]
@@ -114,7 +114,7 @@ export function HomeScreen() {
           <button className="hf-question__next" onClick={() => setQi((qi + 1) % QUESTIONS.length)}>다른 질문 보기 <RefreshCw size={13} /></button>
         </section>
 
-        <Section id="n-title" title="나란히 걸어 볼 이웃" sub={`${card.slots.length ? '산책 시간과 속도가 비슷한 순서예요' : '망원동 · 체험 데이터'}`} more={{ to: '/app/together' }}>
+        <Section id="n-title" title="나란히 걸어 볼 이웃" sub="산책 시간·속도·인사 방식이 잘 맞는 순서예요 · 체험 데이터" more={{ to: '/app/together' }}>
           <div className="hf-hscroll">
             {neighbors.slice(0, 5).map(({ n, p }) => (
               <Link key={n.id} to={`/app/together/${n.id}`} className="hf-photo hf-ncard">
@@ -129,11 +129,12 @@ export function HomeScreen() {
           </div>
         </Section>
 
-        <Section id="p-title" title="멍슐랭 Pick" sub="첫 나란히 하기 좋은 탁 트인 곳" more={{ to: '/app/places' }}>
+        <Section id="p-title" title="멍슐랭 Pick" sub="첫 나란히는 탁 트인 곳에서 시작해요" more={{ to: '/app/places' }}>
           <div className="hf-hscroll">
-            {PLACES.filter((p) => p.open).map((p) => (
+            {[...PLACES].sort((a, b) => Number(b.open) - Number(a.open)).map((p) => (
               <Link key={p.id} to={`/app/places/${p.id}`} className="hf-photo hf-pcard">
                 <img src={asset(p.photo)} alt="" />
+                {p.open && <div className="hf-photo__top"><span className="hf-pill hf-pill--pink">첫 나란히 추천</span></div>}
                 <div className="hf-photo__over">
                   <p className="hf-photo__name">{p.name}</p>
                   <p className="hf-pcard__meta"><MapPin size={13} /> {p.area}</p>

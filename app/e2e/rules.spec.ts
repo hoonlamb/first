@@ -62,3 +62,11 @@ test('suggestion: widen wins, narrowing needs evidence', () => {
   const old = walk('z', [[null, 'react']])
   expect(suggestComfort(card, [walk('a', [[5, 'calm'], [6, 'calm']]), walk('b', [[5, 'calm']]), walk('c', []), walk('d', []), walk('e', []), old])?.kind).toBe('narrow') // only the 5 most recent walks count: the old distance-less reaction no longer blocks
 })
+
+test('plan.target is the last rung and never below the floor', () => {
+  for (let a = 1; a <= 20; a++) for (let b = 1; b <= 20; b++) for (const sessions of [[], [{ closest: 8 }], [{ closest: 8 }, { closest: 6 }]]) {
+    const p = planFor({ comfort: a, greeting: 'slow' }, { comfort: b, greeting: 'slow' }, sessions)
+    expect(p.target).toBe(p.steps[p.steps.length - 1])
+    expect(p.target).toBeGreaterThanOrEqual(p.floor)
+  }
+})

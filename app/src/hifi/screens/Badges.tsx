@@ -95,7 +95,7 @@ export function BadgesScreen() {
           <div className="hf-section__head">
             <div>
               <h2 id="bd-bond-title" className="hf-h2">사이 기록</h2>
-              <p className="hf-sub">나란히 걸을수록 막대가 짧아져요 · 가장 가까이 편안했던 거리</p>
+              <p className="hf-sub">막대는 가장 가까이 편안했던 거리예요 · 짧아질수록 가까워진 거예요</p>
             </div>
           </div>
           {rows.length ? (

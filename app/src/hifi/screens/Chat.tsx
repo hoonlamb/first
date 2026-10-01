@@ -234,6 +234,7 @@ function Thread({ n }: { n: Neighbor }) {
   const msgs = useMemo(() => thread ?? [], [thread])
   const plan = planFor(card, n, sessions)
   const accepted = req?.status === 'accepted'
+  const canChat = !!req || !!sessions?.length // after a walk the conversation stays open
   const [text, setText] = useState('')
   const [typing, setTyping] = useState(false)
   const [sheet, setSheet] = useState<null | 'actions' | 'places'>(null)
@@ -302,8 +303,8 @@ function Thread({ n }: { n: Neighbor }) {
 
   const groups = groupMessages(msgs)
   const ruleText = plan.sessionIndex === 0
-    ? <>첫날은 <b className="num">{plan.start}m</b>부터 · <b className="num">{plan.floor}m</b>까지 · 인사 없이</>
-    : <><span className="num">{plan.sessionIndex + 1}</span>번째 나란히 · <b className="num">{plan.start}m</b>부터 · <b className="num">{plan.floor}m</b>까지 · {plan.canGreet ? '인사는 둘 다 편할 때' : '인사 없이'}</>
+    ? <>첫날은 <b className="num">{plan.start}m</b>부터 · <b className="num">{plan.target}m</b>까지 · 인사 없이</>
+    : <><span className="num">{plan.sessionIndex + 1}</span>번째 나란히 · <b className="num">{plan.start}m</b>부터 · <b className="num">{plan.target}m</b>까지 · {plan.canGreet ? '인사는 둘 다 편할 때' : '인사 없이'}</>
 
   return (
     <div className="cx-fill cx-thread">
@@ -377,12 +378,12 @@ function Thread({ n }: { n: Neighbor }) {
       </div>
 
       <form className="cx-composer" onSubmit={(e) => { e.preventDefault(); submit() }}>
-        <button type="button" className="cx-plus" disabled={!req} aria-label="더하기: 약속 잡기, 장소 추천, 산책 카드" aria-haspopup="dialog" onClick={() => setSheet('actions')}>
+        <button type="button" className="cx-plus" disabled={!canChat} aria-label="더하기: 약속 잡기, 장소 추천, 산책 카드" aria-haspopup="dialog" onClick={() => setSheet('actions')}>
           <Plus size={22} strokeWidth={2.4} />
         </button>
         <label className="cx-field">
           <span className="sr-only">메시지</span>
-          <input ref={inputRef} value={text} onChange={(e) => setText(e.target.value)} placeholder={req ? '메시지를 입력하세요' : '요청을 보내면 대화할 수 있어요'} enterKeyHint="send" disabled={!req}
+          <input ref={inputRef} value={text} onChange={(e) => setText(e.target.value)} placeholder={canChat ? '메시지를 입력하세요' : '요청을 보내면 대화할 수 있어요'} enterKeyHint="send" disabled={!canChat}
             onKeyDown={(e) => { if (e.key === 'Enter' && e.nativeEvent.isComposing) e.preventDefault() }} maxLength={500} />
           <button type="submit" className="cx-send" disabled={!text.trim()} aria-label="보내기"><ArrowUp size={20} strokeWidth={2.6} /></button>
         </label>
@@ -478,7 +479,7 @@ function MeetCard({ n, m, stale: old, live, meet, accepted, plan }: { n: Neighbo
         <span className="cx-meet__status" role="status">
           {status === 'ok' && <><Check size={13} strokeWidth={3} aria-hidden="true" /> 확정</>}
           {status === 'wait' && (stale ? '답을 기다리는 중' : <><LoaderCircle size={13} className="cx-spin" aria-hidden="true" /> 확인 중</>)}
-          {status === 'old' && '변경됨'}
+          {status === 'old' && (meet ? '변경됨' : '지난 약속')}
         </span>
       </header>
       <div className="cx-meet__body">
@@ -490,7 +491,7 @@ function MeetCard({ n, m, stale: old, live, meet, accepted, plan }: { n: Neighbo
             <small>{place?.place ? `${place.place.area} · ${place.place.open ? '탁 트인 곳' : place.place.kind}` : place ? '직접 입력한 장소' : '장소 추천을 보내 보세요'}</small>
           </span>
         </div>
-        <p className="cx-meet__rule"><Footprints size={14} aria-hidden="true" /> <span><span className="num">{plan.start}m</span>부터 · <span className="num">{plan.floor}m</span>까지{plan.sessionIndex === 0 ? ' · 인사 없이' : ''}</span></p>
+        {status !== 'old' && <p className="cx-meet__rule"><Footprints size={14} aria-hidden="true" /> <span><span className="num">{plan.start}m</span>부터 · <span className="num">{plan.target}m</span>까지{plan.sessionIndex === 0 ? ' · 인사 없이' : ''}</span></p>}
         {status === 'ok' && (
           blocked ? (
             <div className="cx-meet__cta">
@@ -513,7 +514,12 @@ const TIMES = {
   am: ['07:00', '08:00', '09:00', '10:00', '11:00'],
   pm: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
 }
-const FIRST_MEET_LAST = '19:00'
+// First meetings start at least an hour before sunset (Seoul, monthly approx., S82) so the walk ends in daylight.
+const SEOUL_SUNSET_H = [17.7, 18.2, 18.7, 19.1, 19.5, 19.9, 19.9, 19.5, 18.8, 18.2, 17.5, 17.3]
+const firstMeetLast = (d: string | null, fallback: number) => {
+  const month = d ? Number(d.slice(5, 7)) - 1 : new Date(fallback).getMonth()
+  return `${pad(Math.floor(SEOUL_SUNSET_H[month] - 1))}:00`
+}
 
 export function MeetPlanner() {
   const { id } = useParams()
@@ -539,7 +545,10 @@ function Planner({ n }: { n: Neighbor }) {
   const dayIds = days.map(ymd)
 
   const qPlace = params.get('place')
-  const initPlace = PLACES.find((p) => p.id === qPlace) ?? (existing?.placeId ? PLACES.find((p) => p.id === existing.placeId) : undefined)
+  const asked = PLACES.find((p) => p.id === qPlace)
+  // a first meeting only starts at open, wide places — a closed/indoor pick from 멍슐랭 isn't carried over
+  const notForFirst = firstMeet && asked && !asked.open ? asked : undefined
+  const initPlace = (notForFirst ? undefined : asked) ?? (existing?.placeId ? PLACES.find((p) => p.id === existing.placeId) : undefined)
   const initCustom = !qPlace && existing?.placeId?.startsWith('custom:') ? existing.placeId.slice(7) : ''
   const [date, setDate] = useState<string | null>(existing && dayIds.includes(existing.date) ? existing.date : null)
   const [time, setTime] = useState<string | null>(existing && dayIds.includes(existing.date) ? existing.time : null)
@@ -554,7 +563,7 @@ function Planner({ n }: { n: Neighbor }) {
   const hm = (d: Date) => `${pad(d.getHours())}:${pad(d.getMinutes())}`
   /** Why a time can't be picked on a given day: night (first meeting) or already past / within 30 minutes. */
   const disabledFor = (d: string | null, t: string): 'night' | 'past' | null => {
-    if (firstMeet && t > FIRST_MEET_LAST) return 'night'
+    if (firstMeet && t > firstMeetLast(d, now)) return 'night'
     if (d !== dayIds[0]) return null
     const soon = new Date(now + 30 * 60000)
     if (ymd(soon) !== d) return 'past'
@@ -628,7 +637,7 @@ function Planner({ n }: { n: Neighbor }) {
         {/* time */}
         <section className="cx-sec" aria-labelledby="meet-time">
           <div className="cx-sec__head"><h3 id="meet-time" className="cx-sec__title">시간</h3>{time && <span className="cx-sec__value num">{timeLabel(time)}</span>}</div>
-          {firstMeet && <p className="cx-hint"><Sun size={15} aria-hidden="true" /> 첫 만남은 밝을 때 만나요. 저녁 7시 이후는 두 번째 나란히부터 열려요.</p>}
+          {firstMeet && <p className="cx-hint"><Sun size={15} aria-hidden="true" /> <span>첫 만남은 해 지기 전에 끝나도록 <b className="num">{timeLabel(firstMeetLast(date, now))}</b>까지만 시작할 수 있어요. 그 뒤는 두 번째 나란히부터 열려요.</span></p>}
           <div className="cx-times" role="radiogroup" aria-labelledby="meet-time" aria-required="true" onKeyDown={radioKeys}>
             {(['am', 'pm'] as const).map((k) => (
               <div key={k} className="cx-tgroup" role="group" aria-label={k === 'am' ? '오전' : '오후'}>
@@ -684,7 +693,8 @@ function Planner({ n }: { n: Neighbor }) {
               <input ref={customRef} value={custom} onChange={(e) => setCustom(e.target.value)} placeholder="예: 망원역 2번 출구 앞 벤치" maxLength={40} />
             </label>
           )}
-          {!mode && <p className="cx-hint cx-hint--plain">장소는 나중에 대화로 정해도 괜찮아요.</p>}
+          {!mode && notForFirst && <p className="cx-hint" role="note"><Sun size={15} aria-hidden="true" /> {josa(notForFirst.name, '은/는')} 첫 만남 장소로 권하지 않아요. 탁 트인 곳을 골라 주세요.</p>}
+          {!mode && !notForFirst && <p className="cx-hint cx-hint--plain">장소는 나중에 대화로 정해도 괜찮아요.</p>}
         </section>
 
         {/* alarm */}

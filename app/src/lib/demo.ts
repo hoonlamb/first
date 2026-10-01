@@ -16,11 +16,11 @@ export interface Neighbor extends Omit<DogCard, 'updatedAt' | 'note'> {
 }
 
 export const NEIGHBORS: Neighbor[] = [
-  { id: 'dubu', name: '두부', photo: 'photos/dog-01-corgi.jpg', breed: '웰시코기', age: 3, sex: 'm', owner: '두부아빠', likes: ['🌳 공원 산책', '🎾 공놀이', '🍠 고구마'], size: 'small', pace: 'slow', greeting: 'slow', comfort: 6, triggers: ['bike'], slots: ['morning', 'evening'], hood: '망원동', walkedTogether: '망원한강공원 산책로', note: '처음엔 뒤에서 따라 걷는 걸 좋아해요.' },
-  { id: 'mango', name: '망고', photo: 'photos/dog-05-labrador.jpg', breed: '래브라도 리트리버', age: 5, sex: 'f', owner: '망고네', likes: ['🌊 물놀이', '🌙 밤 산책', '🦴 개껌'], size: 'medium', pace: 'steady', greeting: 'pass', comfort: 15, triggers: ['bigdog', 'noise'], slots: ['dawn', 'night'], hood: '망원동', walkedTogether: '성미산 둘레길', note: '인사보다 같이 걷는 걸 더 편해해요.' },
+  { id: 'dubu', name: '두부', photo: 'photos/dog-01-corgi.jpg', breed: '웰시코기', age: 3, sex: 'm', owner: '두부아빠', likes: ['🌳 공원 산책', '🎾 공놀이', '🍠 고구마'], size: 'medium', pace: 'slow', greeting: 'slow', comfort: 6, triggers: ['bike'], slots: ['morning', 'evening'], hood: '망원동', walkedTogether: '망원한강공원 산책로', note: '처음엔 뒤에서 따라 걷는 걸 좋아해요.' },
+  { id: 'mango', name: '망고', photo: 'photos/dog-05-labrador.jpg', breed: '래브라도 리트리버', age: 5, sex: 'f', owner: '망고네', likes: ['🌊 물놀이', '🌙 밤 산책', '🦴 개껌'], size: 'large', pace: 'steady', greeting: 'pass', comfort: 15, triggers: ['bigdog', 'noise'], slots: ['dawn', 'night'], hood: '망원동', walkedTogether: '성미산 둘레길', note: '인사보다 같이 걷는 걸 더 편해해요.' },
   { id: 'kong', name: '콩이', photo: 'photos/dog-02-chihuahua.jpg', breed: '치와와', age: 2, sex: 'f', owner: '콩이누나', likes: ['🧸 인형 놀이', '☀️ 햇볕', '🧀 치즈볼'], size: 'small', pace: 'brisk', greeting: 'hello', comfort: 3, triggers: ['touch'], slots: ['morning', 'evening'], hood: '합정동', walkedTogether: '합정 당인리 길', note: '사람은 좋아하지만 손이 갑자기 오면 놀라요.' },
-  { id: 'bori', name: '보리', photo: 'photos/dog-04-poodle.jpg', breed: '토이 푸들', age: 4, sex: 'm', owner: '보리누나', likes: ['🍂 낙엽 밟기', '🐾 냄새 맡기', '🥕 당근'], size: 'large', pace: 'slow', greeting: 'slow', comfort: 8, triggers: ['kids', 'bike'], slots: ['evening', 'night'], hood: '망원동', walkedTogether: '망원시장 뒷길', note: '큰 덩치지만 겁이 많아요.' },
-  { id: 'hodu', name: '호두', photo: 'photos/dog-07-pomeranian.jpg', breed: '포메라니안', age: 3, sex: 'm', owner: '호두집사', likes: ['🏃 달리기', '🥏 원반', '🍗 닭가슴살'], size: 'medium', pace: 'brisk', greeting: 'hello', comfort: 4, triggers: [], slots: ['dawn', 'morning'], hood: '서교동', walkedTogether: '경의선숲길', note: '에너지가 많아요. 긴 산책을 좋아해요.' },
+  { id: 'bori', name: '보리', photo: 'photos/dog-04-poodle.jpg', breed: '토이 푸들', age: 4, sex: 'm', owner: '보리누나', likes: ['🍂 낙엽 밟기', '🐾 냄새 맡기', '🥕 당근'], size: 'small', pace: 'slow', greeting: 'slow', comfort: 8, triggers: ['kids', 'bike'], slots: ['evening', 'night'], hood: '망원동', walkedTogether: '망원시장 뒷길', note: '몸집은 작아도 아이들 소리에 쉽게 놀라요.' },
+  { id: 'hodu', name: '호두', photo: 'photos/dog-07-pomeranian.jpg', breed: '포메라니안', age: 3, sex: 'm', owner: '호두집사', likes: ['🏃 달리기', '🥏 원반', '🍗 닭가슴살'], size: 'small', pace: 'brisk', greeting: 'hello', comfort: 4, triggers: [], slots: ['dawn', 'morning'], hood: '서교동', walkedTogether: '경의선숲길', note: '에너지가 많아요. 긴 산책을 좋아해요.' },
   { id: 'sol', name: '솔', photo: 'photos/dog-06-frenchie.jpg', breed: '프렌치 불도그', age: 6, sex: 'f', owner: '솔이엄마', likes: ['🛋️ 낮잠', '🌙 조용한 길', '🍎 사과'], size: 'small', pace: 'steady', greeting: 'pass', comfort: 15, triggers: ['smalldog', 'bigdog', 'touch'], slots: ['night'], hood: '망원동', walkedTogether: '한강 둔치 가장자리', note: '다른 개를 연습 중이에요. 멀리서부터 천천히요.' },
 ]
 
@@ -81,6 +81,8 @@ export interface Plan {
   sessionIndex: number
   start: number
   floor: number
+  /** closest step actually walked today (the ladder's last rung; ≥ floor) — use this in copy */
+  target: number
   steps: number[]
   canGreet: boolean
   needsPro: boolean
@@ -97,11 +99,13 @@ export function planFor(me: Comfy, n: Comfy, sessions: { closest: number | null 
   const floor = floorDistance(me.comfort, n.comfort, sessionIndex)
   const fresh = startDistance(me.comfort, n.comfort)
   const start = lastCalm !== null ? Math.max(stepAbove(lastCalm), floor) : fresh
+  const steps = ladder(start, floor)
   return {
     sessionIndex,
     start,
     floor,
-    steps: ladder(start, floor),
+    steps,
+    target: steps[steps.length - 1],
     canGreet: sessionIndex > 0 && me.greeting !== 'pass' && n.greeting !== 'pass' && Math.max(me.comfort, n.comfort) <= 8,
     needsPro: Math.max(me.comfort, n.comfort) >= PRO_THRESHOLD,
     resumed: lastCalm !== null,

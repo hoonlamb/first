@@ -205,7 +205,10 @@ export function Onboarding({ edit = false }: { edit?: boolean }) {
       ...s,
       card: { ...d, name: d.name.trim(), note: d.note.trim(), breed: breed || undefined, updatedAt: Date.now() },
       // a different dog: walks, relationships and requests don't carry over
-      ...(existing ? { walks: [], activeWalk: null, bonds: {}, requests: {}, activeTogether: null } : {}),
+      ...(existing ? {
+        walks: [], activeWalk: null, bonds: {}, requests: {}, activeTogether: null,
+        threads: {}, meets: {}, reviews: [], seen: {}, badges: s.badges.filter((b) => b === 'card' || b === 'place'),
+      } : {}),
     }))
     awardBadge('card')
     nav('/app', { replace: true })
@@ -450,7 +453,7 @@ export function Onboarding({ edit = false }: { edit?: boolean }) {
       </div>
 
       <Confirm open={replaceAsk} title={`${existing?.name ?? ''} 카드를 새 카드로 바꿀까요?`}
-        body="새 카드를 저장하면 지금 카드와 산책·사이 기록, 보낸 요청이 모두 지워져요. 같은 개의 정보를 바꾸려면 취소하고 ‘지금 카드 고치기’를 써 주세요."
+        body="새 카드를 저장하면 지금 카드와 산책·사이 기록, 보낸 요청, 채팅과 약속, 산책으로 받은 배지가 모두 지워져요. 같은 개의 정보를 바꾸려면 취소하고 ‘지금 카드 고치기’를 써 주세요."
         yes="새 카드로 바꾸기" danger onNo={() => setReplaceAsk(false)} onYes={save} />
       <Confirm open={leaving} title="작성 중인 내용이 있어요" body={edit ? '고친 내용은 저장되지 않아요.' : '지금 나가면 입력한 내용이 사라져요.'}
         yes="나가기" no="계속 쓰기" danger onNo={() => setLeaving(false)} onYes={() => { setLeaving(false); leave() }} />

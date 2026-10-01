@@ -3,7 +3,7 @@
 /* ================= list ================= */
 .tg-list { gap: 24px; }
 .tg-head { display: grid; gap: 6px; padding-top: 4px; }
-.tg-head__hood { display: inline-flex; align-items: center; gap: 4px; justify-self: start; margin-top: 2px; height: 26px; padding: 0 10px; border-radius: var(--r-chip); background: var(--pink-100); color: var(--pink-600); font-size: 12px; font-weight: 700; }
+.tg-head__hood { display: inline-flex; align-items: center; gap: 4px; justify-self: start; margin-top: 2px; height: 26px; padding: 0 10px; border-radius: var(--r-chip); background: var(--pink-100); color: var(--pink-700); font-size: 12px; font-weight: 700; }
 .tg-filters { margin-top: 12px; gap: 6px; }
 .tg-filters .hf-chip { min-height: 38px; padding: 0 12px; gap: 5px; }
 .tg-filters .hf-chip span { font-size: 14px; }
@@ -76,7 +76,7 @@
 .tg-id__req .tg-req--pending { background: var(--pink-50); color: var(--pink-600); }
 .tg-id__breed { font-size: 15px; font-weight: 600; color: var(--ink-700); }
 .tg-id__owner { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-500); margin-top: 4px; }
-.tg-id__ownericon { width: 22px; height: 22px; border-radius: 50%; background: var(--pink-100); color: var(--pink-600); display: grid; place-items: center; }
+.tg-id__ownericon { width: 22px; height: 22px; border-radius: 50%; background: var(--pink-100); color: var(--pink-700); display: grid; place-items: center; }
 
 .tg-likes { display: flex; flex-wrap: wrap; gap: 8px; }
 .tg-like { display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 14px 0 10px; border-radius: var(--r-chip); background: var(--surface); box-shadow: inset 0 0 0 1px var(--pink-200); font-size: 14px; font-weight: 500; color: var(--ink-700); }
@@ -158,7 +158,8 @@
 .tg-privacy { font-size: 12px; line-height: 1.5; color: var(--ink-500); text-align: center; padding: 4px 8px 0; }
 
 /* sticky CTA */
-.tg-cta { background: linear-gradient(rgba(255,255,255,0), #fff 26%); padding-top: 20px; padding-bottom: 28px; }
+.tg-cta { background: #fff; padding-top: 20px; padding-bottom: 28px; }
+.tg-cta::before { background: linear-gradient(rgba(255,255,255,0), #fff); }
 .tg-cta__row { display: grid; grid-template-columns: 52px 1fr; gap: 8px; }
 .tg-cta__chat { padding: 0; }
 .tg-cta__why { font-size: 13px; font-weight: 600; color: var(--alert); background: var(--alert-bg); border-radius: 12px; padding: 10px 12px; }
@@ -172,13 +173,13 @@
 .tg-status--pro > svg, .tg-status--pro b { color: var(--alert); }
 .tg-status--pro small { color: #6B4A12; }
 .tg-status--live { box-shadow: none; background: var(--pink-50); }
-.tg-wait { width: 40px; height: 40px; flex: none; border-radius: 12px; background: var(--pink-100); color: var(--pink-600); display: grid; place-items: center; animation: tg-tilt 2.4s var(--ease) infinite; }
+.tg-wait { width: 40px; height: 40px; flex: none; border-radius: 12px; background: var(--pink-100); color: var(--pink-700); display: grid; place-items: center; animation: tg-tilt 2.4s var(--ease) infinite; }
 @keyframes tg-tilt { 0%, 70% { transform: rotate(0); } 85% { transform: rotate(180deg); } 100% { transform: rotate(180deg); } }
 .tg-live { width: 12px; height: 12px; margin: 0 4px; flex: none; border-radius: 50%; background: var(--pink-500); box-shadow: 0 0 0 4px rgba(255,67,117,.25); animation: tg-pulse 1.6s infinite; }
 @keyframes tg-pulse { 50% { box-shadow: 0 0 0 8px rgba(255,67,117,0); } }
 
 .tg-meet { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 16px; background: #fff; box-shadow: var(--shadow-lift); }
-.tg-meet__cal { width: 40px; height: 40px; flex: none; border-radius: 12px; background: var(--pink-100); color: var(--pink-600); display: grid; place-items: center; }
+.tg-meet__cal { width: 40px; height: 40px; flex: none; border-radius: 12px; background: var(--pink-100); color: var(--pink-700); display: grid; place-items: center; }
 .tg-meet__txt { flex: 1; min-width: 0; display: grid; gap: 2px; }
 .tg-meet__txt b { font-size: 15px; font-weight: 700; }
 .tg-meet__txt small { display: flex; align-items: center; gap: 4px; font-size: 12.5px; color: var(--ink-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

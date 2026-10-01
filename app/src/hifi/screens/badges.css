@@ -6,7 +6,7 @@
 
 /* tags (original 개인 #EFE5F6/#BC61FC, 숙소 #D5E9F5/#1591D9 — text darkened for AA) */
 .bd-tag { display: inline-flex; align-items: center; gap: 3px; height: 24px; padding: 0 9px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: -0.01em; }
-.bd-tag--pink { background: var(--pink-100); color: var(--pink-600); }
+.bd-tag--pink { background: var(--pink-100); color: var(--pink-700); }
 .bd-tag--green { background: var(--calm-bg); color: var(--calm); }
 .bd-tag--purple { background: #EFE5F6; color: #8A3FC0; }
 .bd-tag--blue { background: #D5E9F5; color: #0B6FA8; }

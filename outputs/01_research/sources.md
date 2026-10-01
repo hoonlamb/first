@@ -93,5 +93,6 @@
 | S79 | Sniffspot 블로그 "How to Do a Parallel Walk with Dogs" | https://www.sniffspot.com/blog/dog-socialization/how-to-do-a-parallel-walk-with-dogs | 2026-09-30 (검색 결과 요약으로 확인, 원문 미열람) | 병행 산책: 두 보호자가 같은 방향으로 걷고, 넓은 거리에서 시작해 점차 좁힘. 가까이 가는 속도가 빠른 것이 흔한 실수 | C (사설 공간 사업자 블로그) |
 | S80 | Journey Dog Training "Introduce a Reactive Dog… Parallel Walk Method" | https://journeydogtraining.com/how-to-introduce-a-reactive-dog-to-a-neutral-dog-using-the-parallel-walk-method/ | 2026-09-30 (검색 결과 요약, 원문 미열람) | 반응성 견은 짖거나 달려들지 않고 알아챌 수 있는 거리에서 시작, 느슨한 리드줄, 계속 걷기 | B |
 | S81 | MLAR "Dog-Dog Introductions: Parallel Walking" (보호소 안내 PDF) | https://www.mlar.org/media/1630/5-dog-dog-introductions.pdf | 2026-09-30 (검색 결과 요약, 원문 미열람) | 보호소 입양 전 개-개 소개에 병행 산책 권장. 흔한 시작 거리 약 10~20ft | B |
+| S82 | 한국천문연구원 천문우주지식정보 ‘출몰시각’ (서울 월별 일몰) | https://astro.kasi.re.kr/life/pageView/9 | 2026-10-01 (네트워크 정책상 원문 미열람, 월 중순 근사치를 모델 지식으로 입력) | 첫 만남 시작 시간 상한 = 일몰 −1시간. 수치 검증 필요 | C |
 
 > 추가(2026-09-30, 검수 C-03 대응): S79–S81은 제품의 '병행 산책' 전제를 뒷받침한다. 제품 수치 규칙(첫 만남 하한 6m, 단계당 35% 이내)은 S74·S79–S81을 참고한 **설계 가정**이며 행동 전문가 검토 전이다.

@@ -3,7 +3,7 @@
 .pl-page { gap: 18px; padding-top: 2px; grid-template-columns: minmax(0, 1fr); }
 .pl-panel > * { min-width: 0; }
 .pl-panel { display: grid; gap: 22px; }
-.pl-search-on { background: var(--pink-100); color: var(--pink-600); }
+.pl-search-on { background: var(--pink-100); color: var(--pink-700); }
 
 /* inline search */
 .pl-search { display: flex; align-items: center; gap: 8px; height: 48px; padding: 0 6px 0 16px; border-radius: 14px; background: var(--surface); box-shadow: var(--shadow), inset 0 0 0 1px var(--pink-200); color: var(--ink-500); animation: pl-drop .22s var(--ease); }
@@ -20,18 +20,18 @@
 
 /* segmented tabs — original: 큐레이션 | 저장소 big text with underline */
 .pl-seg { display: flex; gap: 22px; border-bottom: 1px solid var(--line); }
-.pl-seg__tab { position: relative; min-height: 48px; font-size: 22px; font-weight: 800; letter-spacing: -0.03em; color: var(--ink-300); display: inline-flex; align-items: center; gap: 6px; padding: 0 2px; transition: color .15s; }
+.pl-seg__tab { position: relative; min-height: 48px; font-size: 22px; font-weight: 800; letter-spacing: -0.03em; color: var(--ink-500); display: inline-flex; align-items: center; gap: 6px; padding: 0 2px; transition: color .15s; }
 .pl-seg__tab[aria-selected="true"] { color: var(--ink-900); }
 .pl-seg__tab[aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; border-radius: 3px 3px 0 0; background: var(--ink-900); }
-.pl-seg__count { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 11px; background: var(--pink-500); color: #fff; font-size: 12px; font-weight: 800; display: inline-grid; place-items: center; letter-spacing: 0; }
-.pl-seg__tab[aria-selected="false"] .pl-seg__count { background: var(--pink-100); color: var(--pink-600); }
+.pl-seg__count { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 11px; background: var(--pink-600); color: #fff; font-size: 12px; font-weight: 800; display: inline-grid; place-items: center; letter-spacing: 0; }
+.pl-seg__tab[aria-selected="false"] .pl-seg__count { background: var(--pink-100); color: var(--pink-700); }
 
 /* hero banner */
 .pl-hero { position: relative; display: block; width: 100%; height: 196px; border-radius: 20px; overflow: hidden; text-align: left; box-shadow: 0 10px 24px rgba(60, 20, 40, .16); isolation: isolate; transition: transform .15s var(--ease); }
 .pl-hero:active { transform: scale(.985); }
 .pl-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; z-index: -2; }
 .pl-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(20, 10, 16, .62) 0%, rgba(20, 10, 16, .28) 55%, rgba(20, 10, 16, 0) 80%), linear-gradient(0deg, rgba(0,0,0,.25), transparent 50%); }
-.pl-hero__tag { position: absolute; left: 18px; top: 18px; padding: 4px 10px; border-radius: 6px; background: var(--pink-500); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: -0.01em; }
+.pl-hero__tag { position: absolute; left: 18px; top: 18px; padding: 4px 10px; border-radius: 6px; background: var(--pink-600); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: -0.01em; }
 .pl-hero__text { position: absolute; left: 18px; right: 70px; bottom: 30px; display: grid; gap: 6px; color: #fff; }
 .pl-hero__title { font-size: 25px; font-weight: 800; line-height: 1.22; letter-spacing: -0.035em; text-shadow: 0 1px 12px rgba(0,0,0,.2); }
 .pl-hero__sub { font-size: 13px; font-weight: 600; opacity: .92; }
